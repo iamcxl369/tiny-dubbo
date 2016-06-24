@@ -8,4 +8,8 @@ public interface Const {
 	// rpc请求时间（秒）
 	long TIME_OUT = 1;
 
+	int ZK_SESSION_TIMEOUT = 5000;
+
+	String ZK_DATA_PATH = "/registry/data";
+
 }
