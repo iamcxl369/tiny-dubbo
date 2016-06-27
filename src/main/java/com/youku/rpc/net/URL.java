@@ -3,9 +3,9 @@ package com.youku.rpc.net;
 public class URL {
 
 	private String ip;
-	
+
 	private int port;
-	
+
 	public URL(String ip, int port) {
 		super();
 		this.ip = ip;
@@ -26,5 +26,10 @@ public class URL {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	@Override
+	public String toString() {
+		return "url[" + ip + ":" + port + "]";
 	}
 }
