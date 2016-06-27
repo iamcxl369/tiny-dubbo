@@ -8,6 +8,7 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.KeeperException.NodeExistsException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
@@ -45,18 +46,21 @@ public class ZookeeperRegistry implements RegistryService {
 
 	private void createNode(URL url) {
 		String data = url.getIp() + ":" + url.getPort();
-		create(Const.ZK_DATA_PATH, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+		create(Const.ZK_REGISTRY_PATH + "/" + data, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 	}
 
 	private void create(String path, byte[] bytes, ArrayList<ACL> acl, CreateMode mode) {
 		int index = path.lastIndexOf('/');
 
 		if (index > 0) {
-			create(path.substring(0, index), null, acl, mode);
+			create(path.substring(0, index), null, acl, CreateMode.PERSISTENT);
 		}
 
 		try {
+			log.info("创建path={}", path);
 			zk.create(path, bytes, acl, mode);
+		} catch (NodeExistsException e) {
+
 		} catch (KeeperException | InterruptedException e) {
 			log.error("创建节点报错", e);
 		}
@@ -106,14 +110,7 @@ public class ZookeeperRegistry implements RegistryService {
 			throw new RuntimeException(e);
 		}
 
-		datas = new ArrayList<>(nodes.size());
-		for (String node : nodes) {
-			try {
-				datas.add(new String(zk.getData(Const.ZK_REGISTRY_PATH + "/" + node, false, null)));
-			} catch (KeeperException | InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		datas = nodes;
 
 		log.info("完成通知，数据为{}", datas);
 	}

@@ -16,15 +16,15 @@ public class ZkRegistryTest {
 
 		registry.register(new URL("10.10.10.10", 1111));
 
+		registry.register(new URL("10.10.10.11", 1111));
+
 		System.out.println(registry.getServers());
+
+		ZookeeperRegistry registry2 = new ZookeeperRegistry(registryAddress);
+
+		registry2.subscribe();
+
+		System.out.println(registry2.getServers());
 	}
 
-	@Test
-	public void testSubscribe() {
-		// ZookeeperRegistry registry = new ZookeeperRegistry(registryAddress);
-
-		// registry.subscribe();
-		//
-		// System.out.println(registry.getServers());
-	}
 }

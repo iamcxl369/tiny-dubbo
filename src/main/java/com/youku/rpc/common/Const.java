@@ -12,6 +12,4 @@ public interface Const {
 
 	String ZK_REGISTRY_PATH = "/registry";
 
-	String ZK_DATA_PATH = ZK_REGISTRY_PATH + "/data";
-
 }
