@@ -61,6 +61,7 @@ public class ServiceConfig<T> {
 
 	private void registerService() {
 		log.info("注册服务");
+		
 		TypeObjectMapper.binding(interfaceClass, ref);
 	}
 

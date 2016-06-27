@@ -11,7 +11,7 @@ import com.youku.rpc.service.UserService;
 public class TestClient {
 
 	public static void main(String[] args) {
-		RegistryConfig registryConfig = new RegistryConfig();
+		RegistryConfig registryConfig = new RegistryConfig("127.0.0.1:2181");
 
 		ReferenceConfig<UserService> reference = new ReferenceConfig<UserService>(); // 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
 		reference.setRegistryConfig(registryConfig);// 多个注册中心可以用setRegistries()
@@ -28,7 +28,7 @@ public class TestClient {
 		users.add(new User(2, "tom"));
 		users.add(new User(-1, "hello"));
 		List<User> newUsers = userService.filter(users);
-		
-		System.out.println("合法用户为:"+newUsers);
+
+		System.out.println("合法用户为:" + newUsers);
 	}
 }
