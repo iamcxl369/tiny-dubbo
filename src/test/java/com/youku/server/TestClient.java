@@ -6,7 +6,6 @@ import java.util.List;
 import com.youku.rpc.config.ReferenceConfig;
 import com.youku.rpc.config.RegistryConfig;
 import com.youku.rpc.model.User;
-import com.youku.rpc.net.URL;
 import com.youku.rpc.service.UserService;
 
 public class TestClient {

@@ -1,5 +1,8 @@
 package com.youku.rpc.net;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
@@ -9,16 +12,29 @@ public class URL {
 
 	private int port;
 
+	private Map<String, String> params;
+
 	private String urlString;
 
 	public URL(String urlString) {
 		this.urlString = urlString;
 		String[] arr = StringUtils.split(urlString, ':');
+
+		Assert.isTrue(arr.length == 2, "url字符串的格式为ip:port，实际url=>" + urlString + "不合法");
+
+		this.ip = arr[0];
+		this.port = Integer.parseInt(arr[1]);
+		this.params = new HashMap<>();
 		
-		Assert.isTrue(arr.length==2, "url字符串的格式为ip:port，实际url=>"+urlString+"不合法");
+		int index=urlString.indexOf('?');
+		String paramString=urlString.substring(index+1);
+
+		for(String kv:StringUtils.split(paramString, '&')){
+			if(StringUtils.isNoneBlank(kv)){
+				
+			}
+		}
 		
-		this.ip=arr[0];
-		this.port=Integer.parseInt(arr[1]);
 	}
 
 	public URL(String ip, int port) {

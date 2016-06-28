@@ -14,4 +14,6 @@ public interface Const {
 
 	String REGISTRY_SEPARATOR = "://";
 
+	int DEFAULT_WEIGHT = 100;
+
 }
