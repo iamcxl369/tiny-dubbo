@@ -7,6 +7,7 @@ import com.youku.rpc.client.Request;
 import com.youku.rpc.client.RpcClientHandler;
 import com.youku.rpc.common.Const;
 import com.youku.rpc.common.Progress;
+import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.net.URL;
 import com.youku.rpc.server.Response;
 
@@ -68,7 +69,7 @@ public class NettyClient implements Client {
 	}
 
 	@Override
-	public Response send(Request request) {
+	public Response send(Request request) throws RpcException {
 		boolean success = channelFuture.channel().writeAndFlush(request).awaitUninterruptibly(Const.TIME_OUT,
 				TimeUnit.SECONDS);
 
@@ -76,19 +77,14 @@ public class NettyClient implements Client {
 			Progress.getInstance().process(Const.TIME_OUT, TimeUnit.SECONDS);
 
 			if (handler.getResponse() == null) {
-				throw new RuntimeException("没有获取到远程机器的执行结果");
+				throw new RpcException("没有获取到远程机器的执行结果");
 			} else {
 				return handler.getResponse();
 			}
 		} else {
-			throw new RuntimeException("rpc请求超时");
+			throw new RpcException("rpc请求超时");
 		}
 
 	}
 
-	public static void main(String[] args) {
-		Client client = new NettyClient(new URL("10.10.23.91", 8080));
-		client.open();
-		client.send(new Request());
-	}
 }

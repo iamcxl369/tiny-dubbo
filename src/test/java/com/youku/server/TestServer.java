@@ -12,9 +12,9 @@ public class TestServer {
 
 		UserService userService = new UserServiceImpl();
 
-		ProtocolConfig protocolConfig = new ProtocolConfig(8080);
+		ProtocolConfig protocolConfig = new ProtocolConfig(TestConsts.SERVER_PORT);
 
-		RegistryConfig registryConfig = new RegistryConfig("127.0.0.1:2181");
+		RegistryConfig registryConfig = new RegistryConfig(TestConsts.ZK_REGISTRY_ADDRESS);
 
 		ServiceConfig<UserService> serviceConfig = new ServiceConfig<>();
 
@@ -24,7 +24,7 @@ public class TestServer {
 
 		serviceConfig.setRef(userService);
 
-		serviceConfig.setRegistryConfig(null);
+		serviceConfig.setRegistryConfig(registryConfig);
 
 		serviceConfig.export();
 

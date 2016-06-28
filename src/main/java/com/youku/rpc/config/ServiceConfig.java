@@ -56,20 +56,22 @@ public class ServiceConfig<T> {
 		openServer();
 
 		// 去注册中心注册服务
-		registerService();
+		register();
 	}
 
-	private void registerService() {
-		log.info("注册服务");
-		
+	private void register() {
+		if (registryConfig != null) {
+			log.info("注册服务");
+			registryConfig.getRegistryService().register(protocolConfig.getUrl());
+		}
+
 		TypeObjectMapper.binding(interfaceClass, ref);
 	}
 
 	private void openServer() {
-		String ip = protocolConfig.getIp();
-		int port = protocolConfig.getPort();
-		log.info("开启地址{}处的服务端口{}", ip, port);
-		Server server = new NettyServer(new URL(ip, port));
+		URL url = protocolConfig.getUrl();
+		log.info("开启地址{}处的服务端口{}", url.getIp(), url.getPort());
+		Server server = new NettyServer(url);
 		server.open();
 	}
 }

@@ -1,17 +1,15 @@
 package com.youku.rpc.config;
 
 import com.youku.rpc.common.IpHelper;
+import com.youku.rpc.net.URL;
 
 public class ProtocolConfig {
 
-	private String ip;
-
-	private int port;
+	private URL url;
 
 	public ProtocolConfig(String ip, int port) {
 		super();
-		this.ip = ip;
-		this.port = port;
+		this.url = new URL(ip, port);
 	}
 
 	public ProtocolConfig(int port) {
@@ -22,19 +20,12 @@ public class ProtocolConfig {
 		return IpHelper.getLocalIp();
 	}
 
-	public String getIp() {
-		return ip;
+	public URL getUrl() {
+		return url;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setUrl(URL url) {
+		this.url = url;
 	}
 
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
 }

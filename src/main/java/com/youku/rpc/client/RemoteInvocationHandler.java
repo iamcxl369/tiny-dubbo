@@ -3,6 +3,7 @@ package com.youku.rpc.client;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.server.Response;
 
 public class RemoteInvocationHandler implements InvocationHandler {
@@ -22,8 +23,8 @@ public class RemoteInvocationHandler implements InvocationHandler {
 		request.setArgumentTypes(method.getParameterTypes());
 		request.setInterfaceClass(method.getDeclaringClass());
 
-		Response response = invoker.getClient().send(request);
-
+		Response response = invoker.invoke(request);
+		
 		return response.getValue();
 	}
 }

@@ -1,5 +1,6 @@
 package com.youku.rpc.client;
 
+import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.server.Response;
 
 public interface Client {
@@ -8,5 +9,5 @@ public interface Client {
 
 	void close();
 
-	Response send(Request request);
+	Response send(Request request) throws RpcException;
 }

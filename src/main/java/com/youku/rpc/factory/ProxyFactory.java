@@ -1,6 +1,9 @@
-package com.youku.rpc.client;
+package com.youku.rpc.factory;
 
 import java.lang.reflect.Proxy;
+
+import com.youku.rpc.client.RemoteInvocationHandler;
+import com.youku.rpc.invoker.Invoker;
 
 public class ProxyFactory {
 

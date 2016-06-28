@@ -12,4 +12,6 @@ public interface Const {
 
 	String ZK_REGISTRY_PATH = "/registry";
 
+	String REGISTRY_SEPARATOR = "://";
+
 }
