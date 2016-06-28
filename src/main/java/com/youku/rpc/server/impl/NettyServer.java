@@ -52,8 +52,4 @@ public class NettyServer implements Server {
 		channelFuture.channel().close();
 	}
 
-	public static void main(String[] args) {
-		new NettyServer(new URL("10.10.23.91", 8080)).open();
-	}
-
 }

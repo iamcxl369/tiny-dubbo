@@ -26,7 +26,7 @@ public class ReferenceConfig<T> {
 
 	private RegistryConfig registryConfig;
 
-	private Cluster cluster = ClusterFactory.create("failover");;
+	private Cluster cluster = ClusterFactory.create("failover");
 
 	private int retryTimes = 3;
 
@@ -96,8 +96,9 @@ public class ReferenceConfig<T> {
 	private List<Invoker> wrapInvokers(List<URL> urls, List<Client> clients) {
 		List<Invoker> invokers = new ArrayList<>(urls.size());
 		for (int i = 0; i < urls.size(); i++) {
+			URL url = urls.get(i);
 			Client client = clients.get(i);
-			invokers.add(new DefaultInvoker(client, interfaceClass));
+			invokers.add(new DefaultInvoker(url, client, interfaceClass));
 		}
 		return invokers;
 	}

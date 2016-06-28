@@ -2,6 +2,7 @@ package com.youku.rpc.net;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
@@ -14,33 +15,36 @@ public class URL {
 
 	private Map<String, String> params;
 
-	private String urlString;
-
 	public URL(String urlString) {
-		this.urlString = urlString;
-		String[] arr = StringUtils.split(urlString, ':');
+		this.params = new HashMap<>();
 
-		Assert.isTrue(arr.length == 2, "url字符串的格式为ip:port，实际url=>" + urlString + "不合法");
+		int index = urlString.indexOf('?');
+		String ipPortString = null;
+		if (index < 0) {
+			ipPortString = urlString;
+		} else {
+			String paramString = urlString.substring(index + 1);
+
+			for (String kv : StringUtils.split(paramString, '&')) {
+				if (StringUtils.isNoneBlank(kv)) {
+					String[] kvArr = StringUtils.split(kv, '=');
+
+					String key = kvArr[0];
+					String value = kvArr[1];
+
+					this.params.put(key, value);
+				}
+			}
+			ipPortString = urlString.substring(0, index);
+		}
+
+		String[] arr = StringUtils.split(ipPortString, ':');
+
+		Assert.isTrue(arr.length == 2);
 
 		this.ip = arr[0];
 		this.port = Integer.parseInt(arr[1]);
-		this.params = new HashMap<>();
-		
-		int index=urlString.indexOf('?');
-		String paramString=urlString.substring(index+1);
 
-		for(String kv:StringUtils.split(paramString, '&')){
-			if(StringUtils.isNoneBlank(kv)){
-				
-			}
-		}
-		
-	}
-
-	public URL(String ip, int port) {
-		super();
-		this.ip = ip;
-		this.port = port;
 	}
 
 	public String getIp() {
@@ -59,16 +63,34 @@ public class URL {
 		this.port = port;
 	}
 
-	public String getUrlString() {
-		return urlString;
+	public String toURLString() {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append(ip).append(':').append(port);
+
+		if (params.isEmpty()) {
+			return builder.toString();
+		} else {
+			builder.append('?');
+			for (Entry<String, String> entry : params.entrySet()) {
+				builder.append(entry.getKey()).append('=').append(entry.getValue()).append('&');
+			}
+
+			if (builder.toString().endsWith("&")) {
+				builder.deleteCharAt(builder.length() - 1);
+			}
+
+			return builder.toString();
+		}
+
 	}
 
-	public void setUrlString(String urlString) {
-		this.urlString = urlString;
+	public String getParam(String key) {
+		return params.get(key);
 	}
 
 	@Override
 	public String toString() {
-		return "url[" + ip + ":" + port + "]";
+		return "ip:" + ip + ",port:" + port + ",params:" + params;
 	}
 }

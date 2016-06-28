@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.youku.rpc.common.ReflectUtils;
 
 public class Request implements Serializable {
+	
+	private static final long serialVersionUID = 8974769973791263295L;
 
 	private Class<?> interfaceClass;
 

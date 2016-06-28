@@ -14,9 +14,9 @@ public class ZkRegistryTest {
 
 		ZookeeperRegistry registry = new ZookeeperRegistry(registryAddress);
 
-		registry.register(new URL("10.10.10.10", 1111));
+		registry.register(new URL("10.10.10.10:" + 1111));
 
-		registry.register(new URL("10.10.10.11", 1111));
+		registry.register(new URL("10.10.10.11:" + 1111));
 
 		System.out.println(registry.getServers());
 

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.KeeperException.NodeExistsException;
@@ -45,7 +44,7 @@ public class ZookeeperRegistry implements RegistryService {
 	}
 
 	private void createNode(URL url) {
-		String data = url.getIp() + ":" + url.getPort();
+		String data = url.toURLString();
 		create(Const.ZK_REGISTRY_PATH + "/" + data, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 	}
 
@@ -119,12 +118,8 @@ public class ZookeeperRegistry implements RegistryService {
 	public List<URL> getServers() {
 		List<URL> servers = new ArrayList<>(datas.size());
 
-		for (String url : datas) {
-			String[] arr = StringUtils.split(url, ':');
-			String ip = arr[0];
-			int port = Integer.parseInt(arr[1]);
-
-			servers.add(new URL(ip, port));
+		for (String urlString : datas) {
+			servers.add(new URL(urlString));
 		}
 
 		return servers;

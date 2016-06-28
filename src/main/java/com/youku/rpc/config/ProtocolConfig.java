@@ -9,7 +9,7 @@ public class ProtocolConfig {
 
 	public ProtocolConfig(String ip, int port) {
 		super();
-		this.url = new URL(ip, port);
+		this.url = new URL(ip + ":" + port);
 	}
 
 	public ProtocolConfig(int port) {
