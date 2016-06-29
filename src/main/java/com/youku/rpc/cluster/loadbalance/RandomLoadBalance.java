@@ -10,13 +10,13 @@ import com.youku.rpc.invoker.Invoker;
 
 public class RandomLoadBalance extends AbstractLoadBalance {
 
-	private final Logger log = LoggerFactory.getLogger(RandomLoadBalance.class);
+	private static final Logger log = LoggerFactory.getLogger(RandomLoadBalance.class);
 
 	private final Random random = new Random();
 
 	@Override
-	public Invoker select(List<Invoker> invokers) {
-		log.info("采用随机负载均衡措施");
+	public Invoker doSelect(List<Invoker> invokers) {
+		log.debug("采用随机负载均衡措施");
 
 		int totalWeight = 0;
 
@@ -27,8 +27,12 @@ public class RandomLoadBalance extends AbstractLoadBalance {
 		int weight = random.nextInt(totalWeight);
 
 		int selectIndex;
-		for (selectIndex = 0; selectIndex < invokers.size() && weight > 0; selectIndex++) {
+		for (selectIndex = 0; selectIndex < invokers.size(); selectIndex++) {
 			weight -= getWeight(invokers.get(selectIndex));
+
+			if (weight < 0) {
+				break;
+			}
 		}
 
 		return invokers.get(selectIndex);

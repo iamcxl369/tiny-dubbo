@@ -9,7 +9,7 @@ import com.youku.rpc.service.impl.UserServiceImpl;
 public class TestServer {
 
 	public static void main(String[] args) {
-		
+
 		UserService userService = new UserServiceImpl();
 
 		ProtocolConfig protocolConfig = new ProtocolConfig(TestConsts.SERVER_PORT);

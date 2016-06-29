@@ -16,8 +16,10 @@ public class TestClient {
 		ReferenceConfig<UserService> reference = new ReferenceConfig<UserService>(); // 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
 		reference.setRegistryConfig(registryConfig);// 多个注册中心可以用setRegistries()
 		reference.setInterfaceClass(UserService.class);
+		reference.createCluster("failover");
+		reference.createLoadBalance("random");
 
-//		reference.setUrl(new URL("10.10.23.92:" + TestConsts.SERVER_PORT));
+		// reference.setUrl(new URL("10.10.23.92:" + TestConsts.SERVER_PORT));
 
 		UserService userService = reference.get();
 

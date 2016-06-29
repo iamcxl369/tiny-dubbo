@@ -20,6 +20,16 @@ public class ServiceConfig<T> {
 
 	private ProtocolConfig protocolConfig;
 
+	private int weight = 100;
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	public Class<T> getInterfaceClass() {
 		return interfaceClass;
 	}
@@ -62,7 +72,10 @@ public class ServiceConfig<T> {
 	private void register() {
 		if (registryConfig != null) {
 			log.info("注册服务");
-			registryConfig.getRegistryService().register(protocolConfig.getUrl());
+			URL url = protocolConfig.getUrl();
+			String urlString = new StringBuilder().append(url.getIp()).append(':').append(url.getPort()).append('?')
+					.append("weight=").append(weight).toString();
+			registryConfig.getRegistryService().register(new URL(urlString));
 		}
 
 		TypeObjectMapper.binding(interfaceClass, ref);
