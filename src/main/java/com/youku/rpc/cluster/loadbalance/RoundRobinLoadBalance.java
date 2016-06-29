@@ -30,9 +30,10 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 
 		Invoker current = invokers.get(index);
 		if (getWeight(current) >= cardinalWeight) {
-			invokers.get(index);
+			return current;
+		} else {
+			return doSelect(invokers);
 		}
-		throw new RuntimeException("找不到可以调度的提供者");
 	}
 
 	private int maxWeight(List<Invoker> invokers) {
