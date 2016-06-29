@@ -7,7 +7,24 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 
+@SuppressWarnings("unchecked")
 public class ReflectUtils {
+
+	public static <T> Class<T> forName(String className) {
+		try {
+			return (Class<T>) Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static <T> T newInstance(String className) {
+		try {
+			return newInstance((Class<T>) Class.forName(className));
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static <T> T newInstance(Class<T> targetClass) {
 		try {
@@ -82,4 +99,7 @@ public class ReflectUtils {
 		}
 	}
 
+	public static void main(String[] args) throws ClassNotFoundException {
+		System.out.println(forName("com.youku.rpc.common.IpHelper"));
+	}
 }

@@ -32,10 +32,30 @@ public class ReferenceConfig<T> {
 
 	private LoadBalance loadBalance = LoadBalanceFactory.create("random");
 
-	private Class<?> interfaceClass;
+	private Class<T> interfaceClass;
+
+	private String id;
 
 	// 点对点直连的ip地址:端口
 	private URL url;
+
+	private ApplicationConfig applicationConfig;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public ApplicationConfig getApplicationConfig() {
+		return applicationConfig;
+	}
+
+	public void setApplicationConfig(ApplicationConfig applicationConfig) {
+		this.applicationConfig = applicationConfig;
+	}
 
 	public RegistryConfig getRegistryConfig() {
 		return registryConfig;
@@ -49,7 +69,7 @@ public class ReferenceConfig<T> {
 		return interfaceClass;
 	}
 
-	public void setInterfaceClass(Class<?> interfaceClass) {
+	public void setInterfaceClass(Class<T> interfaceClass) {
 		this.interfaceClass = interfaceClass;
 	}
 

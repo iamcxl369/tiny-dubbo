@@ -5,27 +5,38 @@ import com.youku.rpc.net.URL;
 
 public class ProtocolConfig {
 
-	private URL url;
+	private String name;
 
-	public ProtocolConfig(String ip, int port) {
-		super();
-		this.url = new URL(ip + ":" + port);
+	private String ip= IpHelper.getLocalIp();;
+
+	private int port;
+
+	public String getName() {
+		return name;
 	}
 
-	public ProtocolConfig(int port) {
-		this(getLocalIp(), port);
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	private static String getLocalIp() {
-		return IpHelper.getLocalIp();
+	public String getIp() {
+		return ip;
 	}
 
-	public URL getUrl() {
-		return url;
+	public int getPort() {
+		return port;
 	}
 
-	public void setUrl(URL url) {
-		this.url = url;
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public URL toURL() {
+		return new URL(new StringBuilder().append(ip).append(':').append(port).toString());
 	}
 
 }

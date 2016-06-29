@@ -2,7 +2,7 @@
 <nevermore>
 	<application name="hello-app" />
 
-	<registry address="zookeeper://10.100.52.164:2181" />
+	<registry address="zookeeper://10.10.23.246:2181" />
 
 	<protocol name="dubbo" port="20880" />
 	<protocol name="rmi" port="6000" />
@@ -11,7 +11,7 @@
 	<protocol name="webservice" port="8080" />
 	<protocol name="thrift" port="3030" />
 
-	<dubbo:service interface="com.youku.demo.api.DemoService"
-		class="com.youku.demo.DemoServiceImpl" weight="100" protocol="dubbo" />
+	<service interface="com.youku.rpc.service.UserService" class="com.youku.rpc.service.impl.UserServiceImpl"
+		weight="100" protocol="dubbo" />
 
 </nevermore>

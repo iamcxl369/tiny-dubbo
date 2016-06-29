@@ -20,7 +20,21 @@ public class ServiceConfig<T> {
 
 	private ProtocolConfig protocolConfig;
 
+	private ApplicationConfig applicationConfig;
+
 	private int weight = 100;
+
+	public ProtocolConfig getProtocolConfig() {
+		return protocolConfig;
+	}
+
+	public ApplicationConfig getApplicationConfig() {
+		return applicationConfig;
+	}
+
+	public void setApplicationConfig(ApplicationConfig applicationConfig) {
+		this.applicationConfig = applicationConfig;
+	}
 
 	public int getWeight() {
 		return weight;
@@ -72,7 +86,7 @@ public class ServiceConfig<T> {
 	private void register() {
 		if (registryConfig != null) {
 			log.info("注册服务");
-			URL url = protocolConfig.getUrl();
+			URL url = protocolConfig.toURL();
 			String urlString = new StringBuilder().append(url.getIp()).append(':').append(url.getPort()).append('?')
 					.append("weight=").append(weight).toString();
 			registryConfig.getRegistryService().register(new URL(urlString));
@@ -82,7 +96,7 @@ public class ServiceConfig<T> {
 	}
 
 	private void openServer() {
-		URL url = protocolConfig.getUrl();
+		URL url = protocolConfig.toURL();
 		log.info("开启地址{}处的服务端口{}", url.getIp(), url.getPort());
 		Server server = new NettyServer(url);
 		server.open();

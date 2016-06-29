@@ -2,6 +2,7 @@ package com.youku.rpc;
 
 import java.util.Random;
 
+import com.youku.rpc.config.ApplicationConfig;
 import com.youku.rpc.config.ProtocolConfig;
 import com.youku.rpc.config.RegistryConfig;
 import com.youku.rpc.config.ServiceConfig;
@@ -20,11 +21,20 @@ public class TestServer {
 
 		UserService userService = new UserServiceImpl();
 
-		ProtocolConfig protocolConfig = new ProtocolConfig(TestConsts.SERVER_PORT);
+		ApplicationConfig applicationConfig = new ApplicationConfig();
+
+		applicationConfig.setName("hello-app");
+		applicationConfig.setOwner("loda");
+
+		ProtocolConfig protocolConfig = new ProtocolConfig();
+
+		protocolConfig.setPort(TestConsts.SERVER_PORT);
 
 		RegistryConfig registryConfig = new RegistryConfig(TestConsts.ZK_REGISTRY_ADDRESS);
 
 		ServiceConfig<UserService> serviceConfig = new ServiceConfig<>();
+
+		serviceConfig.setApplicationConfig(applicationConfig);
 
 		serviceConfig.setInterfaceClass(UserService.class);
 
