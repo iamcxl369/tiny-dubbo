@@ -1,4 +1,4 @@
-package com.youku.rpc.cluster.loadbalance;
+package com.youku.rpc.cluster.loadbalance.impl;
 
 import java.util.List;
 import java.util.Random;
@@ -8,6 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.invoker.Invoker;
 
+/**
+ * 随机算法
+ * 
+ * @author loda
+ *
+ */
 public class RandomLoadBalance extends AbstractLoadBalance {
 
 	private static final Logger log = LoggerFactory.getLogger(RandomLoadBalance.class);

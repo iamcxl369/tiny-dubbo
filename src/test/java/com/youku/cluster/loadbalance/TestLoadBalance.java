@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.youku.rpc.cluster.loadbalance.LoadBalance;
-import com.youku.rpc.cluster.loadbalance.RandomLoadBalance;
-import com.youku.rpc.cluster.loadbalance.RoundRobinLoadBalance;
+import com.youku.rpc.cluster.loadbalance.impl.RandomLoadBalance;
+import com.youku.rpc.cluster.loadbalance.impl.RoundRobinLoadBalance;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.DefaultInvoker;
 import com.youku.rpc.net.URL;
@@ -26,6 +26,7 @@ public class TestLoadBalance {
 
 	@Before
 	public void setup() {
+		System.out.println("总共调用" + size + "次");
 		count = new HashMap<>();
 		invokers = new ArrayList<>();
 
@@ -63,7 +64,7 @@ public class TestLoadBalance {
 		}
 
 		for (Entry<String, Integer> entry : count.entrySet()) {
-			System.out.println(entry.getKey() + ":" + entry.getValue());
+			System.out.println(entry.getKey() + "被调用" + entry.getValue() + "次");
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.youku.rpc.cluster.loadbalance;
+package com.youku.rpc.cluster.loadbalance.impl;
 
 import java.util.List;
 
@@ -7,6 +7,14 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.invoker.Invoker;
 
+/**
+ * 加权轮询算法
+ * 
+ * 由于采用轮询，如果某一台服务很慢，那么轮询其他的时候很快就执行完成，轮询到这一台的时候就卡住了，久而久之，所有堆积大量请求
+ * 
+ * @author loda
+ *
+ */
 public class RoundRobinLoadBalance extends AbstractLoadBalance {
 	private static final Logger log = LoggerFactory.getLogger(RoundRobinLoadBalance.class);
 
@@ -62,7 +70,7 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 
 	private int gcd(int[] weights) {
 		if (weights == null || weights.length == 0) {
-			throw new IllegalArgumentException("不存在任何数据信息，没有最大公约数");
+			throw new IllegalArgumentException("不存在任何提供者信息，没有最大公约数");
 		}
 
 		if (weights.length == 1) {
@@ -89,8 +97,4 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 		}
 	}
 
-	public static void main(String[] args) {
-		int r = new RoundRobinLoadBalance().gcd(120, 96);
-		System.out.println(r);
-	}
 }

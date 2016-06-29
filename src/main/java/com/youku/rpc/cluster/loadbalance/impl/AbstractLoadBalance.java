@@ -1,4 +1,4 @@
-package com.youku.rpc.cluster.loadbalance;
+package com.youku.rpc.cluster.loadbalance.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import org.springframework.util.Assert;
 
+import com.youku.rpc.cluster.loadbalance.LoadBalance;
 import com.youku.rpc.common.Const;
 import com.youku.rpc.invoker.Invoker;
 
