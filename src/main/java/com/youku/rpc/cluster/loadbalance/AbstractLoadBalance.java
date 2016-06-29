@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import org.springframework.util.Assert;
+
 import com.youku.rpc.common.Const;
 import com.youku.rpc.invoker.Invoker;
 
@@ -16,6 +18,8 @@ public abstract class AbstractLoadBalance implements LoadBalance {
 	}
 
 	protected List<Invoker> filterIllegalWeight(List<Invoker> invokers) {
+		Assert.notEmpty(invokers, "不存在远程主机");
+
 		List<Invoker> newInvokers = new ArrayList<>();
 
 		for (Invoker invoker : invokers) {
@@ -24,6 +28,8 @@ public abstract class AbstractLoadBalance implements LoadBalance {
 				newInvokers.add(invoker);
 			}
 		}
+
+		Assert.notEmpty(newInvokers, "不存在权重为正数的远程主机");
 
 		return newInvokers;
 	}
