@@ -1,4 +1,4 @@
-package com.youku.server;
+package com.youku.rpc;
 
 import java.util.ArrayList;
 import java.util.List;

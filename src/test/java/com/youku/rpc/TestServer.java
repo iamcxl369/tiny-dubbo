@@ -1,4 +1,4 @@
-package com.youku.server;
+package com.youku.rpc;
 
 import com.youku.rpc.config.ProtocolConfig;
 import com.youku.rpc.config.RegistryConfig;

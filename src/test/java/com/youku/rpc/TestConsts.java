@@ -1,4 +1,4 @@
-package com.youku.server;
+package com.youku.rpc;
 
 public interface TestConsts {
 

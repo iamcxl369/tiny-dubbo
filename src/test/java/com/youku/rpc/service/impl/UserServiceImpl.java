@@ -6,9 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.youku.rpc.TestConsts;
 import com.youku.rpc.model.User;
 import com.youku.rpc.service.UserService;
-import com.youku.server.TestConsts;
 
 public class UserServiceImpl implements UserService {
 
