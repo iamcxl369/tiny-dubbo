@@ -1,4 +1,4 @@
-package com.youku.rpc.registry;
+package com.youku.rpc.registry.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.common.Const;
 import com.youku.rpc.net.URL;
+import com.youku.rpc.registry.RegistryService;
 
 public class ZookeeperRegistry implements RegistryService {
 

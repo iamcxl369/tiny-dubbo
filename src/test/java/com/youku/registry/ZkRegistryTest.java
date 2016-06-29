@@ -3,7 +3,7 @@ package com.youku.registry;
 import org.junit.Test;
 
 import com.youku.rpc.net.URL;
-import com.youku.rpc.registry.ZookeeperRegistry;
+import com.youku.rpc.registry.impl.ZookeeperRegistry;
 
 public class ZkRegistryTest {
 

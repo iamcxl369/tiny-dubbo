@@ -1,7 +1,7 @@
 package com.youku.rpc.factory;
 
 import com.youku.rpc.registry.RegistryService;
-import com.youku.rpc.registry.ZookeeperRegistry;
+import com.youku.rpc.registry.impl.ZookeeperRegistry;
 
 public class RegistryFactory {
 
