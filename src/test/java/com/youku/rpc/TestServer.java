@@ -1,5 +1,7 @@
 package com.youku.rpc;
 
+import java.util.Random;
+
 import com.youku.rpc.config.ProtocolConfig;
 import com.youku.rpc.config.RegistryConfig;
 import com.youku.rpc.config.ServiceConfig;
@@ -8,7 +10,13 @@ import com.youku.rpc.service.impl.UserServiceImpl;
 
 public class TestServer {
 
+	private static final Random random = new Random();
+
 	public static void main(String[] args) {
+
+		int[] weights = { 100, 200, 100, 300 };
+
+		int weight = random(weights);
 
 		UserService userService = new UserServiceImpl();
 
@@ -26,8 +34,14 @@ public class TestServer {
 
 		serviceConfig.setRegistryConfig(registryConfig);
 
+		serviceConfig.setWeight(weight);
+
 		serviceConfig.export();
 
+	}
+
+	private static int random(int[] weights) {
+		return weights[random.nextInt(weights.length)];
 	}
 
 }
