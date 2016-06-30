@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.youku.rpc.TestConsts;
 import com.youku.rpc.model.User;
 import com.youku.rpc.service.UserService;
 
@@ -21,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> filter(List<User> users) {
-		log.info("过滤不合法用户，端口为{}的服务端被调用",TestConsts.SERVER_PORT);
+		log.info("过滤不合法用户");
 
 		List<User> newUsers = new ArrayList<>(users.size());
 

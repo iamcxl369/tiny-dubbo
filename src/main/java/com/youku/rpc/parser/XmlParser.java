@@ -188,10 +188,11 @@ public class XmlParser {
 		this.context = context;
 	}
 
-	public void clear() {
+	public void close() {
 		context = null;
 		serviceConfigs = null;
 		referenceConfigs = null;
 		protocolConfigs = null;
 	}
+
 }

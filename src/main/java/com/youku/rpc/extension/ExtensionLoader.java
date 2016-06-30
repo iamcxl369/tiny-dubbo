@@ -26,9 +26,13 @@ public class ExtensionLoader {
 
 	private static final Logger log = LoggerFactory.getLogger(ExtensionLoader.class);
 
-	public void load() {
+	public ExtensionLoader() {
 		load(NEVERMORE_INTERNAL_DIRECTORY);
 		load(NEVERMORE_DIRECTORY);
+	}
+
+	public void close() {
+		extensionFactory = null;
 	}
 
 	private void load(String location) {

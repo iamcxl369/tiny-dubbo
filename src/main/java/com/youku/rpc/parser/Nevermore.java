@@ -1,10 +1,15 @@
 package com.youku.rpc.parser;
 
+import com.youku.rpc.extension.ExtensionLoader;
+
 public class Nevermore {
 
 	private XmlParser parser;
 
+	private ExtensionLoader loader;
+
 	public Nevermore(String location) {
+		loader = new ExtensionLoader();
 		parser = new XmlParser(location);
 	}
 
@@ -13,7 +18,8 @@ public class Nevermore {
 	}
 
 	public void close() {
-		parser.clear();
+		loader.close();
+		parser.close();
 	}
 
 	@SuppressWarnings("unchecked")

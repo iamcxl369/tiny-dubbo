@@ -7,20 +7,20 @@ import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.factory.ClusterFactory;
 import com.youku.rpc.factory.LoadBalanceFactory;
 
-public class TestExtension{
-	
+public class TestExtension {
+
 	@Before
-	public void load(){
-		new ExtensionLoader().load();
+	public void load() {
+		new ExtensionLoader();
 	}
 
 	@Test
-	public void testGetCluster(){
+	public void testGetCluster() {
 		System.out.println(ClusterFactory.create("failover"));
 	}
-	
+
 	@Test
-	public void testGetLoadBalance(){
+	public void testGetLoadBalance() {
 		System.out.println(LoadBalanceFactory.create("random"));
 	}
 }
