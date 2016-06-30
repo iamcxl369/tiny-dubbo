@@ -18,7 +18,7 @@ import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.DefaultInvoker;
 import com.youku.rpc.net.URL;
-import com.youku.rpc.registry.RegistryService;
+import com.youku.rpc.registry.Registry;
 
 public class ReferenceConfig<T> {
 
@@ -142,7 +142,7 @@ public class ReferenceConfig<T> {
 			// 从zookeeper获取数据
 			Assert.notNull(registryConfig, "注册中心不能为空");
 
-			RegistryService registryService = registryConfig.getRegistryService();
+			Registry registryService = registryConfig.getRegistryService();
 
 			registryService.subscribe();
 

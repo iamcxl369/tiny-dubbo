@@ -15,6 +15,14 @@ public class URL {
 
 	private Map<String, String> params;
 
+	private String registry;
+
+	private String registryAddress;
+
+	public URL() {
+		super();
+	}
+
 	public URL(String urlString) {
 		this.params = new HashMap<>();
 
@@ -61,6 +69,22 @@ public class URL {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public String getRegistry() {
+		return registry;
+	}
+
+	public String getRegistryAddress() {
+		return registryAddress;
+	}
+
+	public void setRegistry(String registry) {
+		this.registry = registry;
+	}
+
+	public void setRegistryAddress(String registryAddress) {
+		this.registryAddress = registryAddress;
 	}
 
 	public String toURLString() {

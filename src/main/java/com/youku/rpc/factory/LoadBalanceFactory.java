@@ -1,13 +1,12 @@
 package com.youku.rpc.factory;
 
 import com.youku.rpc.cluster.loadbalance.LoadBalance;
-import com.youku.rpc.cluster.loadbalance.impl.RandomLoadBalance;
+import com.youku.rpc.extension.ExtensionLoader;
 
 public class LoadBalanceFactory {
 
-	public static LoadBalance create(String loadBalanceName) {
-		// TODO 目前只支持random负载均衡措施
-		return new RandomLoadBalance();
+	public static LoadBalance create(String name) {
+		return ExtensionLoader.getExtension(LoadBalance.class, name);
 	}
 
 }

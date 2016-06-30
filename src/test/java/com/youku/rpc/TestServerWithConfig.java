@@ -8,5 +8,6 @@ public class TestServerWithConfig {
 
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(provider);
+		nevermore.start();
 	}
 }

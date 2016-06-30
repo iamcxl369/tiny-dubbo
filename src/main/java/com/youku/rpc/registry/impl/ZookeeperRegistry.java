@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.common.Const;
 import com.youku.rpc.net.URL;
-import com.youku.rpc.registry.RegistryService;
+import com.youku.rpc.registry.Registry;
 
-public class ZookeeperRegistry implements RegistryService {
+public class ZookeeperRegistry implements Registry {
 
 	private ZooKeeper zk;
 

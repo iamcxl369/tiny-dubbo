@@ -2,6 +2,7 @@ package com.youku.rpc.factory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.util.Assert;
 
@@ -22,9 +23,22 @@ public class ExtensionFactory {
 	}
 
 	public void addExtension(String interfaceName, String name, String className) {
-		Extension extension = new Extension();
+		Extension extension = extensions.get(interfaceName);
+		if (extension == null) {
+			extension = new Extension();
+		}
 		extension.addBean(name, ReflectUtils.newInstance(className));
 		extensions.put(interfaceName, extension);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (Entry<String, Extension> entry : extensions.entrySet()) {
+			builder.append(entry.getKey()).append('\n').append(entry.getValue()).append('\n');
+		}
+
+		return builder.toString();
 	}
 
 }

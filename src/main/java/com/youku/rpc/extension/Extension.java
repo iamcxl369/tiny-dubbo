@@ -2,6 +2,7 @@ package com.youku.rpc.extension;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Extension {
 
@@ -21,5 +22,14 @@ public class Extension {
 
 	public Object getBean(String key) {
 		return beans.get(key);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (Entry<String, Object> entry : beans.entrySet()) {
+			builder.append("\tbeans=[").append(entry.getKey()).append("=").append(entry.getValue()).append("]\n");
+		}
+		return builder.toString();
 	}
 }

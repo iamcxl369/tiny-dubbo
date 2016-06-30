@@ -14,6 +14,8 @@ public class TestClientWithConfig {
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(consumer);
 
+		nevermore.start();
+
 		UserService userService = nevermore.getBean("userService");
 
 		List<User> users = new ArrayList<>();

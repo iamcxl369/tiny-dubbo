@@ -5,8 +5,15 @@ public class Nevermore {
 	private XmlParser parser;
 
 	public Nevermore(String location) {
-		parser = new XmlParser();
-		parser.parse(location);
+		parser = new XmlParser(location);
+	}
+
+	public void start() {
+		parser.execute();
+	}
+
+	public void close() {
+		parser.clear();
 	}
 
 	@SuppressWarnings("unchecked")

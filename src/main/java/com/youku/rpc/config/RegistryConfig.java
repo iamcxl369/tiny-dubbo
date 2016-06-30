@@ -3,8 +3,10 @@ package com.youku.rpc.config;
 import org.springframework.util.Assert;
 
 import com.youku.rpc.common.Const;
+import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.factory.RegistryFactory;
-import com.youku.rpc.registry.RegistryService;
+import com.youku.rpc.net.URL;
+import com.youku.rpc.registry.Registry;
 
 public class RegistryConfig {
 
@@ -41,7 +43,10 @@ public class RegistryConfig {
 		this.address = address;
 	}
 
-	public RegistryService getRegistryService() {
-		return RegistryFactory.create(protocol, address);
+	public Registry getRegistryService() {
+		URL url = new URL();
+		url.setRegistry(protocol);
+		url.setRegistryAddress(address);
+		return ExtensionLoader.getExtension(RegistryFactory.class, url.getRegistry()).getRegistry(url);
 	}
 }

@@ -23,9 +23,20 @@ import com.youku.rpc.net.URL;
 
 public class XmlParser {
 
-	private Map<String, Object> context = new HashMap<>();
+	private Map<String, Object> context;
 
-	public void parse(String configLocation) {
+	private List<ServiceConfig<Object>> serviceConfigs;
+
+	private List<ReferenceConfig<Object>> referenceConfigs;
+
+	private List<ProtocolConfig> protocolConfigs;
+
+	public XmlParser(String configLocation) {
+		parse(configLocation);
+	}
+
+	private void parse(String configLocation) {
+		context = new HashMap<>();
 		SAXReader reader = new SAXReader();
 		Document document = null;
 		try {
@@ -39,14 +50,14 @@ public class XmlParser {
 		ApplicationConfig applicationConfig = parseApplication(root.element("application"));
 		RegistryConfig registryConfig = parseRegistry(root.element("registry"));
 
-		List<ProtocolConfig> protocolConfigs = parseProtocols(root.elements("protocol"));
+		protocolConfigs = parseProtocols(root.elements("protocol"));
 
-		List<ServiceConfig<Object>> serviceConfigs = parseServices(root.elements("service"), applicationConfig,
-				registryConfig, protocolConfigs);
+		serviceConfigs = parseServices(root.elements("service"), applicationConfig, registryConfig, protocolConfigs);
 
-		List<ReferenceConfig<Object>> referenceConfigs = parseReferences(root.elements("reference"), applicationConfig,
-				registryConfig);
+		referenceConfigs = parseReferences(root.elements("reference"), applicationConfig, registryConfig);
+	}
 
+	public void execute() {
 		for (ServiceConfig<Object> serviceConfig : serviceConfigs) {
 			serviceConfig.export();
 		}
@@ -175,5 +186,12 @@ public class XmlParser {
 
 	public void setContext(Map<String, Object> context) {
 		this.context = context;
+	}
+
+	public void clear() {
+		context = null;
+		serviceConfigs = null;
+		referenceConfigs = null;
+		protocolConfigs = null;
 	}
 }
