@@ -7,7 +7,7 @@ public class ProtocolConfig {
 
 	private String name;
 
-	private String ip= IpHelper.getLocalIp();;
+	private String ip = IpHelper.getLocalIp();
 
 	private int port;
 
