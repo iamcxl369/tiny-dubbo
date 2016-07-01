@@ -1,6 +1,7 @@
-package com.youku.rpc.remote.client;
+package com.youku.rpc.remote;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import com.youku.rpc.common.ReflectUtils;
 
@@ -10,7 +11,7 @@ public class Request implements Serializable {
 
 	private Class<?> interfaceClass;
 
-	private Object ref;
+	private transient Object ref;
 
 	private String methodName;
 
@@ -60,6 +61,13 @@ public class Request implements Serializable {
 
 	public void setArgumentTypes(Class<?>[] argumentTypes) {
 		this.argumentTypes = argumentTypes;
+	}
+
+	@Override
+	public String toString() {
+		return "Request [interfaceClass=" + interfaceClass + ", ref=" + ref + ", methodName=" + methodName
+				+ ", argumentTypes=" + Arrays.toString(argumentTypes) + ", arguments=" + Arrays.toString(arguments)
+				+ "]";
 	}
 
 }

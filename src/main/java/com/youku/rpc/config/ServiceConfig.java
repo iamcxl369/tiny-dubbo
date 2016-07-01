@@ -3,6 +3,7 @@ package com.youku.rpc.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.youku.rpc.common.Const;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.server.Server;
 import com.youku.rpc.remote.server.TypeObjectMapper;
@@ -88,7 +89,9 @@ public class ServiceConfig<T> {
 			log.info("注册服务");
 			URL url = protocolConfig.toURL();
 			String urlString = new StringBuilder().append(url.getIp()).append(':').append(url.getPort()).append('?')
-					.append("weight=").append(weight).toString();
+					.append(Const.WEIGHT).append('=').append(weight).append('&').append(Const.SERIALIZER).append('=')
+					.append(protocolConfig.getSerializer()).append('&').append(Const.PROTOCOL).append('=')
+					.append(protocolConfig.getName()).toString();
 			registryConfig.getRegistryService().register(new URL(urlString));
 		}
 

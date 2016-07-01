@@ -5,11 +5,13 @@ import java.util.concurrent.TimeUnit;
 import com.youku.rpc.common.Const;
 import com.youku.rpc.common.Progress;
 import com.youku.rpc.exception.RpcException;
+import com.youku.rpc.remote.Request;
+import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.client.Client;
-import com.youku.rpc.remote.client.Request;
 import com.youku.rpc.remote.client.RpcClientHandler;
-import com.youku.rpc.remote.server.Response;
+import com.youku.rpc.remote.codec.RpcDecoder;
+import com.youku.rpc.remote.codec.RpcEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -19,9 +21,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 
 public class NettyClient implements Client {
 
@@ -41,16 +40,16 @@ public class NettyClient implements Client {
 
 		handler = new RpcClientHandler();
 
-		Bootstrap b = new Bootstrap(); // (1)
-		b.group(workerGroup); // (2)
-		b.channel(NioSocketChannel.class); // (3)
-		b.option(ChannelOption.SO_KEEPALIVE, true); // (4)
+		Bootstrap b = new Bootstrap();
+		b.group(workerGroup);
+		b.channel(NioSocketChannel.class);
+		b.option(ChannelOption.SO_KEEPALIVE, true);
 		b.handler(new ChannelInitializer<SocketChannel>() {
 			@Override
 			public void initChannel(SocketChannel ch) throws Exception {
 				ch.pipeline()//
-						.addLast(new ObjectEncoder())//
-						.addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)))//
+						.addLast(new RpcEncoder(url))//
+						.addLast(new RpcDecoder(url, Response.class))//
 						.addLast(handler);
 			}
 		});

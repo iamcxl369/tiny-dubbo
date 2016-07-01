@@ -11,6 +11,8 @@ public class ProtocolConfig {
 
 	private int port;
 
+	private String serializer = "java";
+
 	public String getName() {
 		return name;
 	}
@@ -35,8 +37,17 @@ public class ProtocolConfig {
 		this.port = port;
 	}
 
+	public String getSerializer() {
+		return serializer;
+	}
+
+	public void setSerializer(String serializer) {
+		this.serializer = serializer;
+	}
+
 	public URL toURL() {
-		return new URL(new StringBuilder().append(ip).append(':').append(port).toString());
+		return new URL(new StringBuilder().append(ip).append(':').append(port).append("?serializer=").append(serializer)
+				.toString());
 	}
 
 }

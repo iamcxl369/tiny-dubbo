@@ -2,7 +2,8 @@ package com.youku.rpc.remote.server;
 
 import org.springframework.util.Assert;
 
-import com.youku.rpc.remote.client.Request;
+import com.youku.rpc.remote.Request;
+import com.youku.rpc.remote.Response;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -13,6 +14,8 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 	protected void channelRead0(ChannelHandlerContext ctx, Request request) throws Exception {
 
 		request = initForServer(request);
+		
+		System.out.println("request===================\n"+request);
 
 		Object result = request.invoke();
 

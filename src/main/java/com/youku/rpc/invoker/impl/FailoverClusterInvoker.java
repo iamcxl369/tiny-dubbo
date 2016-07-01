@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.remote.client.Request;
+import com.youku.rpc.remote.Request;
+import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.cluster.Directory;
 import com.youku.rpc.remote.cluster.impl.AbstractClusterInvoker;
-import com.youku.rpc.remote.server.Response;
 
 public class FailoverClusterInvoker extends AbstractClusterInvoker {
 

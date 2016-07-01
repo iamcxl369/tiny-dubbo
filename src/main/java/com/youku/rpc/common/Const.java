@@ -16,4 +16,9 @@ public interface Const {
 
 	int DEFAULT_WEIGHT = 100;
 
+	String WEIGHT = "weight";
+
+	String SERIALIZER = "serializer";
+
+	Object PROTOCOL = "protocol";
 }

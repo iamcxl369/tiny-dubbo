@@ -29,7 +29,7 @@ public class TestServer {
 		ProtocolConfig protocolConfig = new ProtocolConfig();
 
 		protocolConfig.setPort(TestConsts.SERVER_PORT);
-
+		
 		RegistryConfig registryConfig = new RegistryConfig(TestConsts.ZK_REGISTRY_ADDRESS);
 
 		ServiceConfig<UserService> serviceConfig = new ServiceConfig<>();

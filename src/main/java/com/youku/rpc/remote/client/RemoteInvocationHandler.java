@@ -4,7 +4,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.remote.server.Response;
+import com.youku.rpc.remote.Request;
+import com.youku.rpc.remote.Response;
 
 public class RemoteInvocationHandler implements InvocationHandler {
 

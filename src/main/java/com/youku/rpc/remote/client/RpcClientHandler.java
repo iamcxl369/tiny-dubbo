@@ -1,7 +1,7 @@
 package com.youku.rpc.remote.client;
 
 import com.youku.rpc.common.Progress;
-import com.youku.rpc.remote.server.Response;
+import com.youku.rpc.remote.Response;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

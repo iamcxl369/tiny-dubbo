@@ -157,16 +157,27 @@ public class XmlParser {
 		List<ProtocolConfig> protocolConfigs = new ArrayList<>(elements.size());
 		for (Object obj : elements) {
 			Element element = (Element) obj;
-			ProtocolConfig config = new ProtocolConfig();
-			String ip = element.attributeValue("ip");
-			if (ip != null) {
-				config.setIp(ip);
-			}
-			config.setName(element.attributeValue("name"));
-			config.setPort(Integer.parseInt(element.attributeValue("port")));
+			ProtocolConfig config = parseProtocol(element);
 			protocolConfigs.add(config);
 		}
 		return protocolConfigs;
+	}
+
+	private ProtocolConfig parseProtocol(Element element) {
+		ProtocolConfig config = new ProtocolConfig();
+		String ip = element.attributeValue("ip");
+		if (ip != null) {
+			config.setIp(ip);
+		}
+
+		String serializer = element.attributeValue("serializer");
+		if (serializer != null) {
+			config.setSerializer(serializer);
+		}
+
+		config.setName(element.attributeValue("name"));
+		config.setPort(Integer.parseInt(element.attributeValue("port")));
+		return config;
 	}
 
 	private RegistryConfig parseRegistry(Element element) {
