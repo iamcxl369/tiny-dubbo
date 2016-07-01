@@ -1,7 +1,7 @@
 package com.youku.rpc.factory;
 
-import com.youku.rpc.cluster.loadbalance.LoadBalance;
 import com.youku.rpc.extension.ExtensionLoader;
+import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
 
 public class LoadBalanceFactory {
 

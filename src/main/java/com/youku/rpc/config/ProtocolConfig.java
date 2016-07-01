@@ -1,7 +1,7 @@
 package com.youku.rpc.config;
 
 import com.youku.rpc.common.IpHelper;
-import com.youku.rpc.net.URL;
+import com.youku.rpc.remote.URL;
 
 public class ProtocolConfig {
 

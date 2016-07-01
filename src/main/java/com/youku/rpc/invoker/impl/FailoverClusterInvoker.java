@@ -3,12 +3,12 @@ package com.youku.rpc.invoker.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.youku.rpc.client.Request;
-import com.youku.rpc.cluster.Directory;
-import com.youku.rpc.cluster.impl.AbstractClusterInvoker;
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.server.Response;
+import com.youku.rpc.remote.client.Request;
+import com.youku.rpc.remote.cluster.Directory;
+import com.youku.rpc.remote.cluster.impl.AbstractClusterInvoker;
+import com.youku.rpc.remote.server.Response;
 
 public class FailoverClusterInvoker extends AbstractClusterInvoker {
 

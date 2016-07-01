@@ -2,7 +2,7 @@ package com.youku.rpc.registry;
 
 import java.util.List;
 
-import com.youku.rpc.net.URL;
+import com.youku.rpc.remote.URL;
 
 public interface Registry {
 

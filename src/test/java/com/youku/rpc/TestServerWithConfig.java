@@ -1,6 +1,6 @@
 package com.youku.rpc;
 
-import com.youku.rpc.parser.Nevermore;
+import com.youku.rpc.bootstrap.Nevermore;
 
 public class TestServerWithConfig {
 

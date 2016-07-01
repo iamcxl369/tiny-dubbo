@@ -18,8 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.common.Const;
-import com.youku.rpc.net.URL;
 import com.youku.rpc.registry.Registry;
+import com.youku.rpc.remote.URL;
 
 public class ZookeeperRegistry implements Registry {
 

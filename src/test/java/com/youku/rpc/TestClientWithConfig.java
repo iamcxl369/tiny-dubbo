@@ -3,8 +3,8 @@ package com.youku.rpc;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.youku.rpc.bootstrap.Nevermore;
 import com.youku.rpc.model.User;
-import com.youku.rpc.parser.Nevermore;
 import com.youku.rpc.service.UserService;
 
 public class TestClientWithConfig {

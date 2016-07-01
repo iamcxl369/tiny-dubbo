@@ -9,12 +9,12 @@ import java.util.Map.Entry;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.youku.rpc.cluster.loadbalance.LoadBalance;
-import com.youku.rpc.cluster.loadbalance.impl.RandomLoadBalance;
-import com.youku.rpc.cluster.loadbalance.impl.RoundRobinLoadBalance;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.DefaultInvoker;
-import com.youku.rpc.net.URL;
+import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
+import com.youku.rpc.remote.cluster.loadbalance.impl.RandomLoadBalance;
+import com.youku.rpc.remote.cluster.loadbalance.impl.RoundRobinLoadBalance;
 
 public class TestLoadBalance {
 

@@ -7,18 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import com.youku.rpc.client.Client;
-import com.youku.rpc.client.impl.NettyClient;
-import com.youku.rpc.cluster.Cluster;
-import com.youku.rpc.cluster.Directory;
-import com.youku.rpc.cluster.loadbalance.LoadBalance;
 import com.youku.rpc.factory.ClusterFactory;
 import com.youku.rpc.factory.LoadBalanceFactory;
 import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.DefaultInvoker;
-import com.youku.rpc.net.URL;
 import com.youku.rpc.registry.Registry;
+import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.client.Client;
+import com.youku.rpc.remote.client.impl.NettyClient;
+import com.youku.rpc.remote.cluster.Cluster;
+import com.youku.rpc.remote.cluster.Directory;
+import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
 
 public class ReferenceConfig<T> {
 

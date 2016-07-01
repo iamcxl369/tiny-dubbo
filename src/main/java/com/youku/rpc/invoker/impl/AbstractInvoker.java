@@ -1,8 +1,8 @@
 package com.youku.rpc.invoker.impl;
 
-import com.youku.rpc.client.Client;
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.net.URL;
+import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.client.Client;
 
 public abstract class AbstractInvoker implements Invoker {
 

@@ -2,8 +2,8 @@ package com.youku.registry;
 
 import org.junit.Test;
 
-import com.youku.rpc.net.URL;
 import com.youku.rpc.registry.impl.ZookeeperRegistry;
+import com.youku.rpc.remote.URL;
 
 public class ZkRegistryTest {
 

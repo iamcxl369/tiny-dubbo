@@ -3,10 +3,10 @@ package com.youku.rpc.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.youku.rpc.net.URL;
-import com.youku.rpc.server.Server;
-import com.youku.rpc.server.TypeObjectMapper;
-import com.youku.rpc.server.impl.NettyServer;
+import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.server.Server;
+import com.youku.rpc.remote.server.TypeObjectMapper;
+import com.youku.rpc.remote.server.impl.NettyServer;
 
 public class ServiceConfig<T> {
 

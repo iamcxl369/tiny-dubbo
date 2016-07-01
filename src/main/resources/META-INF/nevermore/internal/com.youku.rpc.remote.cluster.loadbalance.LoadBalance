@@ -1,0 +1,2 @@
+random=com.youku.rpc.remote.cluster.loadbalance.impl.RandomLoadBalance
+roundRobin=com.youku.rpc.remote.cluster.loadbalance.impl.RoundRobinLoadBalance

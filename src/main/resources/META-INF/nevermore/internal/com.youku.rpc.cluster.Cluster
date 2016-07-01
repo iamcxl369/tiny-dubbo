@@ -1,1 +1,0 @@
-failover=com.youku.rpc.cluster.impl.FailoverCluster

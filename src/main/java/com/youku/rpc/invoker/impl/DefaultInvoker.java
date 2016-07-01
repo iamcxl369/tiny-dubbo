@@ -3,11 +3,11 @@ package com.youku.rpc.invoker.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.youku.rpc.client.Client;
-import com.youku.rpc.client.Request;
 import com.youku.rpc.exception.RpcException;
-import com.youku.rpc.net.URL;
-import com.youku.rpc.server.Response;
+import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.client.Client;
+import com.youku.rpc.remote.client.Request;
+import com.youku.rpc.remote.server.Response;
 
 public class DefaultInvoker extends AbstractInvoker {
 
