@@ -14,7 +14,8 @@ public class FastjsonSerializer implements Serializer {
 	@Override
 	public byte[] serialize(Object obj) {
 		log.info("采用fastjson序列化");
-		return JSON.toJSONBytes(obj,SerializerFeature.WriteClassName);
+		return JSON.toJSONBytes(obj, SerializerFeature.WriteClassName);
+		// return JSON.toJSONBytes(obj);
 	}
 
 	@Override
