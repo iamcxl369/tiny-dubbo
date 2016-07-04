@@ -6,10 +6,12 @@ import java.util.Arrays;
 import com.youku.rpc.common.ReflectUtils;
 
 public class Request implements Serializable {
-	
+
 	private static final long serialVersionUID = 8974769973791263295L;
 
 	private Class<?> interfaceClass;
+
+	private String interfaceName;
 
 	private transient Object ref;
 
@@ -61,6 +63,10 @@ public class Request implements Serializable {
 
 	public void setArgumentTypes(Class<?>[] argumentTypes) {
 		this.argumentTypes = argumentTypes;
+	}
+
+	public String getInterfaceName() {
+		return interfaceName;
 	}
 
 	@Override
