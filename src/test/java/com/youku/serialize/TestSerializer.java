@@ -1,17 +1,8 @@
 package com.youku.serialize;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youku.rpc.model.User;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.serialize.Serializer;
@@ -31,10 +22,13 @@ public class TestSerializer {
 	public void init() {
 		request = new Request();
 		request.setRef("");
-		request.setMethodName("filter");
+		// request.setMethodName("filter");
+		request.setMethodName("register");
 		request.setInterfaceClass(UserService.class);
-		request.setArgumentTypes(new Class<?>[] { List.class });
-		request.setArguments(new Object[] { Arrays.asList(new User(1, "jack")) });
+		request.setArgumentTypes(new Class<?>[] { User.class });
+		// request.setArguments(new Object[] { Arrays.asList(new User(1,
+		// "jack")) });
+		request.setArguments(new Object[] { new User(1, "jack") });
 	}
 
 	@Test
