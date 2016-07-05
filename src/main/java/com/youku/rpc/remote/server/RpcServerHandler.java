@@ -14,8 +14,6 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 	protected void channelRead0(ChannelHandlerContext ctx, Request request) throws Exception {
 
 		request = initForServer(request);
-		
-		System.out.println("request===================\n"+request);
 
 		Object result = request.invoke();
 

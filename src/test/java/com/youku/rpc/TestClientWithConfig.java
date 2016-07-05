@@ -9,7 +9,7 @@ import com.youku.rpc.service.UserService;
 
 public class TestClientWithConfig {
 
-	public final static String consumer = "E:/project/workspace/nevermore/src/main/resources/consumer.xml";
+	public final static String consumer = "C:/Users/loda/git/minRpc/src/main/resources/consumer.xml";
 
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(consumer);
@@ -24,6 +24,8 @@ public class TestClientWithConfig {
 		users.add(new User(2, "tom"));
 		users.add(new User(-1, "hello"));
 		List<User> newUsers = userService.filter(users);
+		
+//		userService.register(new User(1, "jack"));
 
 		System.out.println("合法用户为:" + newUsers);
 	}

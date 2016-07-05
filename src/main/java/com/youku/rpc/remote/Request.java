@@ -1,17 +1,14 @@
 package com.youku.rpc.remote;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 import com.youku.rpc.common.ReflectUtils;
 
-public class Request implements Serializable {
-
-	private static final long serialVersionUID = 8974769973791263295L;
+public class Request {
 
 	private Class<?> interfaceClass;
 
-	private transient Object ref;
+	private Object ref;
 
 	private String methodName;
 
@@ -61,14 +58,6 @@ public class Request implements Serializable {
 
 	public void setArgumentTypes(Class<?>[] argumentTypes) {
 		this.argumentTypes = argumentTypes;
-	}
-
-	public String getInterfaceName() {
-		return interfaceClass.getName();
-	}
-
-	public void setInterfaceName(String interfaceName) {
-		setInterfaceClass(ReflectUtils.forName(interfaceName));
 	}
 
 	@Override

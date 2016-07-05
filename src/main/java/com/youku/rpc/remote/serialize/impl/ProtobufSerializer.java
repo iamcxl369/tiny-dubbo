@@ -16,4 +16,10 @@ public class ProtobufSerializer implements Serializer {
 		return null;
 	}
 
+	@Override
+	public Object deserialize(byte[] data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -37,4 +37,9 @@ public class JacksonSerializer implements Serializer {
 		return null;
 	}
 
+	@Override
+	public Object deserialize(byte[] data) {
+		return deserialize(data, Object.class);
+	}
+
 }

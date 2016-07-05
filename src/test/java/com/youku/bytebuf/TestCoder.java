@@ -43,8 +43,10 @@ public class TestCoder {
 		List<Object> list = new ArrayList<>();
 		decoder.decode(null, out, list);
 
-		Request r=(Request) list.get(0);
-		User user=(User) r.getArguments()[0];
+		Request r = (Request) list.get(0);
+		System.out.println(r.getInterfaceClass());
+		User user = (User) r.getArguments()[0];
+		
 		System.out.println(user.getName());
 	}
 }

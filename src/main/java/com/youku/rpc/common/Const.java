@@ -23,4 +23,8 @@ public interface Const {
 	Object PROTOCOL = "protocol";
 
 	short MAGIC = 0x10da;
+
+	byte REQUEST = 0;
+
+	byte RESPONSE = 1;
 }

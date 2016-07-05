@@ -6,6 +6,6 @@
 	<registry address="zookeeper://10.10.23.246:2181" />
 
 	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
-	<reference id="userService" interface="com.youku.rpc.service.UserService" />
+	<reference id="userService" interface="com.youku.rpc.service.UserService" retry="0"/>
 
 </nevermore>

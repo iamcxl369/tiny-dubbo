@@ -1,8 +1,6 @@
 package com.youku.rpc.remote;
 
-import java.io.Serializable;
-
-public class Response implements Serializable {
+public class Response {
 
 	private Object value;
 
