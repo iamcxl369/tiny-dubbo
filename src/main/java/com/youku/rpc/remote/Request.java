@@ -6,7 +6,7 @@ import com.youku.rpc.common.ReflectUtils;
 
 public class Request {
 
-	private Class<?> interfaceClass;
+	private String interfaceName;
 
 	private Object ref;
 
@@ -20,12 +20,12 @@ public class Request {
 		return ReflectUtils.invokeMethod(methodName, ref, argumentTypes, arguments);
 	}
 
-	public Class<?> getInterfaceClass() {
-		return interfaceClass;
+	public String getInterfaceName() {
+		return interfaceName;
 	}
 
-	public void setInterfaceClass(Class<?> interfaceClass) {
-		this.interfaceClass = interfaceClass;
+	public void setInterfaceName(String interfaceName) {
+		this.interfaceName = interfaceName;
 	}
 
 	public Object getRef() {
@@ -62,7 +62,7 @@ public class Request {
 
 	@Override
 	public String toString() {
-		return "Request [interfaceClass=" + interfaceClass + ", ref=" + ref + ", methodName=" + methodName
+		return "Request [interfaceName=" + interfaceName + ", ref=" + ref + ", methodName=" + methodName
 				+ ", argumentTypes=" + Arrays.toString(argumentTypes) + ", arguments=" + Arrays.toString(arguments)
 				+ "]";
 	}

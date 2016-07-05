@@ -32,7 +32,7 @@ public class TestCoder {
 
 		Request request = new Request();
 		request.setMethodName("register");
-		request.setInterfaceClass(UserService.class);
+		request.setInterfaceName(UserService.class.getName());
 		request.setArgumentTypes(new Class<?>[] { User.class });
 		request.setArguments(new Object[] { new User(1, "jack") });
 
@@ -44,9 +44,9 @@ public class TestCoder {
 		decoder.decode(null, out, list);
 
 		Request r = (Request) list.get(0);
-		System.out.println(r.getInterfaceClass());
+		System.out.println(r.getInterfaceName());
 		User user = (User) r.getArguments()[0];
-		
+
 		System.out.println(user.getName());
 	}
 }

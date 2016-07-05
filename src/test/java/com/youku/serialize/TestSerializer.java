@@ -24,7 +24,7 @@ public class TestSerializer {
 		request.setRef("");
 		// request.setMethodName("filter");
 		request.setMethodName("register");
-		request.setInterfaceClass(UserService.class);
+		request.setInterfaceName(UserService.class.getName());
 		request.setArgumentTypes(new Class<?>[] { User.class });
 		// request.setArguments(new Object[] { Arrays.asList(new User(1,
 		// "jack")) });

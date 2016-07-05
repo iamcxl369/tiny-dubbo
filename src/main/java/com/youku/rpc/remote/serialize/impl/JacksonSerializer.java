@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youku.rpc.remote.serialize.Serializer;
 
@@ -30,7 +31,8 @@ public class JacksonSerializer implements Serializer {
 	public <T> T deserialize(byte[] data, Class<T> targetClass) {
 		log.info("采用jackson反序列");
 		try {
-			return mapper.readValue(data, targetClass);
+			return mapper.readValue(data, new TypeReference<T>() {
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

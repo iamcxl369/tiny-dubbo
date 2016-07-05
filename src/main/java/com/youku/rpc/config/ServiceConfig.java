@@ -95,7 +95,7 @@ public class ServiceConfig<T> {
 			registryConfig.getRegistryService().register(new URL(urlString));
 		}
 
-		TypeObjectMapper.binding(interfaceClass, ref);
+		TypeObjectMapper.binding(interfaceClass.getName(), ref);
 	}
 
 	private void openServer() {

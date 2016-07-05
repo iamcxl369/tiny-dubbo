@@ -35,6 +35,20 @@ public class User implements Serializable {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+			User user = (User) obj;
+			if (user.id == 0 || user.name == null) {
+				return false;
+			} else {
+				return id == user.id && user.name.equals(name);
+			}
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + "]";
 	}

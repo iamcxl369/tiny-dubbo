@@ -72,7 +72,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 	private void decodeRequest(SimpleByteBuffer buffer, List<Object> out, Serializer serializer) {
 		log.info("解码request信息");
 		// 请求体
-		Class<?> interfaceClass = serializer.deserialize(buffer.readLengthAndBytes(), Class.class);
+		String interfaceName = serializer.deserialize(buffer.readLengthAndBytes(), String.class);
 
 		String methodName = serializer.deserialize(buffer.readLengthAndBytes(), String.class);
 
@@ -96,10 +96,10 @@ public class RpcDecoder extends ByteToMessageDecoder {
 		request.setMethodName(methodName);
 		request.setArgumentTypes(paramTypes);
 		request.setArguments(params);
-		request.setInterfaceClass(interfaceClass);
+		request.setInterfaceName(interfaceName);
 		request.setMethodName(methodName);
-		
-		log.info("解码完成后request:{}",request);
+
+		log.info("解码完成后request:{}", request);
 		log.info(request.getArguments()[0].getClass().getName());
 
 		out.add(request);

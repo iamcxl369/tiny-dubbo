@@ -22,10 +22,10 @@ public class RemoteInvocationHandler implements InvocationHandler {
 		request.setArguments(args);
 		request.setMethodName(method.getName());
 		request.setArgumentTypes(method.getParameterTypes());
-		request.setInterfaceClass(method.getDeclaringClass());
+		request.setInterfaceName(method.getDeclaringClass().getName());
 
 		Response response = invoker.invoke(request);
-		
+
 		return response.getValue();
 	}
 }

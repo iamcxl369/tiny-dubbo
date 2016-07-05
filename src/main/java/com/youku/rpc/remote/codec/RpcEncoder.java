@@ -70,7 +70,7 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		buffer.writeLengthAndString(getSerializerName());
 
 		// 消息体：接口类型+方法名+参数类型+参数值
-		buffer.writeLengthAndBytes(serializer.serialize(request.getInterfaceClass()));
+		buffer.writeLengthAndBytes(serializer.serialize(request.getInterfaceName()));
 		buffer.writeLengthAndBytes(serializer.serialize(request.getMethodName()));
 
 		buffer.writeInt(request.getArgumentTypes().length);

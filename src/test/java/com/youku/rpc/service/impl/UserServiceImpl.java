@@ -2,6 +2,7 @@ package com.youku.rpc.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,24 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return newUsers;
+	}
+
+	@Override
+	public boolean isExist(List<User> existUsers, User unknown) {
+		log.info("查找用户是否存在");
+		for (User user : existUsers) {
+			if (user.equals(unknown)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean checkNameExist(Map<String, User> existUsers, String name) {
+		log.info("查找用户名字是否存在");
+		return existUsers.containsKey(name);
 	}
 
 }

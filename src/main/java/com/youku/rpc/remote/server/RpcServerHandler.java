@@ -36,9 +36,9 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 	private Request initForServer(Request request) {
 		if (request.getRef() == null) {
 
-			Object obj = TypeObjectMapper.get(request.getInterfaceClass());
+			Object obj = TypeObjectMapper.get(request.getInterfaceName());
 
-			Assert.notNull(obj, "没有找到接口类型" + request.getInterfaceClass() + "对应的实现类");
+			Assert.notNull(obj, "没有找到接口类型" + request.getInterfaceName() + "对应的实现类");
 			request.setRef(obj);
 
 		}
