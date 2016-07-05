@@ -49,7 +49,7 @@ public class NettyClient implements Client {
 			public void initChannel(SocketChannel ch) throws Exception {
 				ch.pipeline()//
 						.addLast(new RpcEncoder(url))//
-						.addLast(new RpcDecoder(url, Response.class))//
+						.addLast(new RpcDecoder())//
 						.addLast(handler);
 			}
 		});

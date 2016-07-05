@@ -1,13 +1,13 @@
 package com.youku.rpc.remote.codec;
 
-import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.springframework.util.Assert;
 
 import com.youku.rpc.common.Const;
 import com.youku.rpc.factory.SerializerFactory;
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.Request;
+import com.youku.rpc.remote.serialize.Serializer;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,79 +15,64 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 public class RpcDecoder extends ByteToMessageDecoder {
 
-	private final int HEAD_LENGTH = 4;
-
-	private Class<?> targetClass;
-
-	private URL url;
-
-	public RpcDecoder(URL url, Class<?> targetClass) {
-		this.url = url;
-		this.targetClass = targetClass;
-	}
+	private final int MAGIC_LENGTH = 2;
 
 	@Override
-	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+	public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 
-		if (in.readableBytes() < HEAD_LENGTH) {
+		SimpleByteBuffer buffer = new SimpleByteBuffer(in);
+
+		int readableBytes = buffer.readableBytes();
+		if (readableBytes < MAGIC_LENGTH) {
 			return;
 		}
-		
-		in.markReaderIndex();
 
-		int crcCode = in.readInt();
+		buffer.markReaderIndex();
 
-		int length = in.readInt();
+		short magic = buffer.readShort();
 
-		byte type = in.readByte();
+		Assert.isTrue(magic == Const.MAGIC);
 
-		byte priority = in.readByte();
+		int length = buffer.readInt();
 
-		int interfaceNameLen = in.readInt();
-		byte[] interfaceNameData = new byte[interfaceNameLen];
-		in.readBytes(interfaceNameData);
-		String interfaceName = new String(interfaceNameData);
+		if (readableBytes < length) {
+			buffer.resetReaderIndex();
+			return;
+		}
 
-		int methodNameLen = in.readInt();
-		byte[] methodNameData = new byte[methodNameLen];
-		in.readBytes(methodNameData);
-		String methodName = new String(methodNameData);
+		String serializerTag = buffer.readLengthAndString();
 
-		Map<String, String> attachment = new HashMap<>();
-		int size = in.readInt();
+		String interfaceName = buffer.readLengthAndString();
+
+		String methodName = buffer.readLengthAndString();
+
+		Serializer serializer = SerializerFactory.getSerializer(serializerTag);
+
+		// 请求体
+		int size = buffer.readInt();
+
+		Class<?>[] paramTypes = new Class<?>[size];
 
 		for (int i = 0; i < size; i++) {
-			int keyLen = in.readInt();
-			byte[] keyData = new byte[keyLen];
-			in.readBytes(keyData);
-			String key = new String(keyData);
-
-			int valueLen = in.readInt();
-			byte[] valueData = new byte[valueLen];
-			in.readBytes(valueData);
-			String value = new String(valueData);
-
-			attachment.put(key, value);
+			byte[] data = buffer.readLengthAndBytes();
+			paramTypes[i] = serializer.deserialize(data, Class.class);
 		}
 
-		int dataLen = in.readInt();
-
-		if (dataLen < 0) {
-			ctx.close();
+		Object[] params = new Object[size];
+		for (int i = 0; i < size; i++) {
+			byte[] data = buffer.readLengthAndBytes();
+			params[i] = serializer.deserialize(data, paramTypes[i]);
 		}
 
-		if (in.readableBytes() < dataLen) {
-			in.resetReaderIndex();
-			return;
-		}
+		Request request = new Request();
 
-		byte[] data = new byte[dataLen];
+		request.setMethodName(methodName);
+		request.setArgumentTypes(paramTypes);
+		request.setArguments(params);
+		request.setInterfaceName(interfaceName);
+		request.setMethodName(methodName);
 
-		in.readBytes(data);
-
-		Object obj = SerializerFactory.getSerializer(url.getParam(Const.SERIALIZER)).deserialize(data, targetClass);
-
-		out.add(obj);
+		out.add(request);
 
 	}
 

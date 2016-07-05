@@ -1,6 +1,5 @@
 package com.youku.rpc.remote.server.impl;
 
-import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.codec.RpcDecoder;
 import com.youku.rpc.remote.codec.RpcEncoder;
@@ -36,7 +35,7 @@ public class NettyServer implements Server {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 						ch.pipeline()//
-								.addLast(new RpcDecoder(url,Request.class))//
+								.addLast(new RpcDecoder())//
 								.addLast(new RpcEncoder(url))//
 								.addLast(new RpcServerHandler());
 

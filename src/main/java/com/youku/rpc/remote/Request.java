@@ -67,6 +67,10 @@ public class Request implements Serializable {
 		return interfaceClass.getName();
 	}
 
+	public void setInterfaceName(String interfaceName) {
+		setInterfaceClass(ReflectUtils.forName(interfaceName));
+	}
+
 	@Override
 	public String toString() {
 		return "Request [interfaceClass=" + interfaceClass + ", ref=" + ref + ", methodName=" + methodName
