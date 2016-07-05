@@ -28,7 +28,7 @@ public class JacksonSerializer implements Serializer {
 	}
 
 	@Override
-	public <T> T deserialize(byte[] data, Class<T> targetClass) {
+	public <T> T deserialize(byte[] data) {
 		log.info("采用jackson反序列");
 		try {
 			return mapper.readValue(data, new TypeReference<T>() {
@@ -37,11 +37,6 @@ public class JacksonSerializer implements Serializer {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	@Override
-	public Object deserialize(byte[] data) {
-		return deserialize(data, Object.class);
 	}
 
 }

@@ -76,7 +76,7 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		buffer.writeInt(request.getArgumentTypes().length);
 
 		for (Class<?> paramClass : request.getArgumentTypes()) {
-			byte[] data = serializer.serialize(paramClass);
+			byte[] data = serializer.serialize(paramClass.getName());
 			buffer.writeLengthAndBytes(data);
 		}
 

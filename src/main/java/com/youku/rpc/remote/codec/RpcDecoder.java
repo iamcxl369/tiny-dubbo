@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.youku.rpc.common.Const;
+import com.youku.rpc.common.ReflectUtils;
 import com.youku.rpc.factory.SerializerFactory;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
@@ -63,7 +64,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
 	private void decodeResponse(SimpleByteBuffer buffer, List<Object> out, Serializer serializer) {
 		log.info("解码response信息");
-		Object value = serializer.deserialize(buffer.readLengthAndBytes(), Object.class);
+		Object value = serializer.deserialize(buffer.readLengthAndBytes());
 		Response response = new Response();
 		response.setValue(value);
 		out.add(response);
@@ -72,9 +73,9 @@ public class RpcDecoder extends ByteToMessageDecoder {
 	private void decodeRequest(SimpleByteBuffer buffer, List<Object> out, Serializer serializer) {
 		log.info("解码request信息");
 		// 请求体
-		String interfaceName = serializer.deserialize(buffer.readLengthAndBytes(), String.class);
+		String interfaceName = serializer.deserialize(buffer.readLengthAndBytes());
 
-		String methodName = serializer.deserialize(buffer.readLengthAndBytes(), String.class);
+		String methodName = serializer.deserialize(buffer.readLengthAndBytes());
 
 		int size = buffer.readInt();
 
@@ -82,13 +83,14 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
 		for (int i = 0; i < size; i++) {
 			byte[] data = buffer.readLengthAndBytes();
-			paramTypes[i] = serializer.deserialize(data, Class.class);
+			String className = serializer.deserialize(data);
+			paramTypes[i] = ReflectUtils.forName(className);
 		}
 
 		Object[] params = new Object[size];
 		for (int i = 0; i < size; i++) {
 			byte[] data = buffer.readLengthAndBytes();
-			params[i] = serializer.deserialize(data, paramTypes[i]);
+			params[i] = serializer.deserialize(data);
 		}
 
 		Request request = new Request();

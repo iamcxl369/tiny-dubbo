@@ -31,23 +31,11 @@ public class JavaSerializer implements Serializer {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T deserialize(byte[] data, Class<T> targetClass) {
+	public <T> T deserialize(byte[] data) {
 		log.info("采用java反序列化");
 		try (ByteArrayInputStream bis = new ByteArrayInputStream(data);
 				ObjectInputStream is = new ObjectInputStream(bis)) {
 			return (T) is.readObject();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Object deserialize(byte[] data) {
-		log.info("采用java反序列化");
-		try (ByteArrayInputStream bis = new ByteArrayInputStream(data);
-				ObjectInputStream is = new ObjectInputStream(bis)) {
-			return is.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

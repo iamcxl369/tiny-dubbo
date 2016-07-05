@@ -18,16 +18,11 @@ public class FastjsonSerializer implements Serializer {
 		return JSON.toJSONBytes(obj, SerializerFeature.WriteClassName);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T deserialize(byte[] data, Class<T> targetClass) {
+	public <T> T deserialize(byte[] data) {
 		log.info("采用fastjson反序列化");
-		return JSON.parseObject(data, targetClass);
-	}
-
-	@Override
-	public Object deserialize(byte[] data) {
-		log.info("采用fastjson反序列化");
-		return JSON.parse(data);
+		return (T) JSON.parse(data);
 	}
 
 }

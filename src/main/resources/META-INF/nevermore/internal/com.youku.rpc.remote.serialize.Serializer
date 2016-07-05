@@ -1,3 +1,4 @@
 java=com.youku.rpc.remote.serialize.impl.JavaSerializer
 fastjson=com.youku.rpc.remote.serialize.impl.FastjsonSerializer
 jackson=com.youku.rpc.remote.serialize.impl.JacksonSerializer
+kryo=com.youku.rpc.remote.serialize.impl.KryoSerializer

@@ -11,13 +11,7 @@ public class ProtobufSerializer implements Serializer {
 	}
 
 	@Override
-	public <T> T deserialize(byte[] data, Class<T> targetClass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object deserialize(byte[] data) {
+	public <T> T deserialize(byte[] data) {
 		// TODO Auto-generated method stub
 		return null;
 	}
