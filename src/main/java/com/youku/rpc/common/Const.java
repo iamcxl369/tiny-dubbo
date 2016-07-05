@@ -21,4 +21,6 @@ public interface Const {
 	String SERIALIZER = "serializer";
 
 	Object PROTOCOL = "protocol";
+
+	short MAGIC = 0x10da;
 }

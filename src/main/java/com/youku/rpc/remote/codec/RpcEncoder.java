@@ -21,7 +21,7 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		super();
 		this.url = url;
 	}
-
+	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 		// 消息头 header TODO
@@ -33,11 +33,9 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		byte[] body = SerializerFactory.getSerializer(url.getParam(Const.SERIALIZER)).serialize(msg);
 
 		int index = out.writerIndex();
-		out.writeInt(0);
-		out.writeInt(body.length);
+		out.writeInt(Const.MAGIC);
 
 		out.writeInt(interfaceNameData.length);
-		out.writeBytes(interfaceNameData);
 
 		out.writeInt(methodNameData.length);
 		out.writeBytes(methodNameData);

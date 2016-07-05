@@ -32,7 +32,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 		if (in.readableBytes() < HEAD_LENGTH) {
 			return;
 		}
-
+		
 		in.markReaderIndex();
 
 		int crcCode = in.readInt();

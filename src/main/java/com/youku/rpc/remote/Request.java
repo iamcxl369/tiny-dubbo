@@ -11,8 +11,6 @@ public class Request implements Serializable {
 
 	private Class<?> interfaceClass;
 
-	private String interfaceName;
-
 	private transient Object ref;
 
 	private String methodName;
@@ -66,7 +64,7 @@ public class Request implements Serializable {
 	}
 
 	public String getInterfaceName() {
-		return interfaceName;
+		return interfaceClass.getName();
 	}
 
 	@Override
