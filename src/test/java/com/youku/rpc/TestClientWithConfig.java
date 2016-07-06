@@ -1,10 +1,9 @@
 package com.youku.rpc;
 
 import java.io.File;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.youku.rpc.bootstrap.Nevermore;
 import com.youku.rpc.model.User;
@@ -13,7 +12,7 @@ import com.youku.util.SystemUtils;
 
 public class TestClientWithConfig {
 
-	private final static String consumer = SystemUtils.macBasePath + File.separator + "consumer.xml";
+	private final static String consumer = SystemUtils.winBasePath + File.separator + "consumer.xml";
 
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(consumer);
