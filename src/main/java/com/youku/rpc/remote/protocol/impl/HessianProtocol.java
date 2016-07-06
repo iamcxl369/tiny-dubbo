@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.caucho.hessian.server.HessianServlet;
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.invoker.impl.HessionInvoker;
+import com.youku.rpc.invoker.impl.HessianInvoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
 
@@ -22,7 +22,7 @@ public class HessianProtocol implements Protocol {
 	@Override
 	public Invoker refer(Class<?> interfaceClass, URL url) {
 		log.info("使用hession协议引用服务");
-		return new HessionInvoker(url, null, interfaceClass);
+		return new HessianInvoker(url, null, interfaceClass);
 	}
 
 	@Override

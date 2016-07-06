@@ -9,9 +9,9 @@ import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.URL;
 
-public class HessionInvoker extends AbstractInvoker {
+public class HessianInvoker extends AbstractInvoker {
 
-	public HessionInvoker(URL url, Object targetEntity, Class<?> interfaceClass) {
+	public HessianInvoker(URL url, Object targetEntity, Class<?> interfaceClass) {
 		super(url, null, targetEntity, interfaceClass);
 	}
 
