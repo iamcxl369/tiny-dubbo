@@ -13,8 +13,11 @@ public class NevermoreInvoker extends AbstractInvoker {
 
 	private static final Logger log = LoggerFactory.getLogger(NevermoreInvoker.class);
 
+	private Client client;
+
 	public NevermoreInvoker(URL url, Client client, Object targetEntity, Class<?> interfaceClass) {
-		super(url, client, targetEntity, interfaceClass);
+		super(url, targetEntity, interfaceClass);
+		this.client = client;
 	}
 
 	@Override

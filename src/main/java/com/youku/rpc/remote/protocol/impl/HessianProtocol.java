@@ -1,5 +1,6 @@
 package com.youku.rpc.remote.protocol.impl;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.caucho.hessian.client.HessianProxyFactory;
 import com.caucho.hessian.server.HessianServlet;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.HessianInvoker;
@@ -22,7 +24,14 @@ public class HessianProtocol implements Protocol {
 	@Override
 	public Invoker refer(Class<?> interfaceClass, URL url) {
 		log.info("使用hession协议引用服务");
-		return new HessianInvoker(url, null, interfaceClass);
+		HessianProxyFactory factory = new HessianProxyFactory();
+		try {
+			Object proxy = factory.create(interfaceClass, new StringBuilder().append("http://").append(url.getIp())
+					.append(':').append(url.getPort()).toString());
+			return new HessianInvoker(url, proxy, interfaceClass);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

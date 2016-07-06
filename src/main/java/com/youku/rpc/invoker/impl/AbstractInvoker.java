@@ -2,11 +2,8 @@ package com.youku.rpc.invoker.impl;
 
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.URL;
-import com.youku.rpc.remote.client.Client;
 
 public abstract class AbstractInvoker implements Invoker {
-
-	protected Client client;
 
 	protected Class<?> interfaceClass;
 
@@ -14,9 +11,8 @@ public abstract class AbstractInvoker implements Invoker {
 
 	protected Object targetEntity;
 
-	public AbstractInvoker(URL url, Client client, Object targetEntity, Class<?> interfaceClass) {
+	public AbstractInvoker(URL url, Object targetEntity, Class<?> interfaceClass) {
 		this.url = url;
-		this.client = client;
 		this.targetEntity = targetEntity;
 		this.interfaceClass = interfaceClass;
 	}

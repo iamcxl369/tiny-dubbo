@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.common.Const;
 import com.youku.rpc.extension.ExtensionLoader;
-import com.youku.rpc.invoker.impl.HessianInvoker;
+import com.youku.rpc.invoker.impl.ExportServiceInvoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
 import com.youku.rpc.remote.server.TypeObjectMapper;
@@ -82,10 +82,11 @@ public class ServiceConfig<T> {
 		Protocol protocol = ExtensionLoader.getExtension(Protocol.class, protocolConfig.getName());
 		URL server = protocolConfig.toURL();
 
-		protocol.export(new HessianInvoker(server, ref, interfaceClass));
+		protocol.export(new ExportServiceInvoker(server, ref, interfaceClass));
 
 		// 去注册中心注册服务
 		register();
+		
 	}
 
 	private void register() {
@@ -96,6 +97,7 @@ public class ServiceConfig<T> {
 					.append(Const.WEIGHT).append('=').append(weight).append('&').append(Const.SERIALIZER).append('=')
 					.append(protocolConfig.getSerializer()).append('&').append(Const.PROTOCOL).append('=')
 					.append(protocolConfig.getName()).toString();
+			
 			registryConfig.getRegistryService().register(new URL(urlString));
 		}
 
