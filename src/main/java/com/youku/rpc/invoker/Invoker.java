@@ -9,6 +9,8 @@ public interface Invoker {
 
 	Class<?> getInterfaceClass();
 
+	Object getTargetEntity();
+
 	ClassLoader getInterfaceClassLoader();
 
 	Response invoke(Request request) throws RpcException;

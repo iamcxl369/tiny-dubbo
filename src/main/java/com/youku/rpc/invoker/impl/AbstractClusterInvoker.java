@@ -1,4 +1,4 @@
-package com.youku.rpc.remote.cluster.impl;
+package com.youku.rpc.invoker.impl;
 
 import java.util.List;
 
@@ -15,6 +15,13 @@ public abstract class AbstractClusterInvoker implements Invoker {
 	public AbstractClusterInvoker(Directory directory) {
 		super();
 		this.directory = directory;
+	}
+
+	@Override
+	public Object getTargetEntity() {
+		List<Invoker> invokers = directory.getInvokers();
+		Assert.isTrue(!invokers.isEmpty(), "没有可用的provider");
+		return invokers.get(0).getTargetEntity();
 	}
 
 	@Override

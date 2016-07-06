@@ -4,10 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.common.Const;
+import com.youku.rpc.extension.ExtensionLoader;
+import com.youku.rpc.invoker.impl.HessionInvoker;
 import com.youku.rpc.remote.URL;
-import com.youku.rpc.remote.server.Server;
+import com.youku.rpc.remote.protocol.Protocol;
 import com.youku.rpc.remote.server.TypeObjectMapper;
-import com.youku.rpc.remote.server.impl.NettyServer;
 
 public class ServiceConfig<T> {
 
@@ -77,8 +78,11 @@ public class ServiceConfig<T> {
 	 * 暴露服务
 	 */
 	public void export() {
-		// 开启netty服务器
-		openServer();
+
+		Protocol protocol = ExtensionLoader.getExtension(Protocol.class, protocolConfig.getName());
+		URL server = protocolConfig.toURL();
+
+		protocol.export(new HessionInvoker(server, ref, interfaceClass));
 
 		// 去注册中心注册服务
 		register();
@@ -98,10 +102,4 @@ public class ServiceConfig<T> {
 		TypeObjectMapper.binding(interfaceClass.getName(), ref);
 	}
 
-	private void openServer() {
-		URL url = protocolConfig.toURL();
-		log.info("开启地址{}处的服务端口{}", url.getIp(), url.getPort());
-		Server server = new NettyServer(url);
-		server.open();
-	}
 }

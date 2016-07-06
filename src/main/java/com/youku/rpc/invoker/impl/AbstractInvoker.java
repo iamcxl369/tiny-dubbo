@@ -12,10 +12,18 @@ public abstract class AbstractInvoker implements Invoker {
 
 	protected URL url;
 
-	public AbstractInvoker(URL url, Client client, Class<?> interfaceClass) {
+	protected Object targetEntity;
+
+	public AbstractInvoker(URL url, Client client, Object targetEntity, Class<?> interfaceClass) {
 		this.url = url;
 		this.client = client;
+		this.targetEntity = targetEntity;
 		this.interfaceClass = interfaceClass;
+	}
+
+	@Override
+	public Object getTargetEntity() {
+		return targetEntity;
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.invoker.impl.DefaultInvoker;
+import com.youku.rpc.invoker.impl.NevermoreInvoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
 import com.youku.rpc.remote.cluster.loadbalance.impl.RandomLoadBalance;
@@ -30,10 +30,10 @@ public class TestLoadBalance {
 		count = new HashMap<>();
 		invokers = new ArrayList<>();
 
-		invokers.add(new DefaultInvoker(new URL("10.10.10.1:8080?weight=200"), null, null));
-		invokers.add(new DefaultInvoker(new URL("10.10.10.2:8080?weight=300"), null, null));
-		invokers.add(new DefaultInvoker(new URL("10.10.10.3:8080?weight=300"), null, null));
-		invokers.add(new DefaultInvoker(new URL("10.10.10.4:8080?weight=200"), null, null));
+		invokers.add(new NevermoreInvoker(new URL("10.10.10.1:8080?weight=200"), null, null, null));
+		invokers.add(new NevermoreInvoker(new URL("10.10.10.2:8080?weight=300"), null, null, null));
+		invokers.add(new NevermoreInvoker(new URL("10.10.10.3:8080?weight=300"), null, null, null));
+		invokers.add(new NevermoreInvoker(new URL("10.10.10.4:8080?weight=200"), null, null, null));
 
 	}
 

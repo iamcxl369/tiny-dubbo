@@ -9,12 +9,12 @@ import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.client.Client;
 
-public class DefaultInvoker extends AbstractInvoker {
+public class NevermoreInvoker extends AbstractInvoker {
 
-	private static final Logger log = LoggerFactory.getLogger(DefaultInvoker.class);
+	private static final Logger log = LoggerFactory.getLogger(NevermoreInvoker.class);
 
-	public DefaultInvoker(URL url, Client client, Class<?> interfaceClass) {
-		super(url, client, interfaceClass);
+	public NevermoreInvoker(URL url, Client client, Object targetEntity, Class<?> interfaceClass) {
+		super(url, client, targetEntity, interfaceClass);
 	}
 
 	@Override

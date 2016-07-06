@@ -8,7 +8,6 @@ import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.cluster.Directory;
-import com.youku.rpc.remote.cluster.impl.AbstractClusterInvoker;
 
 public class FailoverClusterInvoker extends AbstractClusterInvoker {
 

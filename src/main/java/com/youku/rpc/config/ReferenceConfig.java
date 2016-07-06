@@ -7,18 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import com.youku.rpc.common.Const;
+import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.factory.ClusterFactory;
 import com.youku.rpc.factory.LoadBalanceFactory;
 import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.invoker.impl.DefaultInvoker;
 import com.youku.rpc.registry.Registry;
 import com.youku.rpc.remote.URL;
-import com.youku.rpc.remote.client.Client;
-import com.youku.rpc.remote.client.impl.NettyClient;
 import com.youku.rpc.remote.cluster.Cluster;
 import com.youku.rpc.remote.cluster.Directory;
 import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
+import com.youku.rpc.remote.protocol.Protocol;
 
 public class ReferenceConfig<T> {
 
@@ -104,36 +104,17 @@ public class ReferenceConfig<T> {
 
 		Assert.isTrue(!servers.isEmpty(), "没有服务提供者");
 
-		List<Client> clients = connectServers(servers);
+		List<Invoker> invokers = new ArrayList<>(servers.size());
 
-		List<Invoker> invokers = wrapInvokers(servers, clients);
+		for (URL server : servers) {
+			Protocol protocol = ExtensionLoader.getExtension(Protocol.class, server.getParam(Const.PROTOCOL));
+
+			invokers.add(protocol.refer(interfaceClass, server));
+		}
 
 		Directory directory = new Directory(invokers, retryTimes, loadBalance);
 
 		return cluster.join(directory);
-	}
-
-	private List<Invoker> wrapInvokers(List<URL> urls, List<Client> clients) {
-		List<Invoker> invokers = new ArrayList<>(urls.size());
-		for (int i = 0; i < urls.size(); i++) {
-			URL url = urls.get(i);
-			Client client = clients.get(i);
-			invokers.add(new DefaultInvoker(url, client, interfaceClass));
-		}
-		return invokers;
-	}
-
-	private List<Client> connectServers(List<URL> invokers) {
-		List<Client> clients = new ArrayList<>(invokers.size());
-
-		for (URL invoker : invokers) {
-			Client client = new NettyClient(invoker);
-			client.open();
-
-			clients.add(client);
-		}
-
-		return clients;
 	}
 
 	private List<URL> lookUpServers() {
