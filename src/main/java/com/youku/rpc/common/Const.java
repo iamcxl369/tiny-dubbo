@@ -29,4 +29,12 @@ public interface Const {
 	byte RESPONSE = 1;
 
 	String INTERFACE = "interface";
+
+	String REGISTRY_PROTOCOL = "registry";
+
+	String CLUSTER = "cluster";
+
+	String LOADBALANCE = "loadbalance";
+
+	String RETRY_TIMES = "retry_times";
 }

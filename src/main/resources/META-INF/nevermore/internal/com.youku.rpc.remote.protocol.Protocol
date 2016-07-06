@@ -1,2 +1,3 @@
 nevermore=com.youku.rpc.remote.protocol.impl.NevermoreProtocol
 hessian=com.youku.rpc.remote.protocol.impl.HessianProtocol
+registry=com.youku.rpc.remote.protocol.impl.RegistryProtocol

@@ -13,9 +13,9 @@ public class URL {
 
 	private int port;
 
-	private Map<String, String> params;
+	private Map<String, String> params = new HashMap<>();
 
-	private String registry;
+	private String registryProtocol;
 
 	private String registryAddress;
 
@@ -24,8 +24,6 @@ public class URL {
 	}
 
 	public URL(String urlString) {
-		this.params = new HashMap<>();
-
 		int index = urlString.indexOf('?');
 		String ipPortString = null;
 		if (index < 0) {
@@ -71,16 +69,16 @@ public class URL {
 		this.port = port;
 	}
 
-	public String getRegistry() {
-		return registry;
-	}
-
 	public String getRegistryAddress() {
 		return registryAddress;
 	}
 
-	public void setRegistry(String registry) {
-		this.registry = registry;
+	public String getRegistryProtocol() {
+		return registryProtocol;
+	}
+
+	public void setRegistryProtocol(String registryProtocol) {
+		this.registryProtocol = registryProtocol;
 	}
 
 	public void setRegistryAddress(String registryAddress) {
@@ -111,6 +109,18 @@ public class URL {
 
 	public String getParam(String key) {
 		return params.get(key);
+	}
+
+	public int getIntParam(String key) {
+		return Integer.parseInt(getParam(key));
+	}
+
+	public double getDoubleParam(String key) {
+		return Double.parseDouble(getParam(key));
+	}
+
+	public void addParam(String key, String value) {
+		params.put(key, value);
 	}
 
 	@Override

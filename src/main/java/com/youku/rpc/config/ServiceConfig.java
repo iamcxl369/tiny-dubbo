@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.youku.rpc.common.Const;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.invoker.impl.ExportServiceInvoker;
+import com.youku.rpc.invoker.impl.RegistryInvoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
 import com.youku.rpc.remote.server.TypeObjectMapper;
@@ -78,30 +79,36 @@ public class ServiceConfig<T> {
 	 * 暴露服务
 	 */
 	public void export() {
-
 		Protocol protocol = ExtensionLoader.getExtension(Protocol.class, protocolConfig.getName());
 		URL server = protocolConfig.toURL();
 
 		protocol.export(new ExportServiceInvoker(server, ref, interfaceClass));
 
+		TypeObjectMapper.binding(interfaceClass.getName(), ref);
+
 		// 去注册中心注册服务
 		register();
-		
+
 	}
 
 	private void register() {
-		if (registryConfig != null) {
-			log.info("注册服务");
-			URL url = protocolConfig.toURL();
-			String urlString = new StringBuilder().append(url.getIp()).append(':').append(url.getPort()).append('?')
-					.append(Const.WEIGHT).append('=').append(weight).append('&').append(Const.SERIALIZER).append('=')
-					.append(protocolConfig.getSerializer()).append('&').append(Const.PROTOCOL).append('=')
-					.append(protocolConfig.getName()).toString();
-			
-			registryConfig.getRegistryService().register(new URL(urlString));
-		}
+		log.info("注册服务");
+		URL url = protocolConfig.toURL();
+		String urlString = new StringBuilder().append(url.getIp()).append(':').append(url.getPort()).append('?')
+				.append(Const.WEIGHT).append('=').append(weight).append('&').append(Const.SERIALIZER).append('=')
+				.append(protocolConfig.getSerializer()).append('&').append(Const.PROTOCOL).append('=')
+				.append(protocolConfig.getName()).toString();
 
-		TypeObjectMapper.binding(interfaceClass.getName(), ref);
+		url = new URL(urlString);
+
+		url.setRegistryProtocol(registryConfig.getProtocol());
+
+		url.setRegistryAddress(registryConfig.getAddress());
+
+		Protocol registryProtocol = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL);
+
+		registryProtocol.export(new RegistryInvoker(url));
+
 	}
 
 }

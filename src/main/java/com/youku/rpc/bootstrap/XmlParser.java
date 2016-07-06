@@ -19,7 +19,6 @@ import com.youku.rpc.config.ProtocolConfig;
 import com.youku.rpc.config.ReferenceConfig;
 import com.youku.rpc.config.RegistryConfig;
 import com.youku.rpc.config.ServiceConfig;
-import com.youku.rpc.remote.URL;
 
 public class XmlParser {
 
@@ -95,10 +94,6 @@ public class XmlParser {
 		}
 		referenceConfig.setInterfaceClass((Class<T>) ReflectUtils.forName(element.attributeValue("interface")));
 
-		String urlString = element.attributeValue("url");
-		if (urlString != null) {
-			referenceConfig.setUrl(new URL(urlString));
-		}
 		return referenceConfig;
 	}
 
@@ -181,10 +176,12 @@ public class XmlParser {
 	}
 
 	private RegistryConfig parseRegistry(Element element) {
+		Assert.notNull(element, "缺少<registry><registry/>标签");
 		return new RegistryConfig(element.attributeValue("address"));
 	}
 
 	private ApplicationConfig parseApplication(Element element) {
+		Assert.notNull(element, "缺少<application></application>标签");
 		ApplicationConfig applicationConfig = new ApplicationConfig();
 		applicationConfig.setName(element.attributeValue("name"));
 		applicationConfig.setOwner(element.attributeValue("owner"));

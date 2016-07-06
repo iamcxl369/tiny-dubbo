@@ -22,10 +22,8 @@ public class TestClient {
 		reference.setApplicationConfig(applicationConfig);
 		reference.setRegistryConfig(registryConfig);// 多个注册中心可以用setRegistries()
 		reference.setInterfaceClass(UserService.class);
-		reference.createCluster("failover");
-		reference.createLoadBalance("random");
-
-		// reference.setUrl(new URL("10.10.23.92:" + TestConsts.SERVER_PORT));
+		reference.setCluster("failover");
+		reference.setLoadBalance("random");
 
 		UserService userService = reference.get();
 
