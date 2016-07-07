@@ -25,6 +25,7 @@ public class RegistryProtocol implements Protocol {
 	@Override
 	public void export(Invoker invoker) {
 		URL url = invoker.getURL();
+		log.info("注册数据{}", url);
 		Registry registry = ExtensionLoader.getExtension(RegistryFactory.class, url.getRegistryProtocol())
 				.getRegistry(url);
 
@@ -34,6 +35,7 @@ public class RegistryProtocol implements Protocol {
 
 	@Override
 	public Invoker refer(Class<?> interfaceClass, URL url) {
+		log.info("订阅数据");
 
 		List<URL> servers = lookUpServers(url);
 
@@ -65,7 +67,7 @@ public class RegistryProtocol implements Protocol {
 		List<URL> invokers = new ArrayList<>();
 
 		invokers.addAll(registry.getServers());
-		log.info("从zookeeper取出服务提供者信息:{}", invokers);
+		log.info("从{}取出服务提供者信息:{}", url.getRegistryProtocol(), invokers);
 		return invokers;
 	}
 

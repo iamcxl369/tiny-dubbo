@@ -40,7 +40,6 @@ public class ZookeeperRegistry implements Registry {
 
 	@Override
 	public void register(URL url) {
-		log.info("注册数据{}", url);
 		createNode(url);
 	}
 
@@ -91,7 +90,6 @@ public class ZookeeperRegistry implements Registry {
 
 	@Override
 	public void subscribe() {
-		log.info("订阅消息");
 		List<String> nodes = null;
 		try {
 			nodes = zk.getChildren(Const.ZK_REGISTRY_PATH, new Watcher() {
@@ -111,8 +109,6 @@ public class ZookeeperRegistry implements Registry {
 		}
 
 		datas = nodes;
-
-		log.info("完成通知，数据为{}", datas);
 	}
 
 	@Override
