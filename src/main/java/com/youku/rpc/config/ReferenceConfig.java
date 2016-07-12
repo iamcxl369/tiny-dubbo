@@ -6,6 +6,7 @@ import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
+import com.youku.rpc.remote.protocol.ProtocolFilterWrapper;
 
 public class ReferenceConfig<T> {
 
@@ -82,19 +83,19 @@ public class ReferenceConfig<T> {
 	}
 
 	public T get() {
-		Invoker invoker = referRegistry();
+		Protocol protocol = new ProtocolFilterWrapper(registryProtocl);
+		Invoker invoker = protocol.refer(interfaceClass, getRegistryURL());
 		return ProxyFactory.createProxy(invoker);
 	}
 
-	private Invoker referRegistry() {
+	private URL getRegistryURL() {
 		URL registryURL = new URL();
 		registryURL.addParam(Const.CLUSTER, cluster);
 		registryURL.addParam(Const.LOADBALANCE, loadBalance);
 		registryURL.addParam(Const.RETRY_TIMES, String.valueOf(retryTimes));
 		registryURL.setRegistryAddress(registryConfig.getAddress());
 		registryURL.setRegistryProtocol(registryConfig.getProtocol());
-		return registryProtocl.refer(interfaceClass, registryURL);
-
+		return registryURL;
 	}
 
 }

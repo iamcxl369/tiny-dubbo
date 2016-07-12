@@ -80,4 +80,12 @@ public class ExtensionLoader {
 	public static <T> T getExtension(Class<T> targetClass, String name) {
 		return extensionFactory.getExtension(targetClass, name);
 	}
+
+	public static <T> List<T> getExtensions(Class<T> targetClass) {
+		return extensionFactory.getExtensions(targetClass);
+	}
+
+	public static <T> List<T> getActiveExtensions(Class<T> targetClass) {
+		return extensionFactory.getActiveExtensions(targetClass);
+	}
 }

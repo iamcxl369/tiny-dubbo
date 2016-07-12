@@ -1,0 +1,3 @@
+performance=com.youku.rpc.filter.impl.PerformanceFilter
+monitor=com.youku.rpc.filter.impl.MonitorFilter
+accesslog=com.youku.rpc.filter.impl.AccessLogFilter
