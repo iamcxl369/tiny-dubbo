@@ -1,3 +1,5 @@
 nevermore=com.youku.rpc.remote.protocol.impl.NevermoreProtocol
 hessian=com.youku.rpc.remote.protocol.impl.HessianProtocol
 registry=com.youku.rpc.remote.protocol.impl.RegistryProtocol
+filter=com.youku.rpc.remote.protocol.impl.ProtocolFilterWrapper
+listener=com.youku.rpc.remote.protocol.impl.ProtocolListenerWrapper

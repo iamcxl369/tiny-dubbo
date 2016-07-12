@@ -38,6 +38,10 @@ public class ExtensionFactory {
 		}
 		return instances;
 	}
+	
+	public Map<String,Extension> getExtensions(){
+		return extensions;
+	}
 
 	public <T> List<T> getActiveExtensions(Class<T> targetClass) {
 		List<T> extensions = getExtensions(targetClass);
@@ -54,15 +58,27 @@ public class ExtensionFactory {
 		return newExtensions;
 	}
 
-	public void addExtension(String interfaceName, String name, String className) {
-		Extension extension = extensions.get(interfaceName);
-		if (extension == null) {
-			extension = new Extension();
+	public void addExtension(String interfaceName, String name, Class<?> targetClass, Class<?>... wrapperClasses) {
+		Extension extension = getExtension(interfaceName);
+		Object instance = ReflectUtils.newInstance(targetClass);
+
+		for (Class<?> wrapperClass : wrapperClasses) {
+			instance = ReflectUtils.newInstance(wrapperClass, new Class<?>[] { targetClass },
+					new Object[] { instance });
 		}
-		extension.addBean(name, ReflectUtils.newInstance(className));
+		extension.addBean(name, instance);
+
 		extensions.put(interfaceName, extension);
 	}
 
+	private Extension getExtension(String name) {
+		Extension extension = extensions.get(name);
+		if (extension == null) {
+			extension = new Extension();
+		}
+		return extension;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

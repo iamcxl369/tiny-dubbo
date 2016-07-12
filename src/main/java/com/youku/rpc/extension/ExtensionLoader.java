@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import com.youku.rpc.common.ReflectUtils;
 import com.youku.rpc.factory.ExtensionFactory;
 
 public class ExtensionLoader {
@@ -58,6 +63,10 @@ public class ExtensionLoader {
 				} catch (IOException e) {
 					lines = Collections.emptyList();
 				}
+
+				Map<String, Class<?>> normalClasses = new HashMap<>(lines.size());
+				List<Class<?>> wrapperClasses = new ArrayList<>(lines.size());
+
 				for (String line : lines) {
 					if (StringUtils.isNotBlank(line)) {
 						String[] arr = StringUtils.split(line, '=');
@@ -65,8 +74,24 @@ public class ExtensionLoader {
 						Assert.isTrue(arr.length == 2, "配置文件的格式为xxx=yyyy");
 						String name = arr[0];
 						String className = arr[1];
-						extensionFactory.addExtension(interfaceName, name, className);
+
+						Class<?> targetClass = ReflectUtils.forName(className);
+
+						try {
+							targetClass.getConstructor(new Class<?>[] {});
+							normalClasses.put(name, targetClass);
+						} catch (NoSuchMethodException e) {
+							wrapperClasses.add(targetClass);
+						} catch (SecurityException e) {
+							throw new RuntimeException(e);
+						}
+
 					}
+				}
+
+				for (Entry<String, Class<?>> entry : normalClasses.entrySet()) {
+					extensionFactory.addExtension(interfaceName, entry.getKey(), entry.getValue(),
+							wrapperClasses.toArray(new Class<?>[] {}));
 				}
 			}
 		}
@@ -87,5 +112,9 @@ public class ExtensionLoader {
 
 	public static <T> List<T> getActiveExtensions(Class<T> targetClass) {
 		return extensionFactory.getActiveExtensions(targetClass);
+	}
+
+	public static Map<String, Extension> getExtensions() {
+		return extensionFactory.getExtensions();
 	}
 }

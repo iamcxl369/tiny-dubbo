@@ -1,11 +1,13 @@
 package com.youku.rpc.common;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.Assert;
 
 @SuppressWarnings("unchecked")
 public class ReflectUtils {
@@ -38,7 +40,42 @@ public class ReflectUtils {
 		try {
 			return targetClass.getConstructor(argTypes).newInstance(args);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+				| SecurityException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			Constructor<T>[] constructors = (Constructor<T>[]) targetClass.getConstructors();
+			Assert.noNullElements(constructors);
+
+			for (Constructor<T> constructor : constructors) {
+				if (argTypes.length == constructor.getParameterTypes().length) {
+
+					boolean matched = true;
+					for (int i = 0; i < argTypes.length; i++) {
+						Class<?> target = constructor.getParameterTypes()[i];
+
+						Class<?> source = argTypes[i];
+
+						if (!target.isAssignableFrom(source)) {
+							matched = false;
+							break;
+						}
+					}
+
+					if (matched) {
+						return newInstance(constructor, args);
+					}
+				}
+			}
+
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static <T> T newInstance(Constructor<T> constructor, Object[] args) {
+		try {
+			return constructor.newInstance(args);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
 	}

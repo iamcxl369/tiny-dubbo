@@ -6,7 +6,7 @@ import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
-import com.youku.rpc.remote.protocol.ProtocolFilterWrapper;
+import com.youku.rpc.remote.protocol.impl.ProtocolFilterWrapper;
 
 public class ReferenceConfig<T> {
 

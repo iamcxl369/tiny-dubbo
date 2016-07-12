@@ -1,6 +1,8 @@
-package com.youku.rpc.remote.protocol;
+package com.youku.rpc.remote.protocol.impl;
 
 import java.util.List;
+
+import org.springframework.util.Assert;
 
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.extension.ExtensionLoader;
@@ -9,14 +11,14 @@ import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.URL;
-import com.youku.rpc.remote.protocol.impl.RegistryProtocol;
+import com.youku.rpc.remote.protocol.Protocol;
 
 public class ProtocolFilterWrapper implements Protocol {
 
 	private Protocol protocol;
 
 	public ProtocolFilterWrapper(Protocol protocol) {
-		super();
+		Assert.notNull(protocol);
 		this.protocol = protocol;
 	}
 
@@ -35,7 +37,7 @@ public class ProtocolFilterWrapper implements Protocol {
 	}
 
 	private Invoker buildFilterChain(final Invoker invoker) {
-		
+
 		List<Filter> filters = ExtensionLoader.getActiveExtensions(Filter.class);
 
 		Invoker last = invoker;
@@ -73,6 +75,11 @@ public class ProtocolFilterWrapper implements Protocol {
 
 		}
 		return last;
+	}
+
+	@Override
+	public String toString() {
+		return "ProtocolFilterWrapper [protocol=" + protocol + "]";
 	}
 
 }
