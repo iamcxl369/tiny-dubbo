@@ -38,8 +38,8 @@ public class ExtensionFactory {
 		}
 		return instances;
 	}
-	
-	public Map<String,Extension> getExtensions(){
+
+	public Map<String, Extension> getExtensions() {
 		return extensions;
 	}
 
@@ -78,7 +78,7 @@ public class ExtensionFactory {
 		}
 		return extension;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

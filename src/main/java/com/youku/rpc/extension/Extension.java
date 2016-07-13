@@ -1,12 +1,12 @@
 package com.youku.rpc.extension;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class Extension {
 
-	private Map<String, Object> beans = new HashMap<>();
+	private Map<String, Object> beans = new LinkedHashMap<>();
 
 	public Map<String, Object> getBeans() {
 		return beans;

@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -64,7 +64,7 @@ public class ExtensionLoader {
 					lines = Collections.emptyList();
 				}
 
-				Map<String, Class<?>> normalClasses = new HashMap<>(lines.size());
+				Map<String, Class<?>> normalClasses = new LinkedHashMap<>(lines.size());
 				List<Class<?>> wrapperClasses = new ArrayList<>(lines.size());
 
 				for (String line : lines) {
