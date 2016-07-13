@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
@@ -84,15 +83,40 @@ public class ReflectUtils {
 		try {
 			return targetClass.getDeclaredField(name);
 		} catch (NoSuchFieldException | SecurityException e) {
-			throw new RuntimeException("无法找到类型" + targetClass + "的属性" + name, e);
+			throw new RuntimeException(e);
 		}
 	}
 
 	public static <T> Method getDeclaredMethod(Class<T> targetClass, String methodName, Class<?>[] argTypes) {
 		try {
-			return targetClass.getMethod(methodName, argTypes);
-		} catch (NoSuchMethodException | SecurityException e) {
-			throw new RuntimeException("无法获取到参数为" + Arrays.toString(argTypes) + ",参数名为" + methodName + "的方法", e);
+			return targetClass.getDeclaredMethod(methodName, argTypes);
+		} catch (SecurityException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			Method[] methods = targetClass.getDeclaredMethods();
+			Assert.noNullElements(methods);
+
+			for (Method method : methods) {
+				if (method.getParameterTypes().length == argTypes.length) {
+					boolean matched = true;
+					for (int i = 0; i < argTypes.length; i++) {
+						Class<?> target = method.getParameterTypes()[i];
+
+						Class<?> source = argTypes[i];
+
+						if (!target.isAssignableFrom(source)) {
+							matched = false;
+							break;
+						}
+					}
+
+					if (matched) {
+						return method;
+					}
+				}
+			}
+
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -100,7 +124,7 @@ public class ReflectUtils {
 		try {
 			return method.invoke(instance, args);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new RuntimeException("为方法" + method.getName() + "传递的参数" + Arrays.toString(args) + "不匹配", e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -132,7 +156,7 @@ public class ReflectUtils {
 			field.setAccessible(true);
 			return field.get(target);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			throw new RuntimeException("获取" + target + "对象的属性" + field.getName() + "值出现异常", e);
+			throw new RuntimeException(e);
 		}
 	}
 
