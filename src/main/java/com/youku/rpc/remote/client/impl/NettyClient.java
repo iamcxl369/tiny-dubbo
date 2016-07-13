@@ -73,7 +73,9 @@ public class NettyClient implements Client {
 				TimeUnit.SECONDS);
 
 		if (success && channelFuture.isSuccess()) {
-			Progress.getInstance().process(Const.TIME_OUT, TimeUnit.SECONDS);
+			Progress progress = new Progress();
+			handler.setProgress(progress);
+			progress.process(Const.TIME_OUT, TimeUnit.SECONDS);
 
 			if (handler.getResponse() == null) {
 				throw new RpcException("没有获取到远程机器的执行结果");

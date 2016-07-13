@@ -37,4 +37,10 @@ public interface Const {
 	String LOADBALANCE = "loadbalance";
 
 	String RETRY_TIMES = "retry_times";
+
+	String CORE_THREADS = "corethreads";
+
+	String THREADS = "threads";
+
+	String ALIVE = "alive";
 }

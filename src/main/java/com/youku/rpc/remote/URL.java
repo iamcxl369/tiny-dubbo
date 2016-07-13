@@ -111,12 +111,49 @@ public class URL {
 		return params.get(key);
 	}
 
+	public String getParam(String key, String defaultValue) {
+		String value = params.get(key);
+		if (value == null) {
+			return defaultValue;
+		} else {
+			return value;
+		}
+	}
+
 	public int getIntParam(String key) {
 		return Integer.parseInt(getParam(key));
 	}
 
+	public int getIntParam(String key, int defaultValue) {
+		try {
+			return Integer.parseInt(getParam(key));
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+
+	public long getLongParam(String key) {
+		return Long.parseLong(getParam(key));
+	}
+
+	public long getLongParam(String key, long defaultValue) {
+		try {
+			return Long.parseLong(getParam(key));
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+
 	public double getDoubleParam(String key) {
 		return Double.parseDouble(getParam(key));
+	}
+
+	public double getDoubleParam(String key, double defaultValue) {
+		try {
+			return Double.parseDouble(getParam(key));
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
 	}
 
 	public void addParam(String key, String value) {

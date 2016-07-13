@@ -1,0 +1,2 @@
+fixed=com.youku.rpc.remote.threadpool.impl.FixedThreadPool
+cached=com.youku.rpc.remote.threadpool.impl.CachedThreadPool
