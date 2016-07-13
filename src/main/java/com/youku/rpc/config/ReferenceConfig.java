@@ -6,7 +6,6 @@ import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
-import com.youku.rpc.remote.protocol.impl.ProtocolFilterWrapper;
 
 public class ReferenceConfig<T> {
 
@@ -83,8 +82,7 @@ public class ReferenceConfig<T> {
 	}
 
 	public T get() {
-		Protocol protocol = new ProtocolFilterWrapper(registryProtocl);
-		Invoker invoker = protocol.refer(interfaceClass, getRegistryURL());
+		Invoker invoker = registryProtocl.refer(interfaceClass, getRegistryURL());
 		return ProxyFactory.createProxy(invoker);
 	}
 

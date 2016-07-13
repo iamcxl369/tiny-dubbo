@@ -18,13 +18,13 @@ public class PerformanceFilter implements Filter {
 	@Override
 	public Response invoke(Invoker invoker, Request request) throws RpcException {
 		log.info("进入performance filter");
-		long start = System.nanoTime();
+		long start = System.currentTimeMillis();
 
 		Response response = invoker.invoke(request);
 
-		long end = System.nanoTime();
+		long end = System.currentTimeMillis();
 
-		log.info("================ cost {} ms", (end - start) / 1000000.0);
+		log.info("================ cost {} ms", end - start);
 
 		return response;
 	}

@@ -43,13 +43,13 @@ public class ProtocolFilterWrapper implements Protocol {
 		Invoker last = invoker;
 		// 形成filter1->filter2->...->last filter->invoker的调用链，并封装到last对象中
 		for (int i = filters.size() - 1; i >= 0; i--) {
-			Filter filter = filters.get(i);
-			final Filter next = filter;
+			final Filter filter = filters.get(i);
+			final Invoker next = last;
 			last = new Invoker() {
 
 				@Override
 				public Response invoke(Request request) throws RpcException {
-					return next.invoke(invoker, request);
+					return filter.invoke(next, request);
 				}
 
 				@Override
