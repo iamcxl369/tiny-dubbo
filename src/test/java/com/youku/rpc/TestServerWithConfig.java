@@ -7,7 +7,7 @@ import com.youku.util.SystemUtils;
 
 public class TestServerWithConfig {
 
-	private final static String provider = SystemUtils.winBasePath + File.separator + "provider.xml";
+	private final static String provider = SystemUtils.macBasePath + File.separator + "provider.xml";
 
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(provider);

@@ -27,11 +27,13 @@ public class NettyServer implements Server {
 
 	@Override
 	public void open() {
-		EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
-		ServerBootstrap b = new ServerBootstrap(); // (2)
-		b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class) // (3)
-				.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+		// boss线程组接受客户端请求信息，并将接收到的信息交给work线程组处理。所以boss group数量设为1即可
+		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+		// work group是实际处理用户请求信息的工作线程组，建议配置N，1<=N<=CPU core
+		EventLoopGroup workerGroup = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors());
+		ServerBootstrap b = new ServerBootstrap();
+		b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 						ch.pipeline()//
@@ -40,8 +42,7 @@ public class NettyServer implements Server {
 								.addLast(new RpcServerHandler());
 
 					}
-				}).option(ChannelOption.SO_BACKLOG, 128) // (5)
-				.childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
+				}).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
 
 		channelFuture = b.bind(url.getIp(), url.getPort());
 	}

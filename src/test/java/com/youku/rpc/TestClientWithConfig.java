@@ -12,7 +12,7 @@ import com.youku.util.SystemUtils;
 
 public class TestClientWithConfig {
 
-	private final static String consumer = SystemUtils.winBasePath + File.separator + "consumer.xml";
+	private final static String consumer = SystemUtils.macBasePath + File.separator + "consumer.xml";
 
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(consumer);

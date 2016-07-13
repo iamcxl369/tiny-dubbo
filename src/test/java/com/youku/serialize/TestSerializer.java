@@ -40,29 +40,32 @@ public class TestSerializer {
 	}
 
 	@Test
-	public void testJavaSerializer() {
+	public void testJavaSerializer() {// 159
 		serializer = new JavaSerializer();
 		execute();
 	}
 
 	@Test
-	public void testFastjsonSerializer() {
+	public void testFastjsonSerializer() {// 116
 		serializer = new FastjsonSerializer();
 		execute();
 	}
 
 	@Test
-	public void testKryoSerializer() {
+	public void testKryoSerializer() {// 39
 		serializer = new KryoSerializer();
 		execute();
 	}
 
 	public void execute() {
+		long start = System.currentTimeMillis();
 		byte[] data = serializer.serialize(users);
 
-		List<User> p = serializer.deserialize(data);
+		serializer.deserialize(data);
 
-		System.out.println(p.get(0).getClass());
+		long cost = System.currentTimeMillis() - start;
+
+		System.out.printf("cost %d ms and data size is %d bytes\n", cost, data.length);
 
 	}
 

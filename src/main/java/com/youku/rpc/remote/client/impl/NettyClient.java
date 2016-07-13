@@ -41,18 +41,19 @@ public class NettyClient implements Client {
 		handler = new RpcClientHandler();
 
 		Bootstrap b = new Bootstrap();
-		b.group(workerGroup);
-		b.channel(NioSocketChannel.class);
-		b.option(ChannelOption.SO_KEEPALIVE, true);
-		b.handler(new ChannelInitializer<SocketChannel>() {
-			@Override
-			public void initChannel(SocketChannel ch) throws Exception {
-				ch.pipeline()//
-						.addLast(new RpcEncoder(url))//
-						.addLast(new RpcDecoder())//
-						.addLast(handler);
-			}
-		});
+		b.group(workerGroup)//
+				.channel(NioSocketChannel.class)//
+				.option(ChannelOption.SO_KEEPALIVE, true)//
+				.option(ChannelOption.TCP_NODELAY, true)//
+				.handler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					public void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline()//
+								.addLast(new RpcEncoder(url))//
+								.addLast(new RpcDecoder())//
+								.addLast(handler);
+					}
+				});
 
 		channelFuture = b.connect(url.getIp(), url.getPort());
 		boolean success = channelFuture.awaitUninterruptibly(Const.CONNECT_TIME_OUT, TimeUnit.SECONDS);
