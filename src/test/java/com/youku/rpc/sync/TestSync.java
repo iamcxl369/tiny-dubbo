@@ -27,5 +27,7 @@ public class TestSync {
 
 		System.out.println(f1.get());
 
+		service.shutdown();
+
 	}
 }
