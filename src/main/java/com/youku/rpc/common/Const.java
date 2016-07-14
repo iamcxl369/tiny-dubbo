@@ -55,4 +55,6 @@ public interface Const {
 	String BENCHMARK = "benchmark";
 
 	String ID = "id";
+
+	boolean DEFAULT_BENCHMARK = true;
 }

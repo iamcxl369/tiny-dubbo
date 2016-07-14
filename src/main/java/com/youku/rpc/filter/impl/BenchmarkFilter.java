@@ -20,7 +20,7 @@ public class BenchmarkFilter implements Filter {
 	@Override
 	public Response invoke(Invoker invoker, Request request) throws RpcException {
 		URL url = invoker.getURL();
-		if (url.getBooleanParam(Const.BENCHMARK,true)) {
+		if (url.getBooleanParam(Const.BENCHMARK, Const.DEFAULT_BENCHMARK)) {
 			log.debug("进入benchmark filter");
 			long start = System.currentTimeMillis();
 
