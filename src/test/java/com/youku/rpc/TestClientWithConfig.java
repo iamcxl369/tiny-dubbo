@@ -12,7 +12,7 @@ import com.youku.util.SystemUtils;
 
 public class TestClientWithConfig {
 
-	private final static String consumer = SystemUtils.macBasePath + File.separator + "consumer.xml";
+	private final static String consumer = SystemUtils.getBasePath() + File.separator + "consumer.xml";
 
 	public static void main(String[] args) {
 		Nevermore nevermore = new Nevermore(consumer);
@@ -27,8 +27,13 @@ public class TestClientWithConfig {
 		users.add(new User(2, "tom"));
 		users.add(new User(-1, "hello"));
 
-		List<User> newUsers = userService.filter(users);
-		System.out.println("合法用户为:" + newUsers);
+		long start = System.currentTimeMillis();
+
+		for (int i = 0; i < 10; i++) {
+			List<User> newUsers = userService.filter(users);
+		}
+
+		System.out.printf("cost %d ms", System.currentTimeMillis() - start);
 
 		// userService.register(new User(1, "jack"));
 		// System.out.println(userService.isExist(users, new User(2, "jack")));

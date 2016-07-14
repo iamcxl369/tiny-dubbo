@@ -63,7 +63,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 	}
 
 	private void decodeResponse(SimpleByteBuffer buffer, List<Object> out, Serializer serializer) {
-		log.info("解码response信息");
+		log.debug("解码response信息");
 		Object value = serializer.deserialize(buffer.readLengthAndBytes());
 		Response response = new Response();
 		response.setValue(value);
@@ -71,7 +71,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 	}
 
 	private void decodeRequest(SimpleByteBuffer buffer, List<Object> out, Serializer serializer) {
-		log.info("解码request信息");
+		log.debug("解码request信息");
 		// 请求体
 		String interfaceName = serializer.deserialize(buffer.readLengthAndBytes());
 

@@ -13,18 +13,26 @@ import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.URL;
 
 @Active
-public class AccessLogFilter implements Filter {
+public class BenchmarkFilter implements Filter {
 
-	private static final Logger log = LoggerFactory.getLogger(AccessLogFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(BenchmarkFilter.class);
 
 	@Override
 	public Response invoke(Invoker invoker, Request request) throws RpcException {
 		URL url = invoker.getURL();
-		if (url.getBooleanParam(Const.ACCESSLOG, true)) {
-			log.debug("进入accesslog filter");
+		if (url.getBooleanParam(Const.BENCHMARK,true)) {
+			log.debug("进入benchmark filter");
+			long start = System.currentTimeMillis();
+
+			Response response = invoker.invoke(request);
+
+			long end = System.currentTimeMillis();
+
+			log.info("================ cost {} ms", end - start);
+			return response;
+		} else {
+			return invoker.invoke(request);
 		}
-		return invoker.invoke(request);
 
 	}
-
 }

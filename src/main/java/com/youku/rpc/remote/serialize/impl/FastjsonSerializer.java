@@ -14,14 +14,14 @@ public class FastjsonSerializer implements Serializer {
 
 	@Override
 	public byte[] serialize(Object obj) {
-		log.info("采用fastjson序列化");
+		log.debug("采用fastjson序列化");
 		return JSON.toJSONBytes(obj, SerializerFeature.WriteClassName);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T deserialize(byte[] data) {
-		log.info("采用fastjson反序列化");
+		log.debug("采用fastjson反序列化");
 		return (T) JSON.parse(data);
 	}
 

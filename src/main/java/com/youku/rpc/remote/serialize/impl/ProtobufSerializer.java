@@ -6,7 +6,6 @@ public class ProtobufSerializer implements Serializer {
 
 	@Override
 	public byte[] serialize(Object obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

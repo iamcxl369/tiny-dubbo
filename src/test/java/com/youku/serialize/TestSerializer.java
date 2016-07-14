@@ -11,6 +11,7 @@ import com.youku.rpc.remote.serialize.Serializer;
 import com.youku.rpc.remote.serialize.impl.FastjsonSerializer;
 import com.youku.rpc.remote.serialize.impl.JavaSerializer;
 import com.youku.rpc.remote.serialize.impl.KryoSerializer;
+import com.youku.rpc.remote.serialize.impl.ProtobufSerializer;
 
 public class TestSerializer {
 
@@ -55,6 +56,11 @@ public class TestSerializer {
 	public void testKryoSerializer() {// 39
 		serializer = new KryoSerializer();
 		execute();
+	}
+
+	@Test
+	public void testProtocolBuffer() {
+		serializer = new ProtobufSerializer();
 	}
 
 	public void execute() {

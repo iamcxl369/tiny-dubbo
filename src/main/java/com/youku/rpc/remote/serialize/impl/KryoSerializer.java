@@ -97,7 +97,7 @@ public class KryoSerializer implements Serializer {
 
 	@Override
 	public byte[] serialize(Object obj) {
-		log.info("采用kryo序列化");
+		log.debug("采用kryo序列化");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		Output output = new Output(os);
 		kryo.writeClassAndObject(output, obj);
@@ -108,7 +108,7 @@ public class KryoSerializer implements Serializer {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T deserialize(byte[] data) {
-		log.info("采用kryo反序列化");
+		log.debug("采用kryo反序列化");
 		Input input = new Input(data);
 		return (T) kryo.readClassAndObject(input);
 	}

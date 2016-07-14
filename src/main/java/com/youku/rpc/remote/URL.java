@@ -156,12 +156,42 @@ public class URL {
 		}
 	}
 
+	public boolean getBooleanParam(String key) {
+		return Boolean.parseBoolean(getParam(key));
+	}
+
+	public boolean getBooleanParam(String key, boolean defaultValue) {
+		String value = getParam(key);
+		if (value == null) {
+			return defaultValue;
+		}
+		value = value.toLowerCase();
+
+		switch (value) {
+		case "true":
+			return true;
+		case "false":
+			return false;
+		default:
+			return defaultValue;
+		}
+	}
+
 	public void addParam(String key, String value) {
 		params.put(key, value);
+	}
+
+	public Map<String, String> getParams() {
+		return params;
+	}
+
+	public void setParams(Map<String, String> params) {
+		this.params = params;
 	}
 
 	@Override
 	public String toString() {
 		return "ip:" + ip + ",port:" + port + ",params:" + params;
 	}
+
 }

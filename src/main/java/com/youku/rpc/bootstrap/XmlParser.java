@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.util.Assert;
 
+import com.youku.rpc.common.Const;
 import com.youku.rpc.common.ReflectUtils;
 import com.youku.rpc.config.ApplicationConfig;
 import com.youku.rpc.config.ProtocolConfig;
@@ -62,7 +64,10 @@ public class XmlParser {
 		}
 
 		for (ReferenceConfig<Object> referenceConfig : referenceConfigs) {
-			context.put(referenceConfig.getId(), referenceConfig.get());
+			String id = referenceConfig.getAttachment(Const.ID);
+
+			Assert.notNull(id, "reference标签中id不能为空");
+			context.put(id, referenceConfig.get());
 		}
 	}
 
@@ -80,19 +85,16 @@ public class XmlParser {
 		return referenceConfigs;
 	}
 
-	@SuppressWarnings("unchecked")
 	private <T> ReferenceConfig<T> parseReference(Element element, ApplicationConfig applicationConfig,
 			RegistryConfig registryConfig) {
 		ReferenceConfig<T> referenceConfig = new ReferenceConfig<>();
 		referenceConfig.setApplicationConfig(applicationConfig);
 		referenceConfig.setRegistryConfig(registryConfig);
-		referenceConfig.setId(element.attributeValue("id"));
 
-		String retry = element.attributeValue("retry");
-		if (retry != null) {
-			referenceConfig.setRetryTimes(Integer.parseInt(retry));
+		for (Object obj : element.attributes()) {
+			Attribute attribute = (Attribute) obj;
+			referenceConfig.addAttachment(attribute.getName(), attribute.getValue());
 		}
-		referenceConfig.setInterfaceClass((Class<T>) ReflectUtils.forName(element.attributeValue("interface")));
 
 		return referenceConfig;
 	}

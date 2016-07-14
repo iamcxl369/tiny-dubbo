@@ -19,7 +19,7 @@ public class FailoverClusterInvoker extends AbstractClusterInvoker {
 
 	@Override
 	public Response invoke(Request request) throws RpcException {
-		log.info("采用failover集群容错方案");
+		log.debug("采用failover集群容错方案");
 		int retryTimes = directory.getRetryTimes();
 		retryTimes++;
 

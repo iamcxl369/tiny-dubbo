@@ -2,6 +2,7 @@ package com.youku.rpc.remote.protocol.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,16 +47,27 @@ public class RegistryProtocol implements Protocol {
 		for (URL server : servers) {
 			Protocol protocol = ExtensionLoader.getExtension(Protocol.class, server.getParam(Const.PROTOCOL));
 
-			invokers.add(protocol.refer(interfaceClass, server));
+			URL combinedURL = combine(url, server);
+
+			invokers.add(protocol.refer(interfaceClass, combinedURL));
 		}
 
-		int retryTimes = url.getIntParam(Const.RETRY_TIMES);
-		LoadBalance loadBalance = ExtensionLoader.getExtension(LoadBalance.class, url.getParam(Const.LOADBALANCE));
-		Cluster cluster = ExtensionLoader.getExtension(Cluster.class, url.getParam(Const.CLUSTER));
+		int retryTimes = url.getIntParam(Const.RETRY_TIMES, Const.DEFAULT_RETRY_TIMES);
+		LoadBalance loadBalance = ExtensionLoader.getExtension(LoadBalance.class,
+				url.getParam(Const.LOADBALANCE, Const.DEFAULT_LOAD_BALANCE));
+		Cluster cluster = ExtensionLoader.getExtension(Cluster.class,
+				url.getParam(Const.CLUSTER, Const.DEFAULT_CLUSTER));
 
 		Directory directory = new Directory(invokers, retryTimes, loadBalance);
 
 		return cluster.join(directory);
+	}
+
+	private URL combine(URL client, URL server) {
+		for (Entry<String, String> entry : client.getParams().entrySet()) {
+			server.addParam(entry.getKey(), entry.getValue());
+		}
+		return server;
 	}
 
 	private List<URL> lookUpServers(URL url) {

@@ -16,10 +16,6 @@ public interface Const {
 
 	int DEFAULT_WEIGHT = 100;
 
-	String WEIGHT = "weight";
-
-	String SERIALIZER = "serializer";
-
 	String PROTOCOL = "protocol";
 
 	short MAGIC = 0x10da;
@@ -28,9 +24,21 @@ public interface Const {
 
 	byte RESPONSE = 1;
 
-	String INTERFACE = "interface";
-
 	String REGISTRY_PROTOCOL = "registry";
+
+	String WEIGHT = "weight";
+
+	String SERIALIZER = "serializer";
+
+	String ACCESSLOG = "accesslog";
+
+	int DEFAULT_RETRY_TIMES = 3;
+
+	String DEFAULT_LOAD_BALANCE = "random";
+
+	String DEFAULT_CLUSTER = "failover";
+
+	String INTERFACE = "interface";
 
 	String CLUSTER = "cluster";
 
@@ -43,4 +51,8 @@ public interface Const {
 	String THREADS = "threads";
 
 	String ALIVE = "alive";
+
+	String BENCHMARK = "benchmark";
+
+	String ID = "id";
 }

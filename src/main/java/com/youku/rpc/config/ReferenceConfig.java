@@ -1,5 +1,11 @@
 package com.youku.rpc.config;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.springframework.util.Assert;
+
 import com.youku.rpc.common.Const;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.factory.ProxyFactory;
@@ -11,26 +17,18 @@ public class ReferenceConfig<T> {
 
 	private RegistryConfig registryConfig;
 
-	private final Protocol registryProtocl = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL);
+	private final Protocol registryProtocol = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL);
 
-	private String cluster = "failover";
-
-	private int retryTimes = 3;
-
-	private String loadBalance = "random";
-
-	private Class<T> interfaceClass;
-
-	private String id;
+	private Map<String, String> attachments = new HashMap<>();
 
 	private ApplicationConfig applicationConfig;
 
-	public String getId() {
-		return id;
+	public void addAttachment(String key, String value) {
+		attachments.put(key, value);
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getAttachment(String key) {
+		return attachments.get(key);
 	}
 
 	public ApplicationConfig getApplicationConfig() {
@@ -49,48 +47,25 @@ public class ReferenceConfig<T> {
 		this.registryConfig = registryConfig;
 	}
 
-	public Class<?> getInterfaceClass() {
-		return interfaceClass;
-	}
-
-	public void setInterfaceClass(Class<T> interfaceClass) {
-		this.interfaceClass = interfaceClass;
-	}
-
-	public void setRetryTimes(int retryTimes) {
-		this.retryTimes = retryTimes;
-	}
-
-	public int getRetryTimes() {
-		return retryTimes;
-	}
-
-	public String getCluster() {
-		return cluster;
-	}
-
-	public void setCluster(String cluster) {
-		this.cluster = cluster;
-	}
-
-	public String getLoadBalance() {
-		return loadBalance;
-	}
-
-	public void setLoadBalance(String loadBalance) {
-		this.loadBalance = loadBalance;
-	}
-
 	public T get() {
-		Invoker invoker = registryProtocl.refer(interfaceClass, getRegistryURL());
+		String interfaceName = attachments.get(Const.INTERFACE);
+		Assert.notNull(interfaceName, "interface不能为空");
+		Class<?> interfaceClass = null;
+		try {
+			interfaceClass = Class.forName(interfaceName);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("不存在此interface", e);
+		}
+		Invoker invoker = registryProtocol.refer(interfaceClass, getRegistryURL());
 		return ProxyFactory.createProxy(invoker);
 	}
 
 	private URL getRegistryURL() {
 		URL registryURL = new URL();
-		registryURL.addParam(Const.CLUSTER, cluster);
-		registryURL.addParam(Const.LOADBALANCE, loadBalance);
-		registryURL.addParam(Const.RETRY_TIMES, String.valueOf(retryTimes));
+		for (Entry<String, String> entry : attachments.entrySet()) {
+			registryURL.addParam(entry.getKey(), entry.getValue());
+		}
+
 		registryURL.setRegistryAddress(registryConfig.getAddress());
 		registryURL.setRegistryProtocol(registryConfig.getProtocol());
 		return registryURL;

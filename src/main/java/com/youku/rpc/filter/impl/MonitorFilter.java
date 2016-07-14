@@ -17,8 +17,9 @@ public class MonitorFilter implements Filter {
 
 	@Override
 	public Response invoke(Invoker invoker, Request request) throws RpcException {
-		log.info("进入monitor filter");
+		log.debug("进入monitor filter");
 		return invoker.invoke(request);
+
 	}
 
 }

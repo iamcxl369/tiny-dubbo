@@ -22,7 +22,7 @@ public class NevermoreInvoker extends AbstractInvoker {
 
 	@Override
 	public Response invoke(Request request) throws RpcException {
-		log.info("向服务端{}发起请求", url.toString());
+		log.debug("向服务端{}发起请求", url.toString());
 		return client.send(request);
 	}
 

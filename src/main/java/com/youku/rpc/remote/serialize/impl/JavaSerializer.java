@@ -17,7 +17,7 @@ public class JavaSerializer implements Serializer {
 
 	@Override
 	public byte[] serialize(Object obj) {
-		log.info("采用java序列化");
+		log.debug("采用java序列化");
 		try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				ObjectOutputStream os = new ObjectOutputStream(bos)) {
 			os.writeObject(obj);
@@ -32,7 +32,7 @@ public class JavaSerializer implements Serializer {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T deserialize(byte[] data) {
-		log.info("采用java反序列化");
+		log.debug("采用java反序列化");
 		try (ByteArrayInputStream bis = new ByteArrayInputStream(data);
 				ObjectInputStream is = new ObjectInputStream(bis)) {
 			return (T) is.readObject();

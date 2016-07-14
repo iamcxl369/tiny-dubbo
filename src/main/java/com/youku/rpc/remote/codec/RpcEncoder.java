@@ -57,7 +57,7 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 
 	private void encodeRequest(ChannelHandlerContext ctx, Object msg, ByteBuf out) {
 		Request request = (Request) msg;
-		log.info("编码request:{}", request);
+		log.debug("编码request:{}", request);
 		Serializer serializer = getSerializer();
 		SimpleByteBuffer buffer = new SimpleByteBuffer(out);
 
@@ -96,7 +96,7 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 
 	private void encodeResponse(ChannelHandlerContext ctx, Object msg, ByteBuf out) {
 		Response response = (Response) msg;
-		log.info("编码response:{}", response);
+		log.debug("编码response:{}", response);
 		Serializer serializer = getSerializer();
 		SimpleByteBuffer buffer = new SimpleByteBuffer(out);
 
