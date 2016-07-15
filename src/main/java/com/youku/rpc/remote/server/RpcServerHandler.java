@@ -1,5 +1,7 @@
 package com.youku.rpc.remote.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.youku.rpc.remote.Request;
@@ -10,8 +12,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 
+	private static final Logger log = LoggerFactory.getLogger(RpcServerHandler.class);
+
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Request request) throws Exception {
+		log.info("处理客户端请求信息");
 
 		request = initForServer(request);
 

@@ -23,9 +23,8 @@ public class TestSync {
 					return i;
 				}
 			});
+			System.out.println(f1.get());
 		}
-
-		System.out.println(f1.get());
 
 		service.shutdown();
 

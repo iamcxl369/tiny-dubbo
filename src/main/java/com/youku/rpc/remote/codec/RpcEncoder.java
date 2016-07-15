@@ -92,6 +92,7 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		buffer.writeInt(eof - start);
 
 		buffer.writerIndex(eof);
+
 	}
 
 	private void encodeResponse(ChannelHandlerContext ctx, Object msg, ByteBuf out) {

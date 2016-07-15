@@ -101,8 +101,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 		request.setInterfaceName(interfaceName);
 		request.setMethodName(methodName);
 
-		log.info("解码完成后request:{}", request);
-		log.info(request.getArguments()[0].getClass().getName());
+		log.debug("解码完成后request:{}", request);
 
 		out.add(request);
 	}

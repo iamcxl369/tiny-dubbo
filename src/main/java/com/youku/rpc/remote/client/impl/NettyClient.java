@@ -2,6 +2,9 @@ package com.youku.rpc.remote.client.impl;
 
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.youku.rpc.common.Const;
 import com.youku.rpc.common.Progress;
 import com.youku.rpc.exception.RpcException;
@@ -23,6 +26,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class NettyClient implements Client {
+
+	private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
 
 	private URL url;
 
@@ -56,7 +61,7 @@ public class NettyClient implements Client {
 				});
 
 		channelFuture = b.connect(url.getIp(), url.getPort());
-		boolean success = channelFuture.awaitUninterruptibly(Const.CONNECT_TIME_OUT, TimeUnit.SECONDS);
+		boolean success = channelFuture.awaitUninterruptibly(Const.CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
 
 		if (!success || !channelFuture.isSuccess()) {
 			throw new RuntimeException("连接" + url.getIp() + ":" + url.getPort() + "超时");
@@ -70,13 +75,14 @@ public class NettyClient implements Client {
 
 	@Override
 	public Response send(Request request) throws RpcException {
+		log.info("客户端发送消息");
 		boolean success = channelFuture.channel().writeAndFlush(request).awaitUninterruptibly(Const.TIME_OUT,
-				TimeUnit.SECONDS);
+				TimeUnit.MILLISECONDS);
 
 		if (success && channelFuture.isSuccess()) {
 			Progress progress = new Progress();
 			handler.setProgress(progress);
-			progress.process(Const.TIME_OUT, TimeUnit.SECONDS);
+			progress.process();
 
 			if (handler.getResponse() == null) {
 				throw new RpcException("没有获取到远程机器的执行结果");

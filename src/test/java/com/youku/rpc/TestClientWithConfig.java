@@ -29,7 +29,7 @@ public class TestClientWithConfig {
 
 		long start = System.currentTimeMillis();
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			List<User> newUsers = userService.filter(users);
 		}
 

@@ -14,9 +14,19 @@ public class Progress {
 
 	public void process(long timeout, TimeUnit unit) {
 		try {
-			log.debug("等待任务执行");
+			log.info("等待任务执行");
 			latch.await(timeout, unit);
-			log.debug("任务执行完成");
+			log.info("任务执行完成");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void process() {
+		try {
+			log.info("等待任务执行");
+			latch.await();
+			log.info("任务执行完成");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
