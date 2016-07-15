@@ -1,10 +1,13 @@
 package com.youku.rpc.netty;
 
+import java.util.concurrent.Future;
+
 import com.youku.rpc.exception.RpcException;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
@@ -34,8 +37,10 @@ public class TestClient {
 					}
 				});
 
-		b.connect("localhost", 8080).sync();
+		ChannelFuture f = b.connect("localhost", 8080).sync();
 
+		String h = "haha";
+		f.channel().writeAndFlush(Unpooled.copiedBuffer(h.getBytes()));
 	}
 
 	private static class ClientHandler extends ChannelInboundHandlerAdapter {
@@ -43,9 +48,7 @@ public class TestClient {
 		@Override
 		public void channelActive(ChannelHandlerContext ctx) throws Exception {
 			String s = "hello,world";
-			ByteBuf buf = Unpooled.buffer(s.getBytes().length);
-			buf.writeBytes(s.getBytes());
-			ctx.writeAndFlush(buf);
+			ctx.writeAndFlush(Unpooled.copiedBuffer(s.getBytes()));
 		}
 
 		@Override

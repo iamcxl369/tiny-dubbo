@@ -46,11 +46,7 @@ public class TestServer {
 
 			String response = "from response:" + new String(data);
 
-			buf = Unpooled.buffer(response.getBytes().length);
-
-			buf.writeBytes(response.getBytes());
-
-			ctx.writeAndFlush(buf);
+			ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes()));
 		}
 
 	}
