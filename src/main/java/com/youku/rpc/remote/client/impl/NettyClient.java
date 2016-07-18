@@ -81,32 +81,22 @@ public class NettyClient implements Client {
 	@Override
 	public Response send(Request request) throws RpcException {
 		log.info("客户端发送消息");
-		channelFuture.channel().writeAndFlush(request);
-		Progress progress = new Progress();
-		handler.setProgress(progress);
-		progress.process();
-		if (handler.getResponse() == null) {
-			throw new RpcException("没有获取到远程机器的执行结果");
+		boolean success = channelFuture.channel().writeAndFlush(request).awaitUninterruptibly(Const.TIME_OUT,
+				TimeUnit.MILLISECONDS);
+
+		if (success && channelFuture.isSuccess()) {
+			Progress progress = new Progress();
+			handler.setProgress(progress);
+			progress.process();
+
+			if (handler.getResponse() == null) {
+				throw new RpcException("没有获取到远程机器的执行结果");
+			} else {
+				return handler.getResponse();
+			}
 		} else {
-			return handler.getResponse();
+			throw new RpcException("rpc请求超时");
 		}
-		
-//		boolean success = channelFuture.channel().writeAndFlush(request)
-//				.awaitUninterruptibly(Const.TIME_OUT,TimeUnit.MILLISECONDS);
-//
-//		if (success && channelFuture.isSuccess()) {
-//			Progress progress = new Progress();
-//			handler.setProgress(progress);
-//			progress.process();
-//
-//			if (handler.getResponse() == null) {
-//				throw new RpcException("没有获取到远程机器的执行结果");
-//			} else {
-//				return handler.getResponse();
-//			}
-//		} else {
-//			throw new RpcException("rpc请求超时");
-//		}
 
 	}
 

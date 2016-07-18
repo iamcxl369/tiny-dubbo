@@ -5,7 +5,7 @@
 	<!-- <registry address="zookeeper://127.0.0.1:2181" /> -->
 	<registry address="zookeeper://10.10.23.246:2181" />
 
-	<protocol name="nevermore" port="20880" serializer="kryo"/>
+	<protocol name="nevermore" port="20880" serializer="java"/>
 	<protocol name="rmi" port="6000" />
 	<protocol name="http" port="8080" />
 	<protocol name="hessian" port="8181" />
