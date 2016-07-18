@@ -27,9 +27,6 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 		response.setValue(result);
 
 		ctx.writeAndFlush(response);
-
-		ctx.close();
-
 	}
 
 	@Override

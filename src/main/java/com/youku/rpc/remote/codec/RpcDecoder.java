@@ -19,32 +19,16 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 public class RpcDecoder extends ByteToMessageDecoder {
 
-	private final int MAGIC_LENGTH = 2;
-
 	private static final Logger log = LoggerFactory.getLogger(RpcDecoder.class);
 
 	@Override
 	public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-
+		log.info("解码过程开始");
 		SimpleByteBuffer buffer = new SimpleByteBuffer(in);
-
-		int readableBytes = buffer.readableBytes();
-		if (readableBytes < MAGIC_LENGTH) {
-			return;
-		}
-
-		buffer.markReaderIndex();
 
 		short magic = buffer.readShort();
 
 		Assert.isTrue(magic == Const.MAGIC);
-
-		int length = buffer.readInt();
-
-		if (readableBytes < length) {
-			buffer.resetReaderIndex();
-			return;
-		}
 
 		int type = buffer.readByte();
 
@@ -104,6 +88,12 @@ public class RpcDecoder extends ByteToMessageDecoder {
 		log.debug("解码完成后request:{}", request);
 
 		out.add(request);
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		ctx.close();
 	}
 
 }

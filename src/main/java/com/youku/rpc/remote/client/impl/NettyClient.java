@@ -24,6 +24,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 
 public class NettyClient implements Client {
 
@@ -54,13 +56,16 @@ public class NettyClient implements Client {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 						ch.pipeline()//
-								.addLast(new RpcEncoder(url))//
+								.addLast(new LengthFieldBasedFrameDecoder(65535, 0, 2, 0, 2))//
 								.addLast(new RpcDecoder())//
+								.addLast(new LengthFieldPrepender(2))//
+								.addLast(new RpcEncoder(url))//
 								.addLast(handler);
 					}
 				});
 
 		channelFuture = b.connect(url.getIp(), url.getPort());
+
 		boolean success = channelFuture.awaitUninterruptibly(Const.CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
 
 		if (!success || !channelFuture.isSuccess()) {
@@ -76,22 +81,32 @@ public class NettyClient implements Client {
 	@Override
 	public Response send(Request request) throws RpcException {
 		log.info("客户端发送消息");
-		boolean success = channelFuture.channel().writeAndFlush(request).awaitUninterruptibly(Const.TIME_OUT,
-				TimeUnit.MILLISECONDS);
-
-		if (success && channelFuture.isSuccess()) {
-			Progress progress = new Progress();
-			handler.setProgress(progress);
-			progress.process();
-
-			if (handler.getResponse() == null) {
-				throw new RpcException("没有获取到远程机器的执行结果");
-			} else {
-				return handler.getResponse();
-			}
+		channelFuture.channel().writeAndFlush(request);
+		Progress progress = new Progress();
+		handler.setProgress(progress);
+		progress.process();
+		if (handler.getResponse() == null) {
+			throw new RpcException("没有获取到远程机器的执行结果");
 		} else {
-			throw new RpcException("rpc请求超时");
+			return handler.getResponse();
 		}
+		
+//		boolean success = channelFuture.channel().writeAndFlush(request)
+//				.awaitUninterruptibly(Const.TIME_OUT,TimeUnit.MILLISECONDS);
+//
+//		if (success && channelFuture.isSuccess()) {
+//			Progress progress = new Progress();
+//			handler.setProgress(progress);
+//			progress.process();
+//
+//			if (handler.getResponse() == null) {
+//				throw new RpcException("没有获取到远程机器的执行结果");
+//			} else {
+//				return handler.getResponse();
+//			}
+//		} else {
+//			throw new RpcException("rpc请求超时");
+//		}
 
 	}
 

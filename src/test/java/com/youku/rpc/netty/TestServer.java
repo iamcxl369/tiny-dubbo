@@ -1,8 +1,8 @@
 package com.youku.rpc.netty;
 
+import com.youku.rpc.model.User;
+
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
@@ -11,6 +11,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 
 public class TestServer {
 
@@ -25,8 +27,10 @@ public class TestServer {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 						ch.pipeline()//
-								// .addLast(new RpcDecoder())//
-								// .addLast(new RpcEncoder(url))//
+								.addLast(new LengthFieldBasedFrameDecoder(65535, 0, 2, 0, 2))//
+								.addLast(new RpcDecoder())//
+								.addLast(new LengthFieldPrepender(2))//
+								.addLast(new RpcEncoder())//
 								.addLast(new ServerHandler());
 
 					}
@@ -39,14 +43,10 @@ public class TestServer {
 
 		@Override
 		public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-			ByteBuf buf = (ByteBuf) msg;
-			byte[] data = new byte[buf.readableBytes()];
+			User user = (User) msg;
+			System.out.println("----------------resp:" + user);
 
-			buf.readBytes(data);
-
-			String response = "from response:" + new String(data);
-
-			ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes()));
+			ctx.writeAndFlush(user);
 		}
 
 	}

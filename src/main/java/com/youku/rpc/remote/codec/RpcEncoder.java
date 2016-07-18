@@ -55,17 +55,14 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		return SerializerFactory.getSerializer(getSerializerName());
 	}
 
-	private void encodeRequest(ChannelHandlerContext ctx, Object msg, ByteBuf out) {
+	private void encodeRequest(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 		Request request = (Request) msg;
 		log.debug("编码request:{}", request);
 		Serializer serializer = getSerializer();
 		SimpleByteBuffer buffer = new SimpleByteBuffer(out);
 
 		// 消息头
-		int start = buffer.writerIndex();
 		buffer.writeShort(Const.MAGIC);
-		int mark = buffer.writerIndex();
-		buffer.writerIndex(mark + 4);
 		buffer.writeByte(Const.REQUEST);
 		buffer.writeLengthAndString(getSerializerName());
 
@@ -85,14 +82,6 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 			buffer.writeLengthAndBytes(data);
 		}
 
-		int eof = buffer.writerIndex();
-
-		buffer.writerIndex(mark);
-
-		buffer.writeInt(eof - start);
-
-		buffer.writerIndex(eof);
-
 	}
 
 	private void encodeResponse(ChannelHandlerContext ctx, Object msg, ByteBuf out) {
@@ -102,23 +91,18 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 		SimpleByteBuffer buffer = new SimpleByteBuffer(out);
 
 		// 消息头
-		int start = buffer.writerIndex();
 		buffer.writeShort(Const.MAGIC);
-		int mark = buffer.writerIndex();
-		buffer.writerIndex(mark + 4);
 		buffer.writeByte(Const.RESPONSE);
 		buffer.writeLengthAndString(getSerializerName());
 
 		// 消息体 返回值
 		buffer.writeLengthAndBytes(serializer.serialize(response.getValue()));
+	}
 
-		int eof = buffer.writerIndex();
-
-		buffer.writerIndex(mark);
-
-		buffer.writeInt(eof - start);
-
-		buffer.writerIndex(eof);
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		ctx.close();
 	}
 
 }
