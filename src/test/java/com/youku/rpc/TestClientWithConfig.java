@@ -29,11 +29,12 @@ public class TestClientWithConfig {
 
 		long start = System.currentTimeMillis();
 
+		List<User> newUsers = null;
 		for (int i = 0; i < 5; i++) {
-			List<User> newUsers = userService.filter(users);
+			newUsers = userService.filter(users);
 		}
 
-		System.out.printf("cost %d ms", System.currentTimeMillis() - start);
+		System.out.printf("cost %d ms and result is \n%s\n", System.currentTimeMillis() - start, newUsers);
 
 		// userService.register(new User(1, "jack"));
 		// System.out.println(userService.isExist(users, new User(2, "jack")));

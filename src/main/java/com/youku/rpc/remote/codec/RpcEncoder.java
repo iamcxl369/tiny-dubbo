@@ -37,12 +37,15 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 
 	@Override
 	public void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
+		if (out != null) {
+			throw new RuntimeException("not null exception");
+		}
 		if (msg instanceof Request) {
 			encodeRequest(ctx, msg, out);
 		} else if (msg instanceof Response) {
 			encodeResponse(ctx, msg, out);
 		} else {
-			throw new IllegalArgumentException("不支持类型为" + msg.getClass() + "的参数");
+//			throw new IllegalArgumentException("不支持类型为" + msg.getClass() + "的参数");
 		}
 
 	}

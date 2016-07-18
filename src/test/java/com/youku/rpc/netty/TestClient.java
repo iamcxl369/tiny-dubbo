@@ -43,6 +43,7 @@ public class TestClient {
 		for (int i = 0; i < 10; i++) {
 			User user = new User(i, "haha" + i);
 			f.channel().writeAndFlush(user);
+
 		}
 	}
 
