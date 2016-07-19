@@ -45,18 +45,18 @@ public class RegistryProtocol implements Protocol {
 		List<Invoker> invokers = new ArrayList<>(servers.size());
 
 		for (URL server : servers) {
-			Protocol protocol = ExtensionLoader.getExtension(Protocol.class, server.getParam(Const.PROTOCOL));
+			Protocol protocol = ExtensionLoader.getExtension(Protocol.class, server.getParam(Const.PROTOCOL_KEY));
 
 			URL combinedURL = combine(url, server);
 
 			invokers.add(protocol.refer(interfaceClass, combinedURL));
 		}
 
-		int retryTimes = url.getIntParam(Const.RETRY_TIMES, Const.DEFAULT_RETRY_TIMES);
+		int retryTimes = url.getIntParam(Const.RETRY_TIMES_KEY, Const.DEFAULT_RETRY_TIMES);
 		LoadBalance loadBalance = ExtensionLoader.getExtension(LoadBalance.class,
-				url.getParam(Const.LOADBALANCE, Const.DEFAULT_LOAD_BALANCE));
+				url.getParam(Const.LOADBALANCE_KEY, Const.DEFAULT_LOAD_BALANCE));
 		Cluster cluster = ExtensionLoader.getExtension(Cluster.class,
-				url.getParam(Const.CLUSTER, Const.DEFAULT_CLUSTER));
+				url.getParam(Const.CLUSTER_KEY, Const.DEFAULT_CLUSTER));
 
 		Directory directory = new Directory(invokers, retryTimes, loadBalance);
 

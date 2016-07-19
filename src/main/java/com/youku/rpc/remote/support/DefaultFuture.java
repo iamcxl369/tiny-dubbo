@@ -1,41 +1,31 @@
-package com.youku.rpc.remote.client;
+package com.youku.rpc.remote.support;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.youku.rpc.common.Const;
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.exception.TimeoutException;
 import com.youku.rpc.remote.Response;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-
-public class RpcClientHandler extends SimpleChannelInboundHandler<Response> {
+public class DefaultFuture implements ResponseFuture {
 
 	private volatile Response response;
+
+	private long timeout;
 
 	private Lock lock = new ReentrantLock();
 
 	private Condition condition = lock.newCondition();
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, Response response) throws Exception {
-		this.response = response;
-		condition.signal();
+	public Response get() throws RpcException {
+		return get(timeout);
 	}
 
-	private boolean isDone() {
-		return response != null;
-	}
-
-	public Response getResponse() throws RpcException {
-		return getResponse(Const.DEFAULT_TIMEOUT);
-	}
-
-	public Response getResponse(long timeout) throws RpcException {
+	@Override
+	public Response get(long timeout) throws RpcException {
 		if (!isDone()) {
 			long start = System.currentTimeMillis();
 			lock.lock();
@@ -61,9 +51,8 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<Response> {
 	}
 
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		cause.printStackTrace();
-		ctx.close();
+	public boolean isDone() {
+		return response != null;
 	}
 
 }

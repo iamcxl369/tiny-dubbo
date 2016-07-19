@@ -20,7 +20,7 @@ public class AccessLogFilter implements Filter {
 	@Override
 	public Response invoke(Invoker invoker, Request request) throws RpcException {
 		URL url = invoker.getURL();
-		if (url.getBooleanParam(Const.ACCESSLOG, true)) {
+		if (url.getBooleanParam(Const.ACCESSLOG_KEY, true)) {
 			log.debug("进入accesslog filter");
 		}
 		return invoker.invoke(request);

@@ -3,6 +3,7 @@ package com.youku.rpc.invoker.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.youku.rpc.common.Const;
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
@@ -21,9 +22,18 @@ public class NevermoreInvoker extends AbstractInvoker {
 	}
 
 	@Override
-	public Response invoke(Request request) throws RpcException {
+	public Response invoke(final Request request) throws RpcException {
 		log.debug("向服务端{}发起请求", url.toString());
-		return client.send(request);
+
+		boolean async = url.getBooleanParam(Const.ASYNC_KEY, true);
+
+		if (async) {
+			log.debug("异步请求");
+			return null;
+		} else {
+			log.debug("同步请求");
+			return client.request(request).get(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT));
+		}
 	}
 
 }

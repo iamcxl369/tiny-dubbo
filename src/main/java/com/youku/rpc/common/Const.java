@@ -3,10 +3,10 @@ package com.youku.rpc.common;
 public interface Const {
 
 	// 连接超时时间（毫秒）
-	long CONNECT_TIME_OUT = 3000;
+	int CONNECT_TIMEOUT = 3000;
 
 	// rpc请求超时时间（毫秒）
-	long TIME_OUT = 1000;
+	long DEFAULT_TIMEOUT = 1000;
 
 	int ZK_SESSION_TIMEOUT = 5000;
 
@@ -16,7 +16,7 @@ public interface Const {
 
 	int DEFAULT_WEIGHT = 100;
 
-	String PROTOCOL = "protocol";
+	String PROTOCOL_KEY = "protocol";
 
 	short MAGIC = 0x10da;
 
@@ -24,13 +24,13 @@ public interface Const {
 
 	byte RESPONSE = 1;
 
-	String REGISTRY_PROTOCOL = "registry";
+	String REGISTRY_PROTOCOL_KEY = "registry";
 
-	String WEIGHT = "weight";
+	String WEIGHT_KEY = "weight";
 
-	String SERIALIZER = "serializer";
+	String SERIALIZER_KEY = "serializer";
 
-	String ACCESSLOG = "accesslog";
+	String ACCESSLOG_KEY = "accesslog";
 
 	int DEFAULT_RETRY_TIMES = 3;
 
@@ -38,23 +38,28 @@ public interface Const {
 
 	String DEFAULT_CLUSTER = "failover";
 
-	String INTERFACE = "interface";
+	String INTERFACE_KEY = "interface";
 
-	String CLUSTER = "cluster";
+	String CLUSTER_KEY = "cluster";
 
-	String LOADBALANCE = "loadbalance";
+	String TIMEOUT_KEY = "timeout";
 
-	String RETRY_TIMES = "retry_times";
+	String LOADBALANCE_KEY = "loadbalance";
 
-	String CORE_THREADS = "corethreads";
+	String RETRY_TIMES_KEY = "retry_times";
 
-	String THREADS = "threads";
+	String CORE_THREADS_KEY = "corethreads";
 
-	String ALIVE = "alive";
+	String THREADS_KEY = "threads";
 
-	String BENCHMARK = "benchmark";
+	String ALIVE_KEY = "alive";
 
-	String ID = "id";
+	String BENCHMARK_KEY = "benchmark";
+
+	String ID_KEY = "id";
+
+	String ASYNC_KEY = "async";
 
 	boolean DEFAULT_BENCHMARK = true;
+
 }

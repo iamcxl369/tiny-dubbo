@@ -17,7 +17,7 @@ public class ReferenceConfig<T> {
 
 	private RegistryConfig registryConfig;
 
-	private final Protocol registryProtocol = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL);
+	private final Protocol registryProtocol = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL_KEY);
 
 	private Map<String, String> attachments = new HashMap<>();
 
@@ -48,7 +48,7 @@ public class ReferenceConfig<T> {
 	}
 
 	public T get() {
-		String interfaceName = attachments.get(Const.INTERFACE);
+		String interfaceName = attachments.get(Const.INTERFACE_KEY);
 		Assert.notNull(interfaceName, "interface不能为空");
 		Class<?> interfaceClass = null;
 		try {

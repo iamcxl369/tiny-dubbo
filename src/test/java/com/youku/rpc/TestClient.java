@@ -22,9 +22,9 @@ public class TestClient {
 		ReferenceConfig<UserService> reference = new ReferenceConfig<UserService>(); // 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
 		reference.setApplicationConfig(applicationConfig);
 		reference.setRegistryConfig(registryConfig);// 多个注册中心可以用setRegistries()
-		reference.addAttachment(Const.INTERFACE, UserService.class.getName());
-		reference.addAttachment(Const.CLUSTER, "failover");
-		reference.addAttachment(Const.LOADBALANCE, "random");
+		reference.addAttachment(Const.INTERFACE_KEY, UserService.class.getName());
+		reference.addAttachment(Const.CLUSTER_KEY, "failover");
+		reference.addAttachment(Const.LOADBALANCE_KEY, "random");
 
 		UserService userService = reference.get();
 

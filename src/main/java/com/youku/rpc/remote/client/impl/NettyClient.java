@@ -1,23 +1,22 @@
 package com.youku.rpc.remote.client.impl;
 
-import java.util.concurrent.TimeUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import com.youku.rpc.common.Const;
-import com.youku.rpc.common.Progress;
-import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.client.Client;
 import com.youku.rpc.remote.client.RpcClientHandler;
 import com.youku.rpc.remote.codec.RpcDecoder;
 import com.youku.rpc.remote.codec.RpcEncoder;
+import com.youku.rpc.remote.support.DefaultFuture;
+import com.youku.rpc.remote.support.ResponseFuture;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -52,6 +51,7 @@ public class NettyClient implements Client {
 				.channel(NioSocketChannel.class)//
 				.option(ChannelOption.SO_KEEPALIVE, true)//
 				.option(ChannelOption.TCP_NODELAY, true)//
+				.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, url.getIntParam("connect_timeout", Const.CONNECT_TIMEOUT))//
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
@@ -66,10 +66,12 @@ public class NettyClient implements Client {
 
 		channelFuture = b.connect(url.getIp(), url.getPort());
 
-		boolean success = channelFuture.awaitUninterruptibly(Const.CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
+		channelFuture.awaitUninterruptibly();
 
-		if (!success || !channelFuture.isSuccess()) {
-			throw new RuntimeException("连接" + url.getIp() + ":" + url.getPort() + "超时");
+		Assert.isTrue(channelFuture.isDone());
+
+		if (!channelFuture.isSuccess()) {
+			channelFuture.cause().printStackTrace();
 		}
 	}
 
@@ -79,24 +81,47 @@ public class NettyClient implements Client {
 	}
 
 	@Override
-	public Response send(Request request) throws RpcException {
+	public void send(Request request) {
 		log.info("客户端发送消息");
-		boolean success = channelFuture.channel().writeAndFlush(request).awaitUninterruptibly(Const.TIME_OUT,
-				TimeUnit.MILLISECONDS);
+		channelFuture = channelFuture.channel().writeAndFlush(request);
+		channelFuture.addListener(new ChannelFutureListener() {
 
-		if (success && channelFuture.isSuccess()) {
-			Progress progress = new Progress();
-			handler.setProgress(progress);
-			progress.process();
-
-			if (handler.getResponse() == null) {
-				throw new RpcException("没有获取到远程机器的执行结果");
-			} else {
-				return handler.getResponse();
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				if (!future.isSuccess()) {
+					future.cause().printStackTrace();
+					future.channel().close();
+				}
 			}
-		} else {
-			throw new RpcException("rpc请求超时");
-		}
+		});
+
+	}
+
+	@Override
+	public ResponseFuture request(final Request request) {
+
+		ResponseFuture future = new DefaultFuture();
+
+		send(request);
+
+		return future;
+
+//		FutureTask<Response> futureTask = new FutureTask<>(new Callable<Response>() {
+//
+//			@Override
+//			public Response call() throws Exception {
+//				send(request);
+//
+//				handler.getResponse(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT));
+//				if (handler.getResponse() == null) {
+//					throw new RpcException("没有获取到远程机器的执行结果");
+//				} else {
+//					return handler.getResponse();
+//				}
+//			}
+//		});
+//
+//		futureTask.run();
 
 	}
 

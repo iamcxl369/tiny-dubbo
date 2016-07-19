@@ -14,7 +14,7 @@ import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
 public abstract class AbstractLoadBalance implements LoadBalance {
 
 	protected int getWeight(Invoker invoker) {
-		String weightString = invoker.getURL().getParam(Const.WEIGHT);
+		String weightString = invoker.getURL().getParam(Const.WEIGHT_KEY);
 		return NumberUtils.toInt(weightString, Const.DEFAULT_WEIGHT);
 	}
 

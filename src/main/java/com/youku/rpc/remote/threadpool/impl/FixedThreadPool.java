@@ -13,7 +13,7 @@ public class FixedThreadPool implements ThreadPool {
 
 	@Override
 	public Executor getExecutor(URL url) {
-		int threads = url.getIntParam(Const.THREADS, 200);
+		int threads = url.getIntParam(Const.THREADS_KEY, 200);
 		return new ThreadPoolExecutor(threads, threads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	}
 

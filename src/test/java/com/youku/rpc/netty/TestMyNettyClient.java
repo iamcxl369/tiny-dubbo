@@ -8,7 +8,6 @@ import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.model.User;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.client.impl.NettyClient;
 
 public class TestMyNettyClient {
@@ -16,7 +15,7 @@ public class TestMyNettyClient {
 	public static void main(String[] args) throws RpcException {
 		new ExtensionLoader();
 
-		NettyClient client = new NettyClient(new URL("localhost:8080?serializer=kryo"));
+		NettyClient client = new NettyClient(VariableGenerator.url());
 		client.open();
 
 		Request request = new Request();
@@ -27,7 +26,7 @@ public class TestMyNettyClient {
 
 		Response r = null;
 		for (int i = 0; i < 10; i++) {
-			r = client.send(request);
+//			r = client.send(request);
 		}
 
 		System.out.println(r);

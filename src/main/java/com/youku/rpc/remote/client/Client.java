@@ -2,7 +2,7 @@ package com.youku.rpc.remote.client;
 
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
+import com.youku.rpc.remote.support.ResponseFuture;
 
 public interface Client {
 
@@ -10,5 +10,7 @@ public interface Client {
 
 	void close();
 
-	Response send(Request request) throws RpcException;
+	void send(Request request);
+
+	ResponseFuture request(Request request) throws RpcException;
 }

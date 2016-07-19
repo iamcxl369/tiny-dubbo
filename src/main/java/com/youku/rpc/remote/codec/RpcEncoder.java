@@ -37,21 +37,18 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 
 	@Override
 	public void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
-		if (out != null) {
-			throw new RuntimeException("not null exception");
-		}
 		if (msg instanceof Request) {
 			encodeRequest(ctx, msg, out);
 		} else if (msg instanceof Response) {
 			encodeResponse(ctx, msg, out);
 		} else {
-//			throw new IllegalArgumentException("不支持类型为" + msg.getClass() + "的参数");
+			throw new IllegalArgumentException("不支持类型为" + msg.getClass() + "的参数");
 		}
 
 	}
 
 	private String getSerializerName() {
-		return url.getParam(Const.SERIALIZER);
+		return url.getParam(Const.SERIALIZER_KEY);
 	}
 
 	private Serializer getSerializer() {
@@ -100,12 +97,6 @@ public class RpcEncoder extends MessageToByteEncoder<Object> {
 
 		// 消息体 返回值
 		buffer.writeLengthAndBytes(serializer.serialize(response.getValue()));
-	}
-
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		cause.printStackTrace();
-		ctx.close();
 	}
 
 }

@@ -95,8 +95,8 @@ public class ServiceConfig<T> {
 		log.info("注册服务");
 		URL url = protocolConfig.toURL();
 		String urlString = new StringBuilder().append(url.getIp()).append(':').append(url.getPort()).append('?')
-				.append(Const.WEIGHT).append('=').append(weight).append('&').append(Const.SERIALIZER).append('=')
-				.append(protocolConfig.getSerializer()).append('&').append(Const.PROTOCOL).append('=')
+				.append(Const.WEIGHT_KEY).append('=').append(weight).append('&').append(Const.SERIALIZER_KEY).append('=')
+				.append(protocolConfig.getSerializer()).append('&').append(Const.PROTOCOL_KEY).append('=')
 				.append(protocolConfig.getName()).toString();
 
 		url = new URL(urlString);
@@ -105,7 +105,7 @@ public class ServiceConfig<T> {
 
 		url.setRegistryAddress(registryConfig.getAddress());
 
-		Protocol registryProtocol = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL);
+		Protocol registryProtocol = ExtensionLoader.getExtension(Protocol.class, Const.REGISTRY_PROTOCOL_KEY);
 
 		registryProtocol.export(new RegistryInvoker(url));
 

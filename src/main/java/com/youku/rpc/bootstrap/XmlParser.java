@@ -64,7 +64,7 @@ public class XmlParser {
 		}
 
 		for (ReferenceConfig<Object> referenceConfig : referenceConfigs) {
-			String id = referenceConfig.getAttachment(Const.ID);
+			String id = referenceConfig.getAttachment(Const.ID_KEY);
 
 			Assert.notNull(id, "reference标签中id不能为空");
 			context.put(id, referenceConfig.get());

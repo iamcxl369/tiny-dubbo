@@ -18,12 +18,19 @@ public class RpcContext {
 		}
 	};
 
+	private Future<?> future;
+
 	public static RpcContext getContext() {
 		return context.get();
 	}
 
+	@SuppressWarnings("unchecked")
 	public <V> Future<V> getFuture() {
-		return null;
+		return (Future<V>) future;
+	}
+
+	public <V> void setFuture(Future<V> future) {
+		this.future = future;
 	}
 
 }

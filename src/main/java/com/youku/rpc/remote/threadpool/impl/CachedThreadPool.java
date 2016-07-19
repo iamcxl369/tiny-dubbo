@@ -13,9 +13,9 @@ public class CachedThreadPool implements ThreadPool {
 
 	@Override
 	public Executor getExecutor(URL url) {
-		int coreThreads = url.getIntParam(Const.CORE_THREADS, 0);
-		int maxThreads = url.getIntParam(Const.THREADS, Integer.MAX_VALUE);
-		long alive = url.getLongParam(Const.ALIVE, 60000L);
+		int coreThreads = url.getIntParam(Const.CORE_THREADS_KEY, 0);
+		int maxThreads = url.getIntParam(Const.THREADS_KEY, Integer.MAX_VALUE);
+		long alive = url.getLongParam(Const.ALIVE_KEY, 60000L);
 		return new ThreadPoolExecutor(coreThreads, maxThreads, alive, TimeUnit.MILLISECONDS,
 				new SynchronousQueue<Runnable>());
 	}
