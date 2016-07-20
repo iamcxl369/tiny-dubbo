@@ -34,8 +34,6 @@ public class NettyClient implements Client {
 
 	private ChannelFuture channelFuture;
 
-	private RpcClientHandler handler;
-
 	public NettyClient(URL url) {
 		this.url = url;
 	}
@@ -43,8 +41,6 @@ public class NettyClient implements Client {
 	@Override
 	public void open() {
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
-
-		handler = new RpcClientHandler();
 
 		Bootstrap b = new Bootstrap();
 		b.group(workerGroup)//
@@ -60,7 +56,7 @@ public class NettyClient implements Client {
 								.addLast(new RpcDecoder())//
 								.addLast(new LengthFieldPrepender(2))//
 								.addLast(new RpcEncoder(url))//
-								.addLast(handler);
+								.addLast(new RpcClientHandler());
 					}
 				});
 
@@ -99,30 +95,9 @@ public class NettyClient implements Client {
 
 	@Override
 	public ResponseFuture request(final Request request) {
-
-		ResponseFuture future = new DefaultFuture();
-
+		ResponseFuture future = new DefaultFuture(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT), request);
 		send(request);
-
 		return future;
-
-//		FutureTask<Response> futureTask = new FutureTask<>(new Callable<Response>() {
-//
-//			@Override
-//			public Response call() throws Exception {
-//				send(request);
-//
-//				handler.getResponse(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT));
-//				if (handler.getResponse() == null) {
-//					throw new RpcException("没有获取到远程机器的执行结果");
-//				} else {
-//					return handler.getResponse();
-//				}
-//			}
-//		});
-//
-//		futureTask.run();
-
 	}
 
 }

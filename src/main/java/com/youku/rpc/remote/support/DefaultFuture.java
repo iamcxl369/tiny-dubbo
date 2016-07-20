@@ -1,5 +1,7 @@
 package com.youku.rpc.remote.support;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -7,17 +9,26 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.exception.TimeoutException;
+import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
 
 public class DefaultFuture implements ResponseFuture {
 
 	private volatile Response response;
 
-	private long timeout;
+	private final long timeout;
 
-	private Lock lock = new ReentrantLock();
+	private final Lock lock = new ReentrantLock();
 
-	private Condition condition = lock.newCondition();
+	private final Condition condition = lock.newCondition();
+
+	private static ConcurrentMap<String, DefaultFuture> futureMap = new ConcurrentHashMap<>();
+
+	public DefaultFuture(long timeout, Request request) {
+		super();
+		this.timeout = timeout;
+		futureMap.put(request.getId(), this);
+	}
 
 	@Override
 	public Response get() throws RpcException {
@@ -53,6 +64,23 @@ public class DefaultFuture implements ResponseFuture {
 	@Override
 	public boolean isDone() {
 		return response != null;
+	}
+
+	public void doReceived(Response response) {
+		lock.lock();
+		try {
+			this.response = response;
+			condition.signal();
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public static void received(Response response) {
+		DefaultFuture future = futureMap.remove(response.getId());
+		if (future != null) {
+			future.doReceived(response);
+		}
 	}
 
 }

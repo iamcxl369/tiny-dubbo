@@ -22,7 +22,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 
 		Object result = request.invoke();
 
-		Response response = new Response();
+		Response response = new Response(request.getId());
 
 		response.setValue(result);
 

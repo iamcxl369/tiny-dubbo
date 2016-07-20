@@ -3,6 +3,7 @@ package com.youku.rpc.netty;
 import java.util.Arrays;
 import java.util.List;
 
+import com.youku.rpc.common.UUIDUtil;
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.model.User;
@@ -18,7 +19,7 @@ public class TestMyNettyClient {
 		NettyClient client = new NettyClient(VariableGenerator.url());
 		client.open();
 
-		Request request = new Request();
+		Request request = new Request(UUIDUtil.uuid());
 		request.setInterfaceName("com.youku.rpc.service.UserService");
 		request.setMethodName("filter");
 		request.setArguments(new Object[] { Arrays.asList(new User(1, "hi")) });
@@ -26,7 +27,7 @@ public class TestMyNettyClient {
 
 		Response r = null;
 		for (int i = 0; i < 10; i++) {
-//			r = client.send(request);
+			// r = client.send(request);
 		}
 
 		System.out.println(r);

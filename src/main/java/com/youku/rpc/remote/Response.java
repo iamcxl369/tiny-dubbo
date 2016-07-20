@@ -1,6 +1,10 @@
 package com.youku.rpc.remote;
 
-public class Response {
+public class Response extends BaseMessage {
+
+	public Response(String id) {
+		super(id);
+	}
 
 	private Object value;
 
@@ -12,8 +16,18 @@ public class Response {
 		this.value = value;
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	@Override
 	public String toString() {
-		return "Response [value=" + value + "]";
+		return "Response [id=" + id + ", value=" + value + "]";
 	}
+
+	@Override
+	public byte getType() {
+		return MessageType.RESPONSE.type();
+	}
+
 }

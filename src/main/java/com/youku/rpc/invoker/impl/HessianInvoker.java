@@ -17,7 +17,7 @@ public class HessianInvoker extends AbstractInvoker {
 		Object value = ReflectUtils.invokeMethod(request.getMethodName(), targetEntity, request.getArgumentTypes(),
 				request.getArguments());
 
-		Response response = new Response();
+		Response response = new Response(request.getId());
 
 		response.setValue(value);
 

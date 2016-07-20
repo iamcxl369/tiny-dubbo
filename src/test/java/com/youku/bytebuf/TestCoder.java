@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.youku.rpc.common.UUIDUtil;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.model.User;
 import com.youku.rpc.remote.Request;
@@ -30,7 +31,7 @@ public class TestCoder {
 
 		RpcEncoder encoder = new RpcEncoder(new URL("localhost:8080?serializer=fastjson"));
 
-		Request request = new Request();
+		Request request = new Request(UUIDUtil.uuid());
 		request.setMethodName("register");
 		request.setInterfaceName(UserService.class.getName());
 		request.setArgumentTypes(new Class<?>[] { User.class });

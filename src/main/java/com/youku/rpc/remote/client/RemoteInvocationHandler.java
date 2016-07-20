@@ -3,6 +3,7 @@ package com.youku.rpc.remote.client;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import com.youku.rpc.common.UUIDUtil;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.Request;
 import com.youku.rpc.remote.Response;
@@ -17,8 +18,7 @@ public class RemoteInvocationHandler implements InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		Request request = new Request();
-
+		Request request = new Request(UUIDUtil.uuid());
 		request.setArguments(args);
 		request.setMethodName(method.getName());
 		request.setArgumentTypes(method.getParameterTypes());

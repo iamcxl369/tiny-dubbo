@@ -20,10 +20,6 @@ public interface Const {
 
 	short MAGIC = 0x10da;
 
-	byte REQUEST = 0;
-
-	byte RESPONSE = 1;
-
 	String REGISTRY_PROTOCOL_KEY = "registry";
 
 	String WEIGHT_KEY = "weight";
@@ -61,5 +57,7 @@ public interface Const {
 	String ASYNC_KEY = "async";
 
 	boolean DEFAULT_BENCHMARK = true;
+
+	boolean DEFAULT_ASYNC = false;
 
 }

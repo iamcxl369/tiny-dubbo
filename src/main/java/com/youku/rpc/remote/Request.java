@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.youku.rpc.common.ReflectUtils;
 
-public class Request {
+public class Request extends BaseMessage {
 
 	private String interfaceName;
 
@@ -15,6 +15,10 @@ public class Request {
 	private Class<?>[] argumentTypes;
 
 	private Object[] arguments;
+
+	public Request(String id) {
+		super(id);
+	}
 
 	public Object invoke() {
 		return ReflectUtils.invokeMethod(methodName, ref, argumentTypes, arguments);
@@ -61,10 +65,15 @@ public class Request {
 	}
 
 	@Override
+	public byte getType() {
+		return MessageType.REQUEST.type();
+	}
+
+	@Override
 	public String toString() {
 		return "Request [interfaceName=" + interfaceName + ", ref=" + ref + ", methodName=" + methodName
 				+ ", argumentTypes=" + Arrays.toString(argumentTypes) + ", arguments=" + Arrays.toString(arguments)
-				+ "]";
+				+ ", id=" + id + "]";
 	}
 
 }

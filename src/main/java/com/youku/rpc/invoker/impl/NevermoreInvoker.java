@@ -25,11 +25,11 @@ public class NevermoreInvoker extends AbstractInvoker {
 	public Response invoke(final Request request) throws RpcException {
 		log.debug("向服务端{}发起请求", url.toString());
 
-		boolean async = url.getBooleanParam(Const.ASYNC_KEY, true);
+		boolean async = url.getBooleanParam(Const.ASYNC_KEY, Const.DEFAULT_ASYNC);
 
 		if (async) {
 			log.debug("异步请求");
-			return null;
+			throw new UnsupportedOperationException("暂不支持异步处理");
 		} else {
 			log.debug("同步请求");
 			return client.request(request).get(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT));
