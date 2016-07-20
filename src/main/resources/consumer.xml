@@ -8,6 +8,6 @@
 
 	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
 	<reference id="userService" interface="com.youku.rpc.service.UserService"
-		retry="0" benchmark="false" connect_timeout="1000"/>
+		retry="0" benchmark="false" timeout="1000"/>
 
 </nevermore>

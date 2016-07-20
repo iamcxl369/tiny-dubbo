@@ -47,7 +47,8 @@ public class NettyClient implements Client {
 				.channel(NioSocketChannel.class)//
 				.option(ChannelOption.SO_KEEPALIVE, true)//
 				.option(ChannelOption.TCP_NODELAY, true)//
-				.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, url.getIntParam("connect_timeout", Const.CONNECT_TIMEOUT))//
+				.option(ChannelOption.CONNECT_TIMEOUT_MILLIS,
+						url.getIntParam(Const.CONNECT_TIMEOUT_KEY, Const.DEFAULT_CONNECT_TIMEOUT))//
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
@@ -78,7 +79,7 @@ public class NettyClient implements Client {
 
 	@Override
 	public void send(Request request) {
-		log.info("客户端发送消息");
+		log.debug("客户端发送消息");
 		channelFuture = channelFuture.channel().writeAndFlush(request);
 		channelFuture.addListener(new ChannelFutureListener() {
 
@@ -95,7 +96,7 @@ public class NettyClient implements Client {
 
 	@Override
 	public ResponseFuture request(final Request request) {
-		ResponseFuture future = new DefaultFuture(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT), request);
+		ResponseFuture future = new DefaultFuture(url.getIntParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT), request);
 		send(request);
 		return future;
 	}

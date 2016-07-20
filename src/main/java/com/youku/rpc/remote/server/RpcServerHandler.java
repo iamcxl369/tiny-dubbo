@@ -16,7 +16,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<Request> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Request request) throws Exception {
-		log.info("处理客户端请求信息");
+		log.debug("处理客户端请求信息");
 
 		request = initForServer(request);
 

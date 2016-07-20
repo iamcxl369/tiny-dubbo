@@ -50,4 +50,21 @@ public class TestCoder {
 
 		System.out.println(user.getName());
 	}
+	
+	@Test
+	public void testByteSize(){
+		long i=11111111111111111L;
+		
+		ByteBuf out = new PooledByteBufAllocator().buffer();
+		
+		int start=out.writerIndex();
+		out.writeLong(i);
+//		String s=UUIDUtil.uuid();
+//		out.writeBytes(s.getBytes());
+		int end=out.writerIndex();
+		
+		
+		System.out.println(end-start);
+		
+	}
 }

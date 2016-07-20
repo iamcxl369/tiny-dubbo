@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.caucho.hessian.client.HessianProxyFactory;
 import com.caucho.hessian.server.HessianServlet;
+import com.youku.rpc.common.Const;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.HessianInvoker;
 import com.youku.rpc.remote.protocol.Protocol;
@@ -25,6 +26,10 @@ public class HessianProtocol implements Protocol {
 	public Invoker refer(Class<?> interfaceClass, URL url) {
 		log.info("使用hession协议引用服务");
 		HessianProxyFactory factory = new HessianProxyFactory();
+		int connectTimeout = url.getIntParam(Const.CONNECT_TIMEOUT_KEY, Const.DEFAULT_CONNECT_TIMEOUT);
+		int timeout = url.getIntParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT);
+		factory.setConnectTimeout(connectTimeout);
+		factory.setReadTimeout(timeout);
 		try {
 			Object proxy = factory.create(interfaceClass, new StringBuilder().append("http://").append(url.getIp())
 					.append(':').append(url.getPort()).toString());

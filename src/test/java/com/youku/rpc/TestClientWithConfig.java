@@ -30,7 +30,7 @@ public class TestClientWithConfig {
 		long start = System.currentTimeMillis();
 
 		List<User> newUsers = null;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 100; i++) {
 			newUsers = userService.filter(users);
 		}
 

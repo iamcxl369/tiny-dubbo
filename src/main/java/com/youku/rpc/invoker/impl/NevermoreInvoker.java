@@ -8,6 +8,7 @@ import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.remote.client.Client;
 import com.youku.rpc.remote.support.Request;
 import com.youku.rpc.remote.support.Response;
+import com.youku.rpc.remote.support.ResponseFuture;
 import com.youku.rpc.remote.support.URL;
 
 public class NevermoreInvoker extends AbstractInvoker {
@@ -29,10 +30,12 @@ public class NevermoreInvoker extends AbstractInvoker {
 
 		if (async) {
 			log.debug("异步请求");
+			ResponseFuture future = client.request(request);
+			
 			throw new UnsupportedOperationException("暂不支持异步处理");
 		} else {
 			log.debug("同步请求");
-			return client.request(request).get(url.getLongParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT));
+			return client.request(request).get(url.getIntParam(Const.TIMEOUT_KEY, Const.DEFAULT_TIMEOUT));
 		}
 	}
 

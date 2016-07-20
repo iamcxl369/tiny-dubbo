@@ -2,14 +2,6 @@ package com.youku.rpc.common;
 
 public interface Const {
 
-	// 连接超时时间（毫秒）
-	int CONNECT_TIMEOUT = 3000;
-
-	// rpc请求超时时间（毫秒）
-	long DEFAULT_TIMEOUT = 1000;
-
-	int ZK_SESSION_TIMEOUT = 5000;
-
 	String ZK_REGISTRY_PATH = "/registry";
 
 	String REGISTRY_SEPARATOR = "://";
@@ -40,9 +32,11 @@ public interface Const {
 
 	String TIMEOUT_KEY = "timeout";
 
+	String CONNECT_TIMEOUT_KEY = "connect_timeout";
+
 	String LOADBALANCE_KEY = "loadbalance";
 
-	String RETRY_TIMES_KEY = "retry_times";
+	String RETRY_KEY = "retry";
 
 	String CORE_THREADS_KEY = "corethreads";
 
@@ -59,5 +53,11 @@ public interface Const {
 	boolean DEFAULT_BENCHMARK = true;
 
 	boolean DEFAULT_ASYNC = false;
+
+	int DEFAULT_TIMEOUT = 1000;
+
+	int DEFAULT_CONNECT_TIMEOUT = 3000;
+
+	int ZK_SESSION_TIMEOUT = 5000;
 
 }

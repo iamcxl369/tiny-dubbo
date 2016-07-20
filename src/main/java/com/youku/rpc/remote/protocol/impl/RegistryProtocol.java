@@ -52,7 +52,7 @@ public class RegistryProtocol implements Protocol {
 			invokers.add(protocol.refer(interfaceClass, combinedURL));
 		}
 
-		int retryTimes = url.getIntParam(Const.RETRY_TIMES_KEY, Const.DEFAULT_RETRY_TIMES);
+		int retryTimes = url.getIntParam(Const.RETRY_KEY, Const.DEFAULT_RETRY_TIMES);
 		LoadBalance loadBalance = ExtensionLoader.getExtension(LoadBalance.class,
 				url.getParam(Const.LOADBALANCE_KEY, Const.DEFAULT_LOAD_BALANCE));
 		Cluster cluster = ExtensionLoader.getExtension(Cluster.class,
