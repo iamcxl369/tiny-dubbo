@@ -10,8 +10,8 @@ import com.youku.rpc.common.Const;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.factory.ProxyFactory;
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
+import com.youku.rpc.remote.support.URL;
 
 public class ReferenceConfig<T> {
 

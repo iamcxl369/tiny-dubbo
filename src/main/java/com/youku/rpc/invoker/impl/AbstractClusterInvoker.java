@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.util.Assert;
 
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.cluster.Directory;
+import com.youku.rpc.remote.support.URL;
 
 public abstract class AbstractClusterInvoker implements Invoker {
 

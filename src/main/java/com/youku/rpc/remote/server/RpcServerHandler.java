@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
+import com.youku.rpc.remote.support.Request;
+import com.youku.rpc.remote.support.Response;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

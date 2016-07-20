@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.NevermoreInvoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.client.Client;
 import com.youku.rpc.remote.client.impl.NettyClient;
 import com.youku.rpc.remote.protocol.Protocol;
 import com.youku.rpc.remote.server.Server;
 import com.youku.rpc.remote.server.impl.NettyServer;
+import com.youku.rpc.remote.support.URL;
 
 public class NevermoreProtocol implements Protocol {
 

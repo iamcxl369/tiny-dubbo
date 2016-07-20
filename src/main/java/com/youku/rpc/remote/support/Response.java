@@ -1,4 +1,4 @@
-package com.youku.rpc.remote;
+package com.youku.rpc.remote.support;
 
 public class Response extends BaseMessage {
 

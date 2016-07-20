@@ -1,7 +1,7 @@
 package com.youku.rpc.factory;
 
 import com.youku.rpc.registry.Registry;
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.support.URL;
 
 public interface RegistryFactory {
 

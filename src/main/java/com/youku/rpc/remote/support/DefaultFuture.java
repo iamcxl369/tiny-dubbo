@@ -9,8 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.youku.rpc.exception.RpcException;
 import com.youku.rpc.exception.TimeoutException;
-import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
 
 public class DefaultFuture implements ResponseFuture {
 

@@ -13,11 +13,11 @@ import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.factory.RegistryFactory;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.registry.Registry;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.cluster.Cluster;
 import com.youku.rpc.remote.cluster.Directory;
 import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
 import com.youku.rpc.remote.protocol.Protocol;
+import com.youku.rpc.remote.support.URL;
 
 public class RegistryProtocol implements Protocol {
 

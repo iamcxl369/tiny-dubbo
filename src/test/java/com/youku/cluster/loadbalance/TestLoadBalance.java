@@ -11,10 +11,10 @@ import org.junit.Test;
 
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.NevermoreInvoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
 import com.youku.rpc.remote.cluster.loadbalance.impl.RandomLoadBalance;
 import com.youku.rpc.remote.cluster.loadbalance.impl.RoundRobinLoadBalance;
+import com.youku.rpc.remote.support.URL;
 
 public class TestLoadBalance {
 

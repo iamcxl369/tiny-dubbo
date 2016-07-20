@@ -7,9 +7,9 @@ import com.youku.rpc.common.Const;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.invoker.impl.ExportServiceInvoker;
 import com.youku.rpc.invoker.impl.RegistryInvoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
 import com.youku.rpc.remote.server.TypeObjectMapper;
+import com.youku.rpc.remote.support.URL;
 
 public class ServiceConfig<T> {
 

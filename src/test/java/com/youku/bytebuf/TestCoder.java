@@ -9,10 +9,10 @@ import org.junit.Test;
 import com.youku.rpc.common.UUIDUtil;
 import com.youku.rpc.extension.ExtensionLoader;
 import com.youku.rpc.model.User;
-import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.codec.RpcDecoder;
 import com.youku.rpc.remote.codec.RpcEncoder;
+import com.youku.rpc.remote.support.Request;
+import com.youku.rpc.remote.support.URL;
 import com.youku.rpc.service.UserService;
 
 import io.netty.buffer.ByteBuf;

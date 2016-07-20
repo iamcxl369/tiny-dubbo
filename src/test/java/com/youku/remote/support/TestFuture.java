@@ -2,9 +2,9 @@ package com.youku.remote.support;
 
 import com.youku.rpc.common.UUIDUtil;
 import com.youku.rpc.exception.RpcException;
-import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.support.DefaultFuture;
+import com.youku.rpc.remote.support.Request;
+import com.youku.rpc.remote.support.Response;
 
 public class TestFuture {
 

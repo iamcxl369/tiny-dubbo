@@ -1,10 +1,10 @@
 package com.youku.rpc.remote.server.impl;
 
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.codec.RpcDecoder;
 import com.youku.rpc.remote.codec.RpcEncoder;
 import com.youku.rpc.remote.server.RpcServerHandler;
 import com.youku.rpc.remote.server.Server;
+import com.youku.rpc.remote.support.URL;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

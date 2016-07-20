@@ -14,8 +14,8 @@ import com.caucho.hessian.client.HessianProxyFactory;
 import com.caucho.hessian.server.HessianServlet;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.invoker.impl.HessianInvoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
+import com.youku.rpc.remote.support.URL;
 
 public class HessianProtocol implements Protocol {
 

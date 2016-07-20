@@ -2,9 +2,9 @@ package com.youku.rpc.invoker.impl;
 
 import com.youku.rpc.common.ReflectUtils;
 import com.youku.rpc.exception.RpcException;
-import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.support.Request;
+import com.youku.rpc.remote.support.Response;
+import com.youku.rpc.remote.support.URL;
 
 public class HessianInvoker extends AbstractInvoker {
 

@@ -3,8 +3,8 @@ package com.youku.rpc.remote.protocol.impl;
 import org.springframework.util.Assert;
 
 import com.youku.rpc.invoker.Invoker;
-import com.youku.rpc.remote.URL;
 import com.youku.rpc.remote.protocol.Protocol;
+import com.youku.rpc.remote.support.URL;
 
 public class ProtocolListenerWrapper implements Protocol {
 

@@ -1,7 +1,7 @@
 package com.youku.rpc.remote.client;
 
 import com.youku.rpc.exception.RpcException;
-import com.youku.rpc.remote.Request;
+import com.youku.rpc.remote.support.Request;
 import com.youku.rpc.remote.support.ResponseFuture;
 
 public interface Client {

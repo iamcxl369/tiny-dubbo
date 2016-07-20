@@ -1,6 +1,6 @@
 package com.youku.rpc.invoker.impl;
 
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.support.URL;
 
 public class RegistryInvoker extends ExportServiceInvoker {
 

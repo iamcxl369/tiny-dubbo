@@ -1,4 +1,4 @@
-package com.youku.rpc.remote;
+package com.youku.rpc.remote.support;
 
 public enum MessageType {
 	REQUEST((byte) 0, "请求"), RESPONSE((byte) 1, "响应");

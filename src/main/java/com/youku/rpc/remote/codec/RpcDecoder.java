@@ -11,10 +11,10 @@ import org.springframework.util.Assert;
 import com.youku.rpc.common.Const;
 import com.youku.rpc.common.ReflectUtils;
 import com.youku.rpc.factory.SerializerFactory;
-import com.youku.rpc.remote.MessageType;
-import com.youku.rpc.remote.Request;
-import com.youku.rpc.remote.Response;
 import com.youku.rpc.remote.serialize.Serializer;
+import com.youku.rpc.remote.support.MessageType;
+import com.youku.rpc.remote.support.Request;
+import com.youku.rpc.remote.support.Response;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

@@ -2,7 +2,7 @@ package com.youku.util;
 
 import org.junit.Test;
 
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.support.URL;
 
 public class URLTest {
 

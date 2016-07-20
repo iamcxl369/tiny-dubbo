@@ -2,7 +2,7 @@ package com.youku.rpc.remote.threadpool;
 
 import java.util.concurrent.Executor;
 
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.support.URL;
 
 public interface ThreadPool {
 

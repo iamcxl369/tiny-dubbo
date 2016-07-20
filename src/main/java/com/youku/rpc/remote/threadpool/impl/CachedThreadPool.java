@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.youku.rpc.common.Const;
-import com.youku.rpc.remote.URL;
+import com.youku.rpc.remote.support.URL;
 import com.youku.rpc.remote.threadpool.ThreadPool;
 
 public class CachedThreadPool implements ThreadPool {
