@@ -49,7 +49,7 @@ public class TestLoadBalance {
 
 	private void execute(LoadBalance loadBalance) {
 		for (int i = 0; i < size; i++) {
-			Invoker invoker = loadBalance.select(invokers);
+			Invoker invoker = loadBalance.select(invokers, null);
 			String key = toURL(invoker);
 
 			Integer number = count.get(key);

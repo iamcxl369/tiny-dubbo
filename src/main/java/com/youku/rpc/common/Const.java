@@ -50,6 +50,8 @@ public interface Const {
 
 	String ASYNC_KEY = "async";
 
+	String HASH_NODES_KEY = "hash_nodes";
+
 	boolean DEFAULT_BENCHMARK = true;
 
 	boolean DEFAULT_ASYNC = false;
@@ -59,5 +61,7 @@ public interface Const {
 	int DEFAULT_CONNECT_TIMEOUT = 3000;
 
 	int ZK_SESSION_TIMEOUT = 5000;
+
+	int DEFAULT_HASH_NODES = 20;
 
 }

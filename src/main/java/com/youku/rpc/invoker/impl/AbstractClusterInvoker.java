@@ -6,6 +6,7 @@ import org.springframework.util.Assert;
 
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.cluster.Directory;
+import com.youku.rpc.remote.support.Request;
 import com.youku.rpc.remote.support.URL;
 
 public abstract class AbstractClusterInvoker implements Invoker {
@@ -41,8 +42,8 @@ public abstract class AbstractClusterInvoker implements Invoker {
 		throw new RuntimeException("暂时不支持该方法");
 	}
 
-	public Invoker select(List<Invoker> invokers) {
-		return directory.getLoadBalance().select(invokers);
+	public Invoker select(List<Invoker> invokers, Request request) {
+		return directory.getLoadBalance().select(invokers, request);
 	}
 
 }

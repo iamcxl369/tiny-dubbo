@@ -25,7 +25,7 @@ public class FailoverClusterInvoker extends AbstractClusterInvoker {
 
 		for (int i = 0; i < retryTimes; i++) {
 			try {
-				Invoker invoker = select(directory.getInvokers());
+				Invoker invoker = select(directory.getInvokers(), request);
 				return invoker.invoke(request);
 			} catch (RpcException e) {
 				log.warn("远程调用失败，目前已经重试了{}次", i);

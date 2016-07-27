@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.invoker.Invoker;
+import com.youku.rpc.remote.support.Request;
 
 /**
  * 加权轮询算法
@@ -23,7 +24,7 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 	private int cardinalWeight;
 
 	@Override
-	protected Invoker doSelect(List<Invoker> invokers) {
+	protected Invoker doSelect(List<Invoker> invokers, Request request) {
 		log.debug("采用权重轮询负载均衡措施");
 
 		index = (index + 1) % invokers.size();
@@ -40,7 +41,7 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 		if (getWeight(current) >= cardinalWeight) {
 			return current;
 		} else {
-			return doSelect(invokers);
+			return doSelect(invokers, request);
 		}
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import com.youku.rpc.common.Const;
 import com.youku.rpc.invoker.Invoker;
 import com.youku.rpc.remote.cluster.loadbalance.LoadBalance;
+import com.youku.rpc.remote.support.Request;
 
 public abstract class AbstractLoadBalance implements LoadBalance {
 
@@ -36,10 +37,10 @@ public abstract class AbstractLoadBalance implements LoadBalance {
 	}
 
 	@Override
-	public Invoker select(List<Invoker> invokers) {
-		return doSelect(filterIllegalWeight(invokers));
+	public Invoker select(List<Invoker> invokers, Request request) {
+		return doSelect(filterIllegalWeight(invokers), request);
 	}
 
-	protected abstract Invoker doSelect(List<Invoker> invokers);
+	protected abstract Invoker doSelect(List<Invoker> invokers, Request request);
 
 }

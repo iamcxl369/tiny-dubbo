@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.youku.rpc.invoker.Invoker;
+import com.youku.rpc.remote.support.Request;
 
 /**
  * 随机算法
@@ -21,7 +22,7 @@ public class RandomLoadBalance extends AbstractLoadBalance {
 	private final Random random = new Random();
 
 	@Override
-	public Invoker doSelect(List<Invoker> invokers) {
+	public Invoker doSelect(List<Invoker> invokers, Request request) {
 		log.debug("采用随机负载均衡措施");
 
 		int totalWeight = 0;
