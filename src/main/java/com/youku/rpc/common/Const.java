@@ -62,6 +62,6 @@ public interface Const {
 
 	int ZK_SESSION_TIMEOUT = 5000;
 
-	int DEFAULT_HASH_NODES = 20;
+	int DEFAULT_HASH_NODES = 200;
 
 }
